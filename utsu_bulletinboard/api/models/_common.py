@@ -18,3 +18,25 @@ class Trip(models.Model):
 	# relationships
 	customer = models.ForeignKey(User, related_name='customer_trips')
 	rider = models.ForeignKey(User, related_name='rider_trips')
+
+	def send_unconfirmed(self):
+		'''Send a sms to the rider(s) phone number
+		when a trip is created.
+		'''
+		for user in self.riders.all():
+			user.send_text(status='unconfirmed')
+		return
+
+	def send_confirmed(self):
+		'''Send a sms to the customers phone number
+		when a trip is confirmed.
+		'''
+		self.customer.send_text(status='confirmed')
+		return
+
+	def send_arrived(self):
+		'''Send a sms to the customers phone number
+		when a rider has arrived at the pickup location.
+		'''
+		self.customer.send_text(status='arrived')
+		return

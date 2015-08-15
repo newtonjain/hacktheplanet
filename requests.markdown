@@ -16,7 +16,10 @@ xxx/trip/
 	'location': [
 		{
 			'id': 7623,
-			'start':{STILL WORKING ON THIS FIELD},
+			'start':{
+				'longitude': 127635,
+				'latitude': 2126127
+			},
 			'end':{STILL WORKING ON THIS FIELD}
 		},
 		{
@@ -67,9 +70,10 @@ xxx/user/rider
 
 {
 	'id': 12322,
+	'photo': 'www.giphy.com/woah'
 	'name': 'Alec',
 	'type_of_user': 'rider',
-	'phone-number': '416-992-2635'
+	'phone_number': '416-992-2635'
 	'description': ';sjdjbasdjfajsbdf',
 	'interests': 'biking, cooking, eating',
 }

@@ -12,6 +12,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField("Name of User", blank=True, max_length=255)
+    photo = models.URLField(blank=True)
     phone_number = models.IntegerField(blank=True, null=True)
     type_of_rider = models.CharField(max_length=100, default='Customer')
     description = models.CharField(blank=True, max_length=200)
@@ -22,3 +23,7 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
+
+    def send_text(self, status):
+        '''Send a text message to this users phone.'''
+        pass

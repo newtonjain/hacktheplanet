@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from address.models import AddressField
 from api.models import Trip, Location
 from users.models import User
 
@@ -25,10 +26,10 @@ class TripSerializer(serializers.Serializer):
 class UserSerializer(serializers.Serializer):
     # make all other fields non-required
 
-
     class Meta:
         model = User
-        fields = ['id']
+        fields = ['id', 'photo', 'name', 'type_of_user', 'phone_number',
+        'description', 'interets']
 
 
 
@@ -38,3 +39,9 @@ class LocationSerializer(serializers.Serializer):
         model = Location
         fields = ['id', 'start', 'end']
 
+
+class AddressSerializer(serializers.Serializer):
+
+    class Meta:
+        model = AddressField
+        fields = ['latitude', 'longitude']
