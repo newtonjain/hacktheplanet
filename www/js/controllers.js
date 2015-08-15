@@ -144,7 +144,7 @@ angular.module('starter.controllers', [])
       alert('Bike on its way' + position.coords.latitude + position.coords.longitude);
       $scope.locations.push(position.coords);
       //$scope.location.lon = position.coords.longitude;
-      $http({method: 'GET', url: 'http://54.88.187.36:3000/myLocation',
+      $http({method: 'GET', url: url,
               params: {
           locationx : position.coords.latitude,
           locationy : position.coords.longitude}})
