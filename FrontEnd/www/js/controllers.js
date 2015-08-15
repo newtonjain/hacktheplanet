@@ -29,6 +29,24 @@ angular.module('starter.controllers', [])
     amount: '0'
   }
 
+  $scope.riders = [
+    {
+  id: 12322,
+  name: 'Alec',
+  p: 'rider',
+  phonenumber: '416-992-2635',
+  description: 'sjdjbasdjfajsbdf',
+  interests: 'biking, cooking, eating'
+  },
+    {
+  id: 12322,
+  name: 'Alec',
+  p: 'rider',
+  phonenumber: '416-992-2635',
+  description: 'sjdjbasdjfajsbdf',
+  interests: 'biking, cooking, eating'
+  }]
+
    $ionicModal.fromTemplateUrl('templates/transactionComplete.html', {
     scope: $scope
   }).then(function(modal) {
@@ -178,6 +196,18 @@ angular.module('starter.controllers', [])
     var ll = event.latLng;
     $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
   }
+
+  $scope.cities = {
+    1: {position: [41.878113, -87.629798]},
+    2: {position: [40.714352, -74.005973]},
+    3: {position: [37.7699298, -122.4469157]},
+    4: {position: [49.25, -123.1]},
+    5: {position: [49.25, -123.1]}
+  }
+  $scope.getRadius = function(num) {
+    return Math.sqrt(num) * 100;
+  }
+
 })
 
 .controller('ChatsCtrl', function ($scope, Chats) {
