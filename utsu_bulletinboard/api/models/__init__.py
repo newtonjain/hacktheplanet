@@ -1,2 +1,2 @@
-from ._common import Trip
+from ._trip import Trip
 from ._location import Location
