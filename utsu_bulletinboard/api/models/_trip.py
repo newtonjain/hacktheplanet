@@ -3,8 +3,6 @@ from datetime import datetime
 from django.db import models
 from django.utils import timezone
 
-from users.models import User
-
 
 class Trip(models.Model):
 	# real fields
@@ -14,10 +12,6 @@ class Trip(models.Model):
 		blank=True, 
 		default='unconfirmed',
 		max_length=200)
-
-	# relationships
-	customer = models.ForeignKey(User, related_name='customer_trips')
-	rider = models.ForeignKey(User, related_name='rider_trips')
 
 	def send_unconfirmed(self):
 		'''Send a sms to the rider(s) phone number

@@ -7,29 +7,28 @@ trip
 
 ```
 POST
-xxx/trip/
+xxx/trip/user/<user_id> [gets all trips according to user id]
 ```
 
 ```
 {
-	'customer_id': 12343,
-	'location': [
+	'locations': [
 		{
 			'id': 7623,
 			'start':{
 				'longitude': 127635,
 				'latitude': 2126127
 			},
-			'end':{STILL WORKING ON THIS FIELD}
-		},
-		{
-			[WHEN SCENIC IS TRUE, IN THE REQUEST RESPONSE, MORE LOCATIONS WILL BE GIVEN BACK]
+			'end':{
+				'longitude': 127635,
+				'latitude': 2126127
+			}
 		},
 	]},
 	'riders': [
-		{'id': 1232},
-		{'id': 2113},
-		{'id': 3211}
+		{<user_object>},
+		{<user_object>},
+		{<user_object>}
 		]
 	},
 	{
@@ -41,18 +40,6 @@ xxx/trip/
 }
 ```
 'locations' key will specify all start and end points of every line on the graph, you will have to do actual routing to every location
-
-* rider trips
-
-```
-GET
-xxx/trip/
-{
-	'trips':[
-		[legit the same as POST except when `accepted`]
-	]
-}
-```
 
 ```
 PATCH [TO ACCEPT TRIP/ARRIVE AT PICKUP/ARRIVE AT DESINATION]
@@ -76,6 +63,7 @@ xxx/user/rider
 	'phone_number': '416-992-2635'
 	'description': ';sjdjbasdjfajsbdf',
 	'interests': 'biking, cooking, eating',
+	'trips': [<trip-object>]
 }
 
 

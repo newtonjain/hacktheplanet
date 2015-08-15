@@ -5,7 +5,11 @@ urlpatterns = patterns(
 
    	# trips
     url(r'^trip/?$',
-        event_views.TripListCreateView.as_view(),
+        event_views.TripCreateView.as_view(),
+        name='trip_api'
+        ),
+    url(r'^trip/user/(?P<user_pk>\d+)/?$',
+        event_views.TripList.as_view(),
         name='trip_api'
         ),
     url(r'^trip/(?P<pk>\d+)/?$',

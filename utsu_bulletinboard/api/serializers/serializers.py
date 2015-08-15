@@ -7,33 +7,39 @@ from users.models import User
 
 class TripSerializer(serializers.Serializer):
     locations = LocationSerializer(many=True)
-    riders = UserSerializer(many=True, source='rider')
     status = serializers.CharField(required=False)
+    riders = serializers.SerializerMethodField('get_riders')
 
     class Meta:
         model = Trip
-        fields = ['customer', 'locations', 'riders', 'scenic',
-        'start_ts', 'status']
+        fields = ['locations', 'scenic', 'start_ts', 'status',
+        'riders']
 
     def update(self, instance, validated_data):
         riders = validated_data.get('riders')
         if riders and len(riders) == 1:
             instance.status = 'confirmed'
-            instance.save()
-        return instance
+        return instance.save(**validated_data)
+
+    def get_riders(self, trip):
+        qs = User.objects.filter(is_customer=False, trip=trip)
+        serializer = UserSerializer(instance=qs, many=True)
+        return serializer.data
 
 
 class UserSerializer(serializers.Serializer):
-    # make all other fields non-required
+    trips = TripSerializer(many=true)
 
     class Meta:
         model = User
         fields = ['id', 'photo', 'name', 'type_of_user', 'phone_number',
-        'description', 'interets']
+        'description', 'trips']
 
 
 
 class LocationSerializer(serializers.Serializer):
+    start = AddressSerializer()
+    end = AddressSerializer()
 
     class Meta:
         model = Location

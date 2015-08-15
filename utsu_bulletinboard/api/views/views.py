@@ -1,7 +1,8 @@
 
 from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
-                                     RetrieveModelMixin)
+                                     RetrieveModelMixin,
+                                     ListAPIView)
 
 from api.models import Trip, Location
 from users.models import User
@@ -11,12 +12,21 @@ from api.serializers import (
 )
 
 
-class TripListCreateView(ListCreateAPIView):
-    queryset = Trip.objects.all()
+class TripListView(ListAPIView):
     serializer_class = TripSerializer
+
+    def get_queryset(self):
+    	user_id = self.request.query_params['user_pk']
+    	user = User.object.get(id=user_id)
+    	return user.trips
 
     def list(self, request, *args, **kwargs):
         return ListCreateAPIView.list(self, request, *args, **kwargs)
+
+
+class TripCreateView(ListCreateAPIView)
+	queryset = Trip.objects.all()
+    serializer_class = TripSerializer
 
     def create(self, request, *args, **kwargs):
         return ListCreateAPIView.create(self, request, *args, **kwargs)

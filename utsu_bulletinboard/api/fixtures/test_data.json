@@ -1,0 +1,79 @@
+[
+    {
+    "model": "api.trip",
+    "pk": 1,
+    "fields": {
+        "scenic": false,
+        "status": "unconfirmed"
+        }
+    },
+    {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "username": "kelly", 
+        "phone_number": 5266475, 
+        "first_name" :"kelly",
+        "interests": "cooking", 
+        "description": "a cool guy", 
+        "is_customer": true,
+        "trip": 1
+        }
+    },
+    {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "username": "coolio", 
+        "phone_number": 5266475, 
+        "first_name" :"coolio",
+        "interests": "driving", 
+        "description": "a cool guy", 
+        "is_customer": false,
+        "trip": 1
+        }
+    },
+    {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "username": "jon", 
+        "phone_number": 5276475, 
+        "first_name" :"jon",
+        "interests": "driving", 
+        "description": "a cool guy", 
+        "is_customer": false,
+        "trip": 1
+        }
+    },
+    {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+        "username": "paul", 
+        "phone_number": 5286475, 
+        "first_name" :"paul",
+        "interests": "driving", 
+        "description": "a cool guy", 
+        "is_customer": false,
+        "trip": 1
+        }
+    },
+    {
+    "model": "address.address",
+    "pk": 1,
+    "fields": {
+        "latitude": 38.706863, 
+        "longitude": 38.706863
+        }
+    },
+    {
+    "model": "address.address",
+    "pk": 2,
+    "fields": {
+        "latitude": 38.706863, 
+        "longitude": 38.706863
+        }
+    }
+    
+]
