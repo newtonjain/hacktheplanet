@@ -1,4 +1,4 @@
-# requests examples
+# requests examples, more for my spec purposes, i dont need to expose everything
 
 
 ## customers
@@ -35,7 +35,22 @@ xxx/trip/
 		'time':<datetime-object repr>
 	}
 }
+
+SCENIC CALLBACK
+{
+	'points':[{
+		'a':
+	},
+	{
+		'b':
+	},
+	{
+		'c':
+	}]
+}
 ```
+
+ARE WE GOING GOOGLE MAPS STUFF FRONT END OR BACK END????
 
 
 * profiles
@@ -43,21 +58,36 @@ xxx/trip/
 ```
 GET
 xxx/profiles/rider
-```
+
 {
 	'id': 12322,
 	'first-name': 'Alec',
+	'type': 'rider',
+	'phone-number': '416-992-2635'
 	'description': ';sjdjbasdjfajsbdf',
 	'interests': 'biking, cooking, eating',
 	'top desinations to ride to': 'sf, silicon valley'
 }
+
+
+{
+	'id': 83463,
+	'first-name': 'Dave',
+	'type': 'customer',
+	'phone-number': '416-992-2635'
+	'description': ';sjdjbasdjfajsbdf',
+	'interests': 'skiing, bbq'ing, eating',
+	'top desinations to ride to': 'sf, silicon valley'
+}
+```
+
+
 
 * rider trips
 
 ```
 GET
 xxx/trip/
-```
 {
 	'trips':[
 		{
@@ -73,3 +103,30 @@ xxx/trip/
 	]
 	
 }
+```
+
+```
+PATCH [TO ACCEPT TRIP/ARRIVE AT PICKUP/ARRIVE AT DESINATION]
+xxx/trip/123
+{
+	'rider-id': 123,
+	'customer-id': 321,
+	'type': 'accept',
+	'trip':{
+		[TRIP OBJECT UP ABOVE]
+	}
+}
+
+
+{
+	'rider-id': 123,
+	'customer-id': 321,
+	'trip':{
+		[TRIP OBJECT UP ABOVE]
+	},
+	''
+}
+```
+
+```
+

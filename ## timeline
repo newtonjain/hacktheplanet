@@ -2,10 +2,10 @@
 
 * customer/rider experience
 	* customer
-		* inputs point a to b
+		* inputs point a to b [POST TO /trip]
 			* scenic or economically
-				* scenic computation has to happen right here
-		* inputs 3 top profiles he would like to ride with
+				* scenic computation has to happen right here [IN REQUEST CALLBACK, SCENIC ROADMAP IS GIVEN BACK TO FRONT END]
+			* inputs 3 top profiles he would like to ride with [in request body and stuff]
 	* rider
 		* text message from twilio to riders phone
 		* checks app
