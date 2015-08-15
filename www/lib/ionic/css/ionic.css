@@ -7353,8 +7353,7 @@ a.button {
     content: "."; }
 
 .full-image {
-  width: 50%; 
-}
+  width: 100%; }
 
 .clearfix {
   *zoom: 1; }

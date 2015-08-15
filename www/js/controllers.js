@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
     $scope.creditCard = {};
     $scope.amount = null;
     $scope.txid = null;
-    $scope.locations;
+    $scope.locations=[];
 
   var vcard  = {
     firstName: 'Shiva',
@@ -132,7 +132,6 @@ angular.module('starter.controllers', [])
 
 //////////////////////////
   $scope.callRiders = function() {
-    alert('its oressed');
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
   }
 
@@ -143,7 +142,7 @@ angular.module('starter.controllers', [])
   var onSuccess = function(position) {
     var url = "insert url";
       alert('Bike on its way' + position.coords.latitude + position.coords.longitude);
-      $scope.locations = position.coords;
+      $scope.locations.push(position.coords);
       //$scope.location.lon = position.coords.longitude;
       $http({method: 'GET', url: 'http://54.88.187.36:3000/myLocation',
               params: {
@@ -172,8 +171,13 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('CustomerCtrl', function ($scope) {
-
+.controller('CustomerCtrl', function ($scope, $compile) {
+   $scope.positions = [{lat:37.7699298,lng:-122.4469157}];
+  $scope.addMarker = function(event) {
+    console.log(event);
+    var ll = event.latLng;
+    $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
+  }
 })
 
 .controller('ChatsCtrl', function ($scope, Chats) {

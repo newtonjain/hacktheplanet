@@ -1,5 +1,10 @@
 <ion-view view-title="Customers">
   <ion-content>
       <button ng-click="callRiders()" class="button button-balanced button-block" >call riders</button>
+      <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
+<map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
+    <marker ng-repeat="location in locations" position="{{location.latitude}}, {{location.longitude}}"></marker>
+    <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="//developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+  </map>
   </ion-content>
 </ion-view>
