@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django import forms
 
-from models import User
+from .models import User
 
 
 class UserForm(forms.ModelForm):
@@ -13,4 +13,5 @@ class UserForm(forms.ModelForm):
         model = User
 
         # Constrain the UserForm to just the name field.
-        fields = ("name", )
+        fields = ("username", "photo", "phone_number", "is_customer",
+        	"description", "interests")

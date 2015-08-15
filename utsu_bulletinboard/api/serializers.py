@@ -5,6 +5,22 @@ from api.models import Trip, Location
 from users.models import User
 
 
+class AddressSerializer(serializers.Serializer):
+
+    class Meta:
+        model = AddressField
+        fields = ['latitude', 'longitude']
+
+
+class LocationSerializer(serializers.Serializer):
+    start = AddressSerializer()
+    end = AddressSerializer()
+
+    class Meta:
+        model = Location
+        fields = ['id', 'start', 'end']
+
+
 class TripSerializer(serializers.Serializer):
     locations = LocationSerializer(many=True)
     status = serializers.CharField(required=False)
@@ -23,31 +39,17 @@ class TripSerializer(serializers.Serializer):
 
     def get_riders(self, trip):
         qs = User.objects.filter(is_customer=False, trip=trip)
-        serializer = UserSerializer(instance=qs, many=True)
+        serializer = UserSerializer(
+            instance=qs, 
+            many=True, 
+            required=False)
         return serializer.data
 
 
 class UserSerializer(serializers.Serializer):
-    trips = TripSerializer(many=true)
+    trips = TripSerializer(many=True)
 
     class Meta:
         model = User
         fields = ['id', 'photo', 'name', 'type_of_user', 'phone_number',
         'description', 'trips']
-
-
-
-class LocationSerializer(serializers.Serializer):
-    start = AddressSerializer()
-    end = AddressSerializer()
-
-    class Meta:
-        model = Location
-        fields = ['id', 'start', 'end']
-
-
-class AddressSerializer(serializers.Serializer):
-
-    class Meta:
-        model = AddressField
-        fields = ['latitude', 'longitude']
