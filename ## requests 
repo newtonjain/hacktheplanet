@@ -12,8 +12,10 @@ xxx/trip/
 
 ```
 {
-	'user-id': 12343,
-	'location': {
+	'customer_id': 12343,
+	'location': [
+	{
+		'id': 7623,
 		'start':{
 			'x': 3627326453,
 			'y': 2736287326
@@ -22,6 +24,11 @@ xxx/trip/
 			'x': 3627326453,
 			'y': 2736287326
 		}
+	},
+	{
+		[WHEN SCENIC IS TRUE, IN THE REQUEST RESPONSE, MORE LOCATIONS WILL BE GIVEN BACK]
+	},
+	]
 	},
 	'riders': {
 		'id': 763253,
@@ -32,26 +39,11 @@ xxx/trip/
 		'scenic': True
 	},
 	{
-		'time':<datetime-object repr>
+		'start_ts':<datetime-object repr>
 	}
 }
-
-SCENIC CALLBACK
-{
-	'points':[{
-		'a':
-	},
-	{
-		'b':
-	},
-	{
-		'c':
-	}]
-}
 ```
-
-ARE WE GOING GOOGLE MAPS STUFF FRONT END OR BACK END????
-
+'locations' key will specify all start and end points of every line on the graph, you will have to do actual routing to every location
 
 * profiles
 
@@ -61,8 +53,8 @@ xxx/profiles/rider
 
 {
 	'id': 12322,
-	'first-name': 'Alec',
-	'type': 'rider',
+	'name': 'Alec',
+	'type_of_user': 'rider',
 	'phone-number': '416-992-2635'
 	'description': ';sjdjbasdjfajsbdf',
 	'interests': 'biking, cooking, eating',
@@ -73,7 +65,7 @@ xxx/profiles/rider
 {
 	'id': 83463,
 	'first-name': 'Dave',
-	'type': 'customer',
+	'type_of_user': 'customer',
 	'phone-number': '416-992-2635'
 	'description': ';sjdjbasdjfajsbdf',
 	'interests': 'skiing, bbq'ing, eating',
@@ -91,8 +83,8 @@ xxx/trip/
 {
 	'trips':[
 		{
-			'rider-id': 123,
-			'customer-id': 321,
+			'rider_id': 123,
+			'customer_id': 321,
 			'trip':{
 				[TRIP OBJECT UP ABOVE]
 			}

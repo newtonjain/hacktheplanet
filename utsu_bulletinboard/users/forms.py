@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django import forms
 
-from .models import User
+from models import User
 
 
 class UserForm(forms.ModelForm):

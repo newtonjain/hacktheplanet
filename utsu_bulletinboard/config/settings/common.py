@@ -34,6 +34,7 @@ DJANGO_APPS = (
     # Admin
     'django.contrib.admin',
     'rest_framework',
+    'address'
 )
 THIRD_PARTY_APPS = (
     'allauth',  # registration
