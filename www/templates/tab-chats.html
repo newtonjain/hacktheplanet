@@ -1,0 +1,18 @@
+<ion-view view-title="Transactions">
+  <ion-content>
+    <ion-list>
+        <ion-item ng-repeat="chat in chats" type="item-text-wrap">
+
+            <a class="item item-thumbnail-left">
+
+                <img ng-src="{{chat._attributes.creditCard.imageUrl}}" style="height: 50%">
+                <h2>{{chat._attributes.billing.firstName}} {{chat._attributes.billing.lastName}}</h2>
+                <p>{{chat._attributes.createdAt.date}}</p>
+                <p>{{chat._attributes.createdAt.timezone}}</p>
+                <p style="font-size: 16px; font-weight: bold">${{chat._attributes.amount}}</p>
+            </a>
+
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

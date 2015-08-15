@@ -1,0 +1,18 @@
+﻿<ion-modal-view>
+    <ion-header-bar>
+        <div class="buttons">
+            <button class="button button-clear" ng-click="closeTxDetails()">Close</button>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+
+        <h1 class="title"><center>Transaction Details</center></h1>
+        <br>
+        <center><img ng-src="{{currentTx._attributes.creditCard.imageUrl}}" style="height: 50%"></center>
+        <h2><center>{{currentTx._attributes.billing.firstName}} {{currentTx._attributes.billing.lastName}}</center></h2>
+        <p><center> {{currentTx._attributes.createdAt.date}} </center></p>
+        <p><center> {{currentTx._attributes.createdAt.timezone}} </center></p>
+        <p><b> <center>${{currentTx._attributes.amount}} <center></b></p>
+        
+    </ion-content>
+</ion-modal-view>

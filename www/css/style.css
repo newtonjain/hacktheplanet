@@ -1,0 +1,21 @@
+/* Empty. Add your own CSS if you like */
+
+.ticker-danger {
+
+background-color: red;
+color: white;
+font-size: 18px;
+}
+
+.ticker-success {
+background-color: green;
+color: white;
+font-size: 18px;
+}
+
+.ticker-warning {
+background-color: yellow;
+color: white;
+font-size: 18px;
+}
+

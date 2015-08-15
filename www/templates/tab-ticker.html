@@ -1,0 +1,11 @@
+<ion-view view-title="Tickers">
+  <ion-content>
+      <ion-list>
+          <div class ='card' ng-repeat="ticker_msg in ticker_msgs" type="item-text-wrap">
+              <div class="ticker-{{ticker_msg.alert_type}}">
+                  <p style="padding: 10px">{{ticker_msg.message}}</p>
+              </div>
+          </div>
+      </ion-list>
+  </ion-content>
+</ion-view>
