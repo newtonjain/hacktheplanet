@@ -10,3 +10,6 @@ plugins/
 changeList.json
 *.user
 bin/
+
+# virtual envs
+/htp

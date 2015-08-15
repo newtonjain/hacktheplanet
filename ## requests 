@@ -1,0 +1,75 @@
+# requests examples
+
+
+## customers
+
+* new customer trip
+
+```
+POST
+xxx/trip/
+```
+
+```
+{
+	'user-id': 12343,
+	'location': {
+		'start':{
+			'x': 3627326453,
+			'y': 2736287326
+		},
+		'end':{
+			'x': 3627326453,
+			'y': 2736287326
+		}
+	},
+	'riders': {
+		'id': 763253,
+		'id': 376438,
+		'id': 273623
+	},
+	{
+		'scenic': True
+	},
+	{
+		'time':<datetime-object repr>
+	}
+}
+```
+
+
+* profiles
+
+```
+GET
+xxx/profiles/rider
+```
+{
+	'id': 12322,
+	'first-name': 'Alec',
+	'description': ';sjdjbasdjfajsbdf',
+	'interests': 'biking, cooking, eating',
+	'top desinations to ride to': 'sf, silicon valley'
+}
+
+* rider trips
+
+```
+GET
+xxx/trip/
+```
+{
+	'trips':[
+		{
+			'rider-id': 123,
+			'customer-id': 321,
+			'trip':{
+				[TRIP OBJECT UP ABOVE]
+			}
+		},
+		{
+			number 2 and so on
+		}
+	]
+	
+}

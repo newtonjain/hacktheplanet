@@ -1,0 +1,25 @@
+## timeline
+
+* customer/rider experience
+	* customer
+		* inputs point a to b
+			* scenic or economically
+				* scenic computation has to happen right here
+		* inputs 3 top profiles he would like to ride with
+	* rider
+		* text message from twilio to riders phone
+		* checks app
+		* sees new requests
+		* accepts one of them
+	* customer
+		* text sms arrives to customer when he confirms
+	* rider
+		* *drives to destination*
+		* presses arrived on the app
+	* customer
+		* text sms arrives to customer when driver arrives
+	* rider
+		* desination arrived, hits button
+	* customer 
+		* checks app and in the ticker pane, he has a transaction report
+
