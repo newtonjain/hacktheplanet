@@ -27,12 +27,12 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # django-secure
 # ------------------------------------------------------------------------------
-# INSTALLED_APPS += ("djangosecure", )
+INSTALLED_APPS += ("djangosecure", )
 
-# MIDDLEWARE_CLASSES = (
-#     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
-#     'djangosecure.middleware.SecurityMiddleware',
-# ) + MIDDLEWARE_CLASSES
+MIDDLEWARE_CLASSES = (
+    # Make sure djangosecure.middleware.SecurityMiddleware is listed first
+    'djangosecure.middleware.SecurityMiddleware',
+) + MIDDLEWARE_CLASSES
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 # SECURE_HSTS_SECONDS = 60
@@ -51,24 +51,24 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ["*"]
 # END SITE CONFIGURATION
 
-# INSTALLED_APPS += ("gunicorn", )
+INSTALLED_APPS += ("gunicorn", )
 
 # STORAGE CONFIGURATION
 # ------------------------------------------------------------------------------
 # Uploaded Media Files
 # ------------------------
 # See: http://django-storages.readthedocs.org/en/latest/index.html
-# INSTALLED_APPS += (
-#     'storages',
-# )
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+INSTALLED_APPS += (
+    'storages',
+)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-# AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME')
-# AWS_AUTO_CREATE_BUCKET = True
-# AWS_QUERYSTRING_AUTH = False
-# AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
+AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID', None)
+AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY', None)
+AWS_STORAGE_BUCKET_NAME = env('DJANGO_AWS_STORAGE_BUCKET_NAME', None)
+AWS_AUTO_CREATE_BUCKET = True
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 # # AWS cache settings, don't change unless you know what you're doing:
 # AWS_EXPIRY = 60 * 60 * 24 * 7
@@ -86,7 +86,7 @@ ALLOWED_HOSTS = ["*"]
 
 # # Static Assests
 # # ------------------------
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # # EMAIL
@@ -101,21 +101,21 @@ ALLOWED_HOSTS = ["*"]
 # # DATABASE CONFIGURATION
 # # ------------------------------------------------------------------------------
 # # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-# # DATABASES['default'] = env.db("DATABASE_URL")
+DATABASES['default'] = env.db("DATABASE_URL")
 
-# # CACHING
-# # ------------------------------------------------------------------------------
-# # Heroku URL does not pass the DB number, so we parse it in
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#             "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
-#                                         # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-#         }
-#     }
-# }
+# CACHING
+# ------------------------------------------------------------------------------
+# Heroku URL does not pass the DB number, so we parse it in
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
+                                        # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+        }
+    }
+}
 
 # # Your production stuff: Below this line define 3rd party library settings
