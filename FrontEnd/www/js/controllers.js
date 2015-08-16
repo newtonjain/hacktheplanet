@@ -7,6 +7,8 @@ angular.module('starter.controllers', [])
     $scope.txid = null;
     $scope.locations=[];
     $scope.positions = [];
+    $scope.locations2;
+    $scope.positions2;
     //$scope.clicked = false;
 
   var vcard  = {
@@ -35,7 +37,7 @@ angular.module('starter.controllers', [])
 
   function _getRiders () {
 
-     $http.get('http://127.0.0.1:8000/user')
+     $http.get('https://cryptic-oasis-6309.herokuapp.com/user')
         .success(function (data) {
            $scope.riders = data;
            console.log(data);
@@ -135,7 +137,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.doLogin = function (username, password) {
-      if (username.toLowerCase() === "newton" && password.toLowerCase() === "1234") {
+      if (username.toLowerCase() === "eric" && password.toLowerCase() === "1234") {
           $scope.modallogin.hide();
       } else {
           alert("Invalid password entered");
@@ -199,6 +201,7 @@ angular.module('starter.controllers', [])
       scenic = true;
     };
 
+
     var toSend= [
     {
         "id": 1,
@@ -215,8 +218,7 @@ angular.module('starter.controllers', [])
                     "id": 2,
                     "latitude": $scope.positions[0].lat,
                     "longitude": $scope.positions[0].lng
-                },
-                "trip": 1
+                }
             }
         ],
         "scenic": scenic,
@@ -232,18 +234,46 @@ angular.module('starter.controllers', [])
 ];
 
 console.log('here is to send', toSend);
-  $http.post('http://127.0.0.1:8000/trip', toSend)
+  $http.post('https://cryptic-oasis-6309.herokuapp.com/trip', toSend)
     .success(function (data, status, headers, config) {
       $scope.modal.show();
     }).error(function (data, status, headers, config) {
-        alert('There was a problem retrieving your information' + data+ status);
+        alert('There was a problem retrieving your information' + data + status);
     });
   };
 
 
 })
 
-.controller('DashCtrl', function ($scope) {
+.controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {
+$scope.driverObject;
+$scope.passanger;
+
+  function _pickups() {
+    $http.get('http://127.0.0.1:8000/trip')
+       .success(function (data) {
+        $scope.driverObject = data;
+        $scope.locations2 = data[0].routes[0].start;
+        $scope.positions2 = data[0].routes[0].end;
+        console.log(data, $scope.positions2);
+          
+       })
+       .error(function (data) {
+           alert("Error: " + data);
+       });
+  }
+  _pickups();
+
+
+  $scope.rideComplete = function() {
+    $ionicActionSheet.show({
+          buttons: [
+       { text: '<center><b>Thanks for Riding'}
+     ],
+           titleText: '<center>You are going to pay $50</center>'
+        });
+
+  }
 
 })
 

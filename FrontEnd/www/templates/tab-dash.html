@@ -1,19 +1,53 @@
 <ion-view view-title="Rider">
   <ion-content>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
-    <marker ng-repeat="pickup in pickups" position="{{pickup.latitude}}, {{pickup.longitude}}"></marker>
+<map center="37.41396, -122.07779" zoom="12" id="map" data-tap-disabled="true">
+    <marker  position="{{location2.latitude}}, {{location2.longitude}}"></marker>
+    <marker  position="{{position2.latitude}}, {{position2.latitude}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
   </map>
+
+  <div class="row card">
+    <div class="col col-30 col-center">
+        <img src="img/Erlich.png" style="width:75%">
+    </div>
+    
+    <div class="col col-40 col-center">
+        <h2>Erlich Bachman</h2>
+        <p>415 - 739 - 3425</p>
+        <p>erlich.bachman@piedpiper.com</p>
+        <p><strong>Interests: </strong>startups, marijuana, technology, fine dining, bars, nightclubs, strip clubs</p>
+    </div>
+    <div class="col col-30 col-center"> 
+        <div class="row-center">
+            <h3>Confirm Ride:</h3>
+        </div>
+        <div class="row-center">
+            <label class="checkbox">
+                <input type="checkbox" ng-model="passanger.ride.checked" ng-checked="passanger.ride.checked">
+            </label>
+        </div>
+    </div>
+</div>
+
   <div class="list">
-  <div ng-if="!rideConfirmed" ng-repeat="pickup in pickups">
-    <button ng-click="confirmRide(pickup)" class="button button-balanced button-block" >Confirm This Ride</button>
+  <div ng-if="passanger.ride.checked && !passanger.arrived">
+    <button ng-click="passanger.arrived = true" class="button button-balanced button-block" >Arrived</button>
   </div>
-  <div ng-if="!arrived">
-    <button ng-click="arrived(pickup)" class="button button-balanced button-block" >Arrived</button>
+    <div ng-if="passanger.arrived">
+    <button ng-click="rideComplete(); passanger.delivered = true" class="button button-balanced button-block">Ride Complete</button>
   </div>
-    <div ng-if="!rideComplete">
-    <button ng-click="rideComplete(pickup)" class="button button-balanced button-block">Ride Complete</button>
-  </div>
+
+
+      <div class="list card" ng-if="passanger.delivered">
+      <div class="item item-divider">Enter Amount</div>
+      <div class="item item-body">
+        <div class="item item-input-inset">
+            $&nbsp <input style="width: 100%" class="input-group input" type="number" name="amount" placeholder="Enter Transaction amount" ng-model="amount" required>
+        </div>
+        <br>
+        <div><button class="button button-balanced button-block"  ng-disabled="amount <= 0" ng-click="tapping(amount)"> Tap </button></div>
+      </div>
+    </div>
       
 </div>
   </ion-content>
