@@ -3,6 +3,8 @@ from math import sqrt, math
 
 from .yelp import find_yelp_posts
 
+from .sendsms import SMS
+
 # from .models import Route, Trip
 # from users.model import User
 
@@ -53,37 +55,30 @@ def order_points(self, point_a, point_b, points):
 	'''
 	pass
 
-def send_unconfirmed(self, trip):
+def send_unconfirmed(self, trip_id):
 	'''Send a sms to the rider(s) phone number
 	when a trip is created.
 	'''
 	riders = User.objects.filter(
-		trip_id=trip.id,
+		trip_id=trip_id,
 		is_customer=False)
 	for rider in riders:
-	    #person = SMS(rider.name)  NEED TO GET NAMES AND IMPORT sendsms.py
-	    #person("A trip has been requested")
-	    send_text(user=rider, status='unconfirmed')
-	return
+	    sms = SMS(rider.number)  
+	    status = sms.send("A customer is waiting for your reply, a trip has been requested.")
+	return status
 
-def send_confirmed(self, user):
+def send_confirmed(self, user_number):
 	'''Send a sms to the customers phone number
 	when a trip is confirmed.
 	'''
-	#person = SMS(user.name)
-	#person("A trip has been confirmed")
-	send_text(user=user, status='confirmed')
-	return
+    sms = SMS(user_number)  
+    status = sms.send("A rider has confirmed your trip request.")
+	return status
 
-def send_arrived(self, trip_id):
+def send_arrived(self, user_number):
 	'''Send a sms to the customers phone number
 	when a rider has arrived at the pickup location.
 	'''
-	riders = User.objects.filter(
-		trip_id=trip.id,
-		is_customer=False)
-	for rider in riders:
-	    #person = SMS(rider.name)
-	    #person("Your rider has arrived")
-	send_text(user=user, status='arrived')
-	return
+	sms = SMS(user_number)  
+    status = sms.send("Your rider has arrived at your pick-up location.")
+	return status
