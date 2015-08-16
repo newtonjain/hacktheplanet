@@ -101,6 +101,10 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # # DATABASE CONFIGURATION
 # # ------------------------------------------------------------------------------
 # # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
+DATABASES = {
+    # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
+    'default': env.db("DATABASE_URL", default="postgres:///htp")
+}
 DATABASES['default'] = env.db("DATABASE_URL")
 
 # CACHING
