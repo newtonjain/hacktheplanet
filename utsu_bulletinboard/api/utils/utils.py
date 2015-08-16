@@ -1,6 +1,7 @@
 import requests
+from math import sqrt, math
 
-from math import sqrt
+from .yelp import find_yelp_posts
 
 # from .models import Route, Trip
 # from users.model import User
@@ -21,36 +22,34 @@ def scenic_trip_builder(self, point_a, point_b):
 
 	'''
 	print(trip)
+	scenic_routes = []
 	# MATH ALERT
+
+	# convert to decimal for ya boy
 	point_a[0] = Decimal(point_a[0])
 	point_a[1] = Decimal(point_a[1])
 	point_b[0] = Decimal(point_b[0])
 	point_b[1] = Decimal(point_b[1])
-	#find five points along the way from point a to point b
-	distance = sqrt(
-		(point_b[1] - point_a[0])**2 + (point_b[1] - point[0])**2
-	)
+
+	# distance formula
+	distance = math.hypot(point_b[1] - point_a[0]), (point_b[1] - point[0])) 
 
 	y = 0
 	x = 0
+	# just find 5 spots for now
 	interval = distance / 5
 	for i in range(5):
-		y = (point_a[0] + point_a[1]) - x
-		sqrt(
-			(point_b[1] - y)**2 + (point_b[0] - x)**2
-		)
-		pass
+		x = (point_a[1] + point_b[1]) / interval
+		y = (point_a[0] + point_b[0]) / interval
+		scenic_routes.append(find_yelp_spot(x, y))
 
-
-
-
-	pass
-
-# def 
+	return order_points(scenic_routes)
 
 def order_points(self, point_a, point_b, points):
 	'''Order the points from closest to farthest in between point_a
 	point_b.
+
+	Params: []
 	'''
 	pass
 
