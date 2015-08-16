@@ -5,14 +5,14 @@ from api.models import Trip, Location
 from users.models import User
 
 
-class AddressSerializer(serializers.Serializer):
+class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AddressField
-        fields = ['latitude', 'longitude']
+        fields = ['id', 'latitude', 'longitude']
 
 
-class LocationSerializer(serializers.Serializer):
+class LocationSerializer(serializers.ModelSerializer):
     start = AddressSerializer()
     end = AddressSerializer()
 
@@ -21,15 +21,13 @@ class LocationSerializer(serializers.Serializer):
         fields = ['id', 'start', 'end']
 
 
-class TripSerializer(serializers.Serializer):
+class TripSerializer(serializers.ModelSerializer):
     locations = LocationSerializer(many=True)
     status = serializers.CharField(required=False)
-    # riders = serializers.SerializerMethodField('get_riders')
 
     class Meta:
         model = Trip
-        fields = ['locations', 'scenic', 'start_ts', 'status',
-        'riders']
+        fields = ['id', 'locations', 'scenic', 'start_ts', 'status']
 
     def update(self, instance, validated_data):
         riders = validated_data.get('riders')
@@ -37,19 +35,11 @@ class TripSerializer(serializers.Serializer):
             instance.status = 'confirmed'
         return instance.save(**validated_data)
 
-    # def get_riders(self, trip):
-    #     qs = User.objects.filter(is_customer=False, trip=trip)
-    #     serializer = UserSerializer(
-    #         instance=qs, 
-    #         many=True, 
-    #         required=False)
-    #     return serializer.data
 
-
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
     trips = TripSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ['id', 'photo', 'name', 'type_of_user', 'phone_number',
-        'description', 'trips']
+        fields = ['id', 'photo', 'username', 'is_customer', 'phone_number',
+        'description', 'trips', 'interests']

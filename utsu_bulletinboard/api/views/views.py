@@ -11,24 +11,27 @@ from api.serializers import (
 )
 
 
-class TripListView(ListAPIView):
+class TripListCreateView(ListAPIView):
     serializer_class = TripSerializer
+    queryset = Trip.objects.all()
 
-    def get_queryset(self):
-        user_id = self.kwargs.get('pk')
-        user = User.object.get(id=user_id)
-        return user.trips
+    # def get_queryset(self):
+    #     user_id = self.kwargs.get('pk')
+    #     user = User.object.get(id=user_id)
+    #     return user.trips
 
     def list(self, request, *args, **kwargs):
         return ListCreateAPIView.list(self, request, *args, **kwargs)
 
-
-class TripCreateView(ListCreateAPIView):
-    queryset = Trip.objects.all()
-    serializer_class = TripSerializer
-
     def create(self, request, *args, **kwargs):
         return ListCreateAPIView.create(self, request, *args, **kwargs)
+
+# class TripCreateView(ListCreateAPIView):
+#     queryset = Trip.objects.all()
+#     serializer_class = TripSerializer
+
+#     def create(self, request, *args, **kwargs):
+#         return ListCreateAPIView.create(self, request, *args, **kwargs)
 
 
 class TripDetail(RetrieveUpdateDestroyAPIView):

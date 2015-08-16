@@ -20,7 +20,7 @@ class User(AbstractUser):
     interests = models.CharField(blank=True, max_length=300)
 
     # relationships
-    trip = models.ForeignKey(Trip, blank=True, null=True, related_name='users')
+    trips = models.ForeignKey(Trip, blank=True, null=True, related_name='users')
 
     def __unicode__(self):
         return self.username
