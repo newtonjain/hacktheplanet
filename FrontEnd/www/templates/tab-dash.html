@@ -1,28 +1,22 @@
-<ion-view view-title="Pay">
-  <ion-content class="padding">
+<ion-view view-title="Rider">
+  <ion-content>
+      <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
+<map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
+    <marker ng-repeat="pickup in pickups" position="{{pickup.latitude}}, {{pickup.longitude}}"></marker>
+  </map>
+  <div class="list">
+  <div ng-if="!rideConfirmed" ng-repeat="pickup in pickups">
+    <button ng-click="confirmRide(pickup)" class="button button-balanced button-block" >Confirm This Ride</button>
+  </div>
+  <div ng-if="!arrived">
+    <button ng-click="arrived(pickup)" class="button button-balanced button-block" >Arrived</button>
+  </div>
+    <div ng-if="!rideComplete">
+    <button ng-click="rideComplete(pickup)" class="button button-balanced button-block" >Arrived</button>
+  </div>
+      
+    
 
-    <div class="list card">
-      <div class="item item-divider">Enter Amount</div>
-      <div class="item item-body">
-        <div class="item item-input-inset">
-            $&nbsp <input style="width: 100%" class="input-group input" type="number" name="amount" placeholder="Enter Transaction amount" ng-model="amount" required>
-        </div>
-        <br>
-        <div><button class="button button-balanced button-block"  ng-disabled="amount <= 0" ng-click="tapping(amount)"> Tap </button></div>
-      </div>
-    </div>
-
-    <div class="list card">
-        <div class="item item-divider">Verify Preorder</div>
-        <div class="item item-body">
-            <div class="item item-input-inset">
-                <input style="width: 100%" class="input-group input" type="text" name="txId" placeholder="Enter transaction id" ng-model="txid" required />
-            </div>
-            <br />
-            <div><button class="button button-balanced button-block" ng-disabled="txid <= 0" ng-click="verifyTxId(txid)">Verify</button></div>
-        </div>
-    </div>
-
-
+</div>
   </ion-content>
 </ion-view>
