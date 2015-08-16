@@ -13,7 +13,7 @@
 
             <div class="item item-body">
                 <center>
-                    <img src="img/Erlich.png" width:"100px"; height:"100px";>
+                    <img src="img/Erlich.png" style="width:250px; height:250px";>
                     <p align="middle" style="width:50%">
                       Erlich Bachman is a a supremely confident and arrogant entrepreneur who founded an innovation incubator in his home after the purchase of his airfare collator Aviato. Under the incubator agreement, Erlich owns 10% of Pied Piper, and is later appointed to the company's board of directors after Richard realizes how important Erlich is to the business. Erlich is a frequent user of marijuana. It is revealed in the season 2 finale that Erlich no longer codes because of severe carpal tunnel syndrome.
                     </p>
@@ -25,7 +25,7 @@
       <div class="item item-divider">Enter Amount</div>
       <div class="item item-body">
         <div class="item item-input-inset">
-            $&nbsp <input style="width: 100%" class="input-group input" type="number" name="amount" placeholder="Enter Transaction amount" ng-model="amount" required>
+            $&nbsp <input style="width:"100%" class="input-group input" type="number" name="amount" placeholder="Enter Transaction amount" ng-model="amount" required>
         </div>
         <br>
         <div><button class="button button-balanced button-block"  ng-disabled="amount <= 0" ng-click="tapping(amount)"> Tap </button></div>
@@ -60,78 +60,86 @@
             </div>            
             
             <div class="item item-divider">
-                <h2><strong><center>Profile</center></strong></h2>
+                <h2><strong><center>Details</center></strong></h2>
             </div>
+            
+            <div class="list">
+                <a class="item item-icon-left item-icon-right" href="#">
+                    <i class="icon ion-thumbsup"></i>
+                        Preferences
+                    <span class="item-note">
+                        <h3>{{chats.length}}</h3>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" href="#">
+                    <i class="icon ion-cash"></i>
+                        Travel Budget
+                    <span class="item-note">
+                        <h3>$1,000</h3>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" href="#">
+                    <i class="icon ion-alert-circled"></i>
+                        Risk Level
+                    <span class="badge badge-assertive">
+                        <h3>100,00% - Daredevil</h3>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" href="#">
+                    <i class="icon ion-happy-outline"></i>
+                        Rider Rating
+                    <span class="item-note">
+                        <h3>1 Star</h3>
+                    </span>
+               </a>
+           </div>                   
+
             <div class="item item-divider">
-                <h2><strong><center>Profile</center></strong></h2>
+                <h2><strong><center>Configuration</center></strong></h2>
             </div>
+                        
+            <ul class="list">
+                <a href="#">
+                    <li class="item item-icon-left">
+                        <i class="icon ion-settings"></i>
+                            Edit Profile
+                    </li>
+                </a>
+                <li class="item item-left item-right">
+                    <i class="icon ion-key"></i>
+                        Become a Driver
+                    <span class="item-note item-toggle">
+                        <label class="toggle toggle-balanced">
+                            <input type="checkbox">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>                    
+                    </span>         
+                </li>
+                <a href="#">
+                    <li class="item item-icon-left item-icon-right">
+                        <i class="icon ion-card"></i>
+                            Payment Method
+                        <span class="item-note">
+                            <p>Mastercard - ERLICH BACHMANN - 5555555555554444 </p>
+                        </span>       
+                    </li>
+                </a>
                 
-                <div class="col col-33">
-                    <div class="list">
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-thumbsup"></i>
-                                Preferences
-                            <span class="item-note">
-                                <h3>{{chats.length}}</h3>
-                            </span>
-                        </a>
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-cash"></i>
-                                Travel Budget
-                            <span class="item-note">
-                                <h3>$1,000</h3>
-                            </span>
-                        </a>
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-alert-circled"></i>
-                                Risk Level
-                            <span class="badge badge-assertive">
-                                <h3>100,00% - Daredevil</h3>
-                            </span>
-                        </a>
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-happy-outline"></i>
-                                Rider Rating
-                            <span class="item-note">
-                                <h3>1 Star</h3>
-                            </span>
-                       </a>
-                   </div>                                         
-                </div>
-                <div class="col col-33">
-                    <div class="list">
-                        <a class="item item-icon-left" href="#">
-                            <i class="icon ion-settings"></i>
-                                Edit Profile
-                        </a>
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-key"></i>
-                                Become a Driver
-                            <span class="item-note">
-                                <label class="toggle toggle-balanced">
-                                    <input type="checkbox">
-                                    <div class="track">
-                                        <div class="handle"></div>
-                                    </div>
-                                </label>    
-                            </span>       
-                        </a>
-                        <a class="item item-icon-left item-icon-right" href="#">
-                            <i class="icon ion-card"></i>
-                                Payment Method
-                            <span class="item-note">
-                                Mastercard
-                            </span>       
-                        </a>
-                        <a class="item item-icon-left" href="#">
-                            <i class="icon ion-link"></i>
-                                Social Connect
-                            <span class="item-note">
-                                <h3>1 Star</h3>
-                            </span>
-                       </a>
-                   </div>                                         
-                </div>
+                <li class="item item-icon-left item-icon-right">
+                    <i class="icon ion-link"></i>
+                        Social Connect
+                    <span class="item-note">
+                        <h3>
+                            <i class=" icon ion-social-facebook-outline"></i>
+                            <i class=" icon ion-social-twitter-outline"></i>
+                            <i class=" icon ion-social-linkedin"></i>
+                        </h3>
+                    </span>
+               </li>
+           </ul>                                         
+            
             </div>        
         </div>       
 
