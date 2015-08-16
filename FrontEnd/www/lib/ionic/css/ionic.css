@@ -4769,6 +4769,12 @@ ion-tabs.tabs-color-active-dark .tab-item {
   text-overflow: ellipsis;
   white-space: nowrap; }
 
+
+p Erlich
+{
+    width:150px;
+}
+
 a.item {
   color: inherit;
   text-decoration: none; }
@@ -6699,6 +6705,12 @@ progress {
     border-color: #e42012;
     background-color: #ef473a;
     color: #fff; }
+  .button.button-assertive-BMW{
+    border-color: #e42012;
+    background-color: #ef473a;
+    color: #fff;
+    width:100%;
+  }
     .button.button-assertive:hover {
       color: #fff;
       text-decoration: none; }
@@ -6726,6 +6738,12 @@ progress {
     border-color: #28a54c;
     background-color: #33cd5f;
     color: #fff; }
+  .button.button-balanced-BMW{
+    border-color: #28a54c;
+    background-color: #33cd5f;
+    color: #fff;
+    width:100%;
+  }
     .button.button-balanced:hover {
       color: #fff;
       text-decoration: none; }

@@ -74,12 +74,9 @@ angular.module('starter.controllers', [])
   }
     //document.addEventListener('deviceready', this.onDeviceReady, false);
   $scope.tapping = function(amount){
-    alert('amount'  + amount);
-
     $scope.amount = amount;
     nfc.addTagDiscoveredListener(triggerEvent,
       function () {
-        alert('I am here');
       $scope.hideSheet = $ionicActionSheet.show({
           buttons: [
        { text: '<center><b>You are going to pay $' + $scope.amount}

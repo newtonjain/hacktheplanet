@@ -33,7 +33,7 @@ class TripSerializer(serializers.ModelSerializer):
         'users']
 
     def create(self, validated_data):
-        # get scenic Routes on the way to point B, 
+        # get scenic Routes on the way to point B,
         # make the Route objects (attached trips to them),
         if validated_data['scenic']:
             locations = validated_data['routes']

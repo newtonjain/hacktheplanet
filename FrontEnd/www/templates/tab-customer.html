@@ -1,5 +1,6 @@
-<ion-view view-title="Thrill Seaker">
+<ion-view view-title="Bookings">
   <ion-content>
+
       <button ng-click="useCurrentLocation()" class="button button-balanced button-block" >Use current location</button>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
@@ -8,6 +9,16 @@
     <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
     </shape>
   </map>
+      
+      <div class="row">
+        <div class="col col-50">
+            <button class="button button-balanced-BMW">Economical</button>
+        </div>
+        <div class="col col-50">
+            <button class="button button-assertive-BMW">Adventurous</button>
+        </div>
+      </div>
+
   <div class="list">
 <div ng-repeat="ride in riders track by $index">
   <div class="row card" >
