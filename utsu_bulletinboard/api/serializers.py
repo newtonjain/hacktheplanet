@@ -24,7 +24,7 @@ class LocationSerializer(serializers.Serializer):
 class TripSerializer(serializers.Serializer):
     locations = LocationSerializer(many=True)
     status = serializers.CharField(required=False)
-    riders = serializers.SerializerMethodField('get_riders')
+    # riders = serializers.SerializerMethodField('get_riders')
 
     class Meta:
         model = Trip
@@ -37,13 +37,13 @@ class TripSerializer(serializers.Serializer):
             instance.status = 'confirmed'
         return instance.save(**validated_data)
 
-    def get_riders(self, trip):
-        qs = User.objects.filter(is_customer=False, trip=trip)
-        serializer = UserSerializer(
-            instance=qs, 
-            many=True, 
-            required=False)
-        return serializer.data
+    # def get_riders(self, trip):
+    #     qs = User.objects.filter(is_customer=False, trip=trip)
+    #     serializer = UserSerializer(
+    #         instance=qs, 
+    #         many=True, 
+    #         required=False)
+    #     return serializer.data
 
 
 class UserSerializer(serializers.Serializer):
