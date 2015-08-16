@@ -58,16 +58,14 @@ def order_points(point_a, point_b, points):
     pass
 
 
-def send_unconfirmed(trip_id):
+def send_unconfirmed(user_number):
     '''Send a sms to the rider(s) phone number
     when a trip is created.
     '''
-    riders = User.objects.filter(
-        trip_id=trip_id,
-        is_customer=False)
-    for rider in riders.all():
-        sms = SMS(rider.phone_number)
-        status = sms.send("A customer is waiting for your reply, a trip has been requested.")
+    status = None
+    if user_number:
+        sms = SMS(user_number)
+        status = sms.send("A rider has requested a ride.")
     return status
 
 
@@ -75,8 +73,10 @@ def send_confirmed(user_number):
     '''Send a sms to the customers phone number
     when a trip is confirmed.
     '''
-    sms = SMS(user_number)
-    status = sms.send("A rider has confirmed your trip request.")
+    status = None
+    if user_number:
+        sms = SMS(user_number)
+        status = sms.send("A rider has confirmed your trip request.")
     return status
 
 
@@ -84,6 +84,8 @@ def send_arrived(user_number):
     '''Send a sms to the customers phone number
     when a rider has arrived at the pickup location.
     '''
-    sms = SMS(user_number)
-    status = sms.send("Your rider has arrived at your pick-up location.")
+    status = None
+    if user_number:
+        sms = SMS(user_number)
+        status = sms.send("Your rider has arrived at your pick-up location.")
     return status

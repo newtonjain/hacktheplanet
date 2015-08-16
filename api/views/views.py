@@ -9,6 +9,9 @@ from api.serializers import (
     UserSerializer,
     TripSerializer,
 )
+from api.utils.utils import (
+    send_unconfirmed
+)
 
 
 class TripListCreateView(ListCreateAPIView):
@@ -44,6 +47,9 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     def partial_update(self, request, *args, **kwargs):
+        if self.request.data.get('trips'):
+            phone_number = self.get_object().phone_number
+            send_unconfirmed(phone_number)
         return RetrieveUpdateDestroyAPIView.partial_update(
             self, request, *args, **kwargs)
 

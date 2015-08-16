@@ -12,7 +12,7 @@
     "pk": 2,
     "fields": {
         "username": "coolio", 
-        "phone_number": 2672318681, 
+        "phone_number": 12672318681, 
         "first_name" :"Newton",
         "interests": "Cooking, Gardening, Recycling", 
         "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
@@ -25,7 +25,7 @@
     "pk": 3,
     "fields": {
         "username": "jon", 
-        "phone_number": 2672318681, 
+        "phone_number": 13136703532, 
         "first_name" :"John",
         "interests": "Bicycling, Gaming, Typing Fast", 
         "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
