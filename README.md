@@ -1,3 +1,5 @@
+# DJANGO/DJANGO REST + ANGULAR/CORDOVA + AWESOMENESS
+
 Preview:
 
 ![lol](http://i.imgur.com/hnQklPw.png)
