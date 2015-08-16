@@ -13,3 +13,4 @@ bin/
 
 # virtual envs
 /htp
+*.pyc 
