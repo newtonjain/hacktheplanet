@@ -45,6 +45,7 @@ class TripSerializer(serializers.ModelSerializer):
             scenic_trip_builder(starting_point, ending_point)
         return Trip.objects.create(**validated_data)
 
+        
 class UserSerializer(serializers.ModelSerializer):
     trips = TripSerializer(many=True)
 
