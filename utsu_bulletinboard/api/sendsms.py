@@ -7,12 +7,17 @@ client = TwilioRestClient(account_sid, auth_token)
 
 
 class SMS(object):
-    def __init__(self, number, message):
-    """ Initilializes SMS  """
-      	self.number = "+" + number
-	self.message = message
+    def __init__(self, number):
+    	""" Initilializes SMS  """
+      	self.number = "+" + str(number)
 
-    def send(self):
-    """ Sends SMS """
-    	client.sms.messages.create(body=self.message, to=self.number, from_="+13853557433")
-	return sms.sid
+
+    def send(self, body_text):
+    	""" Sends SMS """
+    	message = client.sms.messages.create(body=str(body_text), to=self.number, from_="+13853557433")
+	return message.sid
+
+
+###  Sample Usage
+# Steven = SMS(13136703532)
+# print(Steven.send("What's up, Steven?"))
