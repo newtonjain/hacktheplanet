@@ -3,7 +3,7 @@
 
       <button ng-click="useCurrentLocation()" class="button button-balanced button-block" >Use current location</button>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
+<map center="37.41396, -122.07779" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
     <marker ng-repeat="location in locations" position="{{location.latitude}}, {{location.longitude}}"></marker>
     <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
     <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
@@ -12,10 +12,10 @@
       
       <div class="row">
         <div class="col col-50">
-            <button class="button button-balanced-BMW">Economical</button>
+            <button class="button button-block" ng-class="{'button-balanced' : clicked}" ng-click="options('Economical'); clicked = !clicked">Economical</button>
         </div>
         <div class="col col-50">
-            <button class="button button-assertive-BMW">Adventurous</button>
+            <button class="button button-block" ng-class="{'button-assertive' : clicked2}" ng-click="options('Adventurous'); clicked2 = !clicked2">Adventurous</button>
         </div>
       </div>
 
@@ -26,10 +26,10 @@
     <img src="img/Bike{{$index+1}}.png" style="width:100%">
     </div>
     <div class="col col-50">  
-    <h2>{{ride.first_name}}</h2>
-      <p>{{ride.phone_number}}</p>
-      <p>{{ride.description}}</p>
-      <p>{{ride.interests}}</p>
+    <h3>{{ride.first_name}}</h3>
+      <p>Ph: {{ride.phone_number}}</p>
+      <p>Description: {{ride.description}}</p>
+      <p>Interests: {{ride.interests}}</p>
       </div>
       <div class="col col-25"> 
       Choose Rider: 
@@ -39,7 +39,7 @@
      </div>
   </div>
 </div>
-<button ng-click="callRiders()" class="button button-assertive button-block" >Call Rider!</button>
+<button ng-click="callRiders(riders)" class="button button-assertive button-block" >Call Rider!</button>
 
 <!--     <a class="item item-thumbnail-left"  href="#"> -->
       
