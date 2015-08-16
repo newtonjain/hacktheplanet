@@ -24,6 +24,11 @@ urlpatterns = patterns(
         views.UserListView.as_view(),
         name='user_api'
         ),
+    url(r'^user/(?P<pk>\d+)/?$',
+        views.UserDetailView.as_view(),
+        name='user_api'
+        ),
+    
 
 
 )

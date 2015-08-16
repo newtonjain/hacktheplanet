@@ -56,4 +56,4 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        return RetrieveModelMixin.retrieve(self, request, *args, **kwargs)
+        return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)

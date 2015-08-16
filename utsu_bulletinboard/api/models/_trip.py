@@ -17,10 +17,11 @@ class Trip(models.Model):
 		'''Send a sms to the rider(s) phone number
 		when a trip is created.
 		'''
-		for user in self.riders.all():
-			user.send_text(status='unconfirmed')
-		return
-
+		##for user in self.riders.all():
+		#	user.send_text(status='unconfirmed')
+		#return
+		pass
+		
 	def send_confirmed(self):
 		'''Send a sms to the customers phone number
 		when a trip is confirmed.
