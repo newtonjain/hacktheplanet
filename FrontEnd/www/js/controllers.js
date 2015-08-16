@@ -6,6 +6,8 @@ angular.module('starter.controllers', [])
     $scope.amount = null;
     $scope.txid = null;
     $scope.locations=[];
+    $scope.positions = [];
+    //$scope.clicked = false;
 
   var vcard  = {
     firstName: 'Shiva',
@@ -44,6 +46,10 @@ angular.module('starter.controllers', [])
   }
 
   _getRiders();
+
+  $scope.options = function (option) {
+    $scope.option = option;
+  }
 
    $ionicModal.fromTemplateUrl('templates/transactionComplete.html', {
     scope: $scope
@@ -155,7 +161,6 @@ angular.module('starter.controllers', [])
   //
   var onSuccess = function(position) {
     var url = "insert url";
-      alert('Bike on its way' + position.coords.latitude + position.coords.longitude);
       $scope.locations.push(position.coords);
       //$scope.location.lon = position.coords.longitude;
       $http({method: 'GET', url: url,
@@ -163,7 +168,6 @@ angular.module('starter.controllers', [])
           locationx : position.coords.latitude,
           locationy : position.coords.longitude}})
         .success(function(data, status, headers, config) {
-          alert('Bike on its way');
           console.log('got my information3' +JSON.stringify(data));
         });
   };
@@ -179,6 +183,64 @@ angular.module('starter.controllers', [])
     console.log('here we go again', location);
   })
 
+  $scope.callRiders = function(riders) {
+    var selectedRiders = [];
+    var url = 'url', scenic;
+
+    for (var i = 0; i< $scope.riders.length; i++) {
+      if($scope.riders[i].checked){
+        selectedRiders.push($scope.riders[i]);
+      }
+    }
+
+    if($scope.option == 'Economical') {
+      scenic = false
+    } else {
+      scenic = true;
+    };
+
+    var toSend= [
+    {
+        "id": 1,
+        "routes": [
+            {
+                "id": 1,
+                "name": "location 1",
+                "start": {
+                    "id": 1,
+                    "latitude": $scope.locations[0].latitude,
+                    "longitude": $scope.locations[0].longitude
+                },
+                "end": {
+                    "id": 2,
+                    "latitude": $scope.positions[0].lat,
+                    "longitude": $scope.positions[0].lng
+                },
+                "trip": 1
+            }
+        ],
+        "scenic": scenic,
+        "start_ts": "2015-08-16T13:21:20.382226Z",
+        "status": "unconfirmed",
+        "users": [
+            selectedRiders[0].id,
+            selectedRiders[1].id,
+            selectedRiders[2].id,
+            5
+        ]
+    }
+];
+
+console.log('here is to send', toSend);
+  $http.post('http://127.0.0.1:8000/trip', toSend)
+    .success(function (data, status, headers, config) {
+      $scope.modal.show();
+    }).error(function (data, status, headers, config) {
+        alert('There was a problem retrieving your information' + data+ status);
+    });
+  };
+
+
 })
 
 .controller('DashCtrl', function ($scope) {
@@ -186,10 +248,12 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CustomerCtrl', function ($scope, $compile) {
-   $scope.positions = [];
+ 
+ // $("map").on("tap",function(){
+ //   $scope.addMarker();
+ //  });  
   
   $scope.addMarker = function(event) {
-    console.log(event);
     var ll = event.latLng;
     $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
     console.log($scope.positions);
