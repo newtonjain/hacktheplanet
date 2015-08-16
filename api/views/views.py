@@ -43,5 +43,9 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def partial_update(self, request, *args, **kwargs):
+        return RetrieveUpdateDestroyAPIView.partial_update(
+            self, request, *args, **kwargs)
+
     def retrieve(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)

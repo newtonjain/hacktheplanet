@@ -30,7 +30,8 @@ class RouteSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    trips = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    trips = serializers.PrimaryKeyRelatedField(many=True,
+                                               queryset=Trip.objects.all())
 
     class Meta:
         model = User
@@ -55,9 +56,8 @@ class TripSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # get scenic Routes on the way to point B,
         # make the Route objects (attached trips to them),
-        print(validated_data)
         if validated_data.get('scenic'):
-            locations = validated_data['routes']
+            locations = validated_data.get('routes')[0]
             starting_point = [locations['start']['latitude'],
                               locations['start']['latitude']]
             ending_point = [locations['end']['latitude'],
@@ -74,12 +74,13 @@ class TripSerializer(serializers.ModelSerializer):
 
     def validate_status(self, value):
         if self.instance:
-            customer = instance.users.filter(is_customer=True).first()
+            print(self.instance.users)
+            customer = self.instance.users.filter(is_customer=True).first()
             new_status = value
-            if (instance.status == 'unconfirmed' and
+            if (self.instance.status == 'unconfirmed' and
                     new_status == 'confirmed'):
                 send_confirmed(user_number=customer.phone_number)
-            if (instance.status == 'confirmed' and
+            if (self.instance.status == 'confirmed' and
                     new_status == 'arrived'):
                 send_arrived(user_number=customer.phone_number)
         return value
@@ -102,3 +103,5 @@ class TripSerializer(serializers.ModelSerializer):
 # user_ids)
     #     instance.save()
     #     return instance
+# ance.save()
+#     return instance

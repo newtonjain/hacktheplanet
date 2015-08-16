@@ -5,7 +5,7 @@ from .views import views
 urlpatterns = patterns(
     'views',
 
-   	# trips
+    # trips
     url(r'^trip/?$',
         views.TripListCreateView.as_view(),
         name='trip_api'
@@ -27,7 +27,7 @@ urlpatterns = patterns(
         views.UserDetailView.as_view(),
         name='user_api'
         ),
-    
+
 
 
 )
