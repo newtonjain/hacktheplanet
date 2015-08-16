@@ -43,8 +43,9 @@ class TripSerializer(serializers.ModelSerializer):
     routes = RouteSerializer(many=True)
     status = serializers.CharField(required=False)
     start_ts = serializers.DateTimeField(required=False)
-    users = UserSerializer(
-        many=True)
+    users = serializers.PrimaryKeyRelatedField(
+        many=True, 
+        queryset=User.objects.all())
 
     class Meta:
         model = Trip
@@ -71,16 +72,26 @@ class TripSerializer(serializers.ModelSerializer):
         Route.objects.create(start=start_aadr, end=end_aadr, trip=trip)
         return trip
 
-    def validate_status(self, instance, value):
-        customer = instance.users.filter(is_customer=True).first()
-        new_status = value
-        if (instance.status == 'unconfirmed' and
-            new_status == 'confirmed'):
-            send_confirmed(user_number=customer.phone_number)
-        if (instance.status == 'confirmed' and
-            new_status == 'arrived'):
-            send_arrived(user_number=customer.phone_number)
+    def validate_status(self, value):
+        if self.instance:
+            customer = instance.users.filter(is_customer=True).first()
+            new_status = value
+            if (instance.status == 'unconfirmed' and
+                new_status == 'confirmed'):
+                send_confirmed(user_number=customer.phone_number)
+            if (instance.status == 'confirmed' and
+                new_status == 'arrived'):
+                send_arrived(user_number=customer.phone_number)
         return value
+
+    # def update (self, instance, validated_data):
+    #     # customer = instance.users.filter(is_customer=True).first()
+    #     # if (instance.status == 'unconfirmed' and
+    #     #     validated_data.get('status', None) == 'confirmed'):
+    #     #     send_confirmed(user_number=customer.phone_number)
+    #     # if (instance.status == 'confirmed' and
+    #     #     validated_data.get('status', None) == 'arrived'):
+    #     #     send_arrived(user_number=customer.phone_number)
     #     #patching users
     #     print(validated_data)
     #     user_ids = validated_data.get('users')
