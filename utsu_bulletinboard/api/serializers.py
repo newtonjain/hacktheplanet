@@ -5,7 +5,7 @@ from api.models import Trip, Route
 from users.models import User
 
 from api.utils.utils import scenic_trip_builder
-from api.utils import (
+from api.utils.utils import (
     send_arrived,
     send_confirmed,
     send_unconfirmed
