@@ -2260,7 +2260,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border: 0;
   vertical-align: baseline;
   font: inherit;
-  font-size: 100%; }
+  font-size: 100%;
+}
 
 ol, ul {
   list-style: none; }
@@ -2513,7 +2514,10 @@ textarea {
   /* 2 */ }
 
 img {
-  -webkit-user-drag: none; }
+  -webkit-user-drag: none;
+    width: 100%;
+    height: auto;
+}
 
 /* ==========================================================================
    Tables
@@ -7075,7 +7079,10 @@ a.button {
   -ms-flex-align: center;
   -webkit-align-items: center;
   -moz-align-items: center;
-  align-items: center; }
+  align-items: center; 
+    text-align:center;
+    vertical-align: center;
+}
 
 .row-stretch {
   -webkit-box-align: stretch;
@@ -7108,7 +7115,10 @@ a.button {
   -webkit-align-self: center;
   -moz-align-self: center;
   -ms-flex-item-align: center;
-  align-self: center; }
+  align-self: center; 
+    text-align:center;
+    vertical-align:center;
+}
 
 /* Column Offsets */
 .col-offset-10 {
