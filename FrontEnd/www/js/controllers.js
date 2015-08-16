@@ -150,7 +150,7 @@ angular.module('starter.controllers', [])
 
 
 //////////////////////////
-  $scope.callRiders = function() {
+  $scope.useCurrentLocation = function() {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
   }
 
@@ -191,11 +191,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CustomerCtrl', function ($scope, $compile) {
-   $scope.positions = [{lat:37.7699298,lng:-122.4469157}];
+   $scope.positions = [];
+  
   $scope.addMarker = function(event) {
     console.log(event);
     var ll = event.latLng;
     $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
+    console.log($scope.positions);
   }
 
   $scope.cities = {
