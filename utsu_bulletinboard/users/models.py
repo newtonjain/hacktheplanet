@@ -20,7 +20,7 @@ class User(AbstractUser):
     interests = models.CharField(blank=True, max_length=300)
 
     # relationships
-    trips = models.ForeignKey(Trip, blank=True, null=True, related_name='users')
+    trips = models.ManyToManyField(Trip, blank=True, related_name='users')
 
     def __unicode__(self):
         return self.username
@@ -30,4 +30,7 @@ class User(AbstractUser):
 
     def send_text(self, status):
         '''Send a text message to this users phone.'''
-        pass
+	#person = SMS(user.name)  I NEED USERNAME & to import the SMS class (sendsms.py)
+	#person(str(status))
+	#return
+	pass

@@ -1,13 +1,21 @@
 
 from django.db import models
 
-from address.models import AddressField
+from address.models import Address
 from ._trip import Trip
 
-class Location(models.Model):
-	start = AddressField(blank=True, null=True, 
-		related_name='start_locations')
-	end = AddressField(blank=True, null=True, 
-		related_name='end_locations')
+class Route(models.Model):
+	name = models.CharField(blank=True, null=True,
+		max_length=100)
+	start = models.ForeignKey(
+		Address, 
+		blank=True, 
+		null=True,
+		related_name='starting_addresses')
+	end = models.ForeignKey(
+		Address, 
+		blank=True, 
+		null=True,
+		related_name='ending_addresses')
 	trip = models.ForeignKey(Trip, blank=True,
-		related_name='locations')
+		related_name='routes')

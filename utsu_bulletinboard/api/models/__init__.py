@@ -1,2 +1,2 @@
 from ._trip import Trip
-from ._location import Location
+from ._location import Route

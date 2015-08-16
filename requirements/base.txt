@@ -36,6 +36,8 @@ pytz==2015.4
 django-redis==4.2.0
 redis>=2.10.0
 
+oauth2==1.0
+httplib2==0.9
 
 
 # Your custom requirements go here

@@ -3,7 +3,7 @@ from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      ListAPIView)
 
-from api.models import Trip, Location
+from api.models import Trip, Route
 from users.models import User
 from api.serializers import (
     UserSerializer,
@@ -11,27 +11,15 @@ from api.serializers import (
 )
 
 
-class TripListCreateView(ListAPIView):
+class TripListCreateView(ListCreateAPIView):
     serializer_class = TripSerializer
     queryset = Trip.objects.all()
-
-    # def get_queryset(self):
-    #     user_id = self.kwargs.get('pk')
-    #     user = User.object.get(id=user_id)
-    #     return user.trips
 
     def list(self, request, *args, **kwargs):
         return ListCreateAPIView.list(self, request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         return ListCreateAPIView.create(self, request, *args, **kwargs)
-
-# class TripCreateView(ListCreateAPIView):
-#     queryset = Trip.objects.all()
-#     serializer_class = TripSerializer
-
-#     def create(self, request, *args, **kwargs):
-#         return ListCreateAPIView.create(self, request, *args, **kwargs)
 
 
 class TripDetail(RetrieveUpdateDestroyAPIView):
@@ -43,12 +31,12 @@ class TripDetail(RetrieveUpdateDestroyAPIView):
             self, request, *args, **kwargs)
 
 
-class UserListView(ListCreateAPIView):
+class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def list(self, request, *args, **kwargs):
-        return ListCreateAPIView.list(self, request, *args, **kwargs)
+        return ListAPIView.list(self, request, *args, **kwargs)
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):

@@ -1,39 +1,48 @@
 from rest_framework import serializers
 
-from address.models import AddressField
-from api.models import Trip, Location
+from address.models import Address
+from api.models import Trip, Route
 from users.models import User
+
+from api.utils.utils import scenic_trip_builder
 
 
 class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = AddressField
+        model = Address
         fields = ['id', 'latitude', 'longitude']
 
 
-class LocationSerializer(serializers.ModelSerializer):
+class RouteSerializer(serializers.ModelSerializer):
     start = AddressSerializer()
     end = AddressSerializer()
 
     class Meta:
-        model = Location
-        fields = ['id', 'start', 'end']
+        model = Route
+        fields = ['id', 'name', 'start', 'end', 'trip']
 
 
 class TripSerializer(serializers.ModelSerializer):
-    locations = LocationSerializer(many=True)
+    routes = RouteSerializer(many=True)
     status = serializers.CharField(required=False)
 
     class Meta:
         model = Trip
-        fields = ['id', 'locations', 'scenic', 'start_ts', 'status']
+        fields = ['id', 'routes', 'scenic', 'start_ts', 'status',
+        'users']
 
-    def update(self, instance, validated_data):
-        riders = validated_data.get('riders')
-        if riders and len(riders) == 1:
-            instance.status = 'confirmed'
-        return instance.save(**validated_data)
+    def create(self, validated_data):
+        # get scenic Routes on the way to point B,
+        # make the Route objects (attached trips to them),
+        if validated_data['scenic']:
+            locations = validated_data['routes']
+            starting_point = [locations['start']['latitude'],
+                locations['start']['latitude']]
+            ending_point = [locations['end']['latitude'],
+                locations['end']['latitude'] ]
+            scenic_trip_builder(starting_point, ending_point)
+        return Trip.objects.create(**validated_data)
 
 
 class UserSerializer(serializers.ModelSerializer):
