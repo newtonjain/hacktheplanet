@@ -7,7 +7,7 @@ from django.utils import timezone
 class Trip(models.Model):
 	# real fields
 	scenic = models.BooleanField(blank=True, default=False)
-	start_ts = models.DateTimeField(blank=True, default=timezone.now)
+	start_ts = models.DateTimeField(blank=True, null=True, default=timezone.now)
 	status = models.CharField(
 		blank=True, 
 		default='unconfirmed',

@@ -16,8 +16,8 @@ class User(AbstractUser):
     photo = models.URLField(blank=True)
     phone_number = models.BigIntegerField(blank=True, null=True)
     is_customer = models.BooleanField(max_length=100, default=True)
-    description = models.CharField(blank=True, max_length=200)
-    interests = models.CharField(blank=True, max_length=300)
+    description = models.CharField(blank=True, max_length=1000)
+    interests = models.CharField(blank=True, max_length=500)
 
     # relationships
     trips = models.ManyToManyField(Trip, blank=True, related_name='users')
