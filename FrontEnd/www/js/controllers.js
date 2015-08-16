@@ -37,7 +37,7 @@ angular.module('starter.controllers', [])
 
   function _getRiders () {
 
-     $http.get('http://127.0.0.1:8000/user')
+     $http.get('https://cryptic-oasis-6309.herokuapp.com/user')
         .success(function (data) {
            $scope.riders = data;
            console.log(data);
@@ -201,6 +201,7 @@ angular.module('starter.controllers', [])
       scenic = true;
     };
 
+
     var toSend= [
     {
         "id": 1,
@@ -237,7 +238,7 @@ console.log('here is to send', toSend);
     .success(function (data, status, headers, config) {
       $scope.modal.show();
     }).error(function (data, status, headers, config) {
-        alert('There was a problem retrieving your information' + data+ status);
+        alert('There was a problem retrieving your information' + data + status);
     });
   };
 
