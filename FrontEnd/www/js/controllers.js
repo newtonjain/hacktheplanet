@@ -29,23 +29,21 @@ angular.module('starter.controllers', [])
     amount: '0'
   }
 
-  $scope.riders = [
-    {
-  id: 12322,
-  name: 'Alec',
-  p: 'rider',
-  phonenumber: '416-992-2635',
-  description: 'sjdjbasdjfajsbdf',
-  interests: 'biking, cooking, eating'
-  },
-    {
-  id: 12322,
-  name: 'Alec',
-  p: 'rider',
-  phonenumber: '416-992-2635',
-  description: 'sjdjbasdjfajsbdf',
-  interests: 'biking, cooking, eating'
-  }]
+  $scope.riders = [];
+
+  function _getRiders () {
+
+     $http.get('http://127.0.0.1:8000/user')
+        .success(function (data) {
+           $scope.riders = data;
+           console.log(data);
+        })
+        .error(function (data) {
+            alert("Error: " + data);
+        });
+  }
+
+  _getRiders();
 
    $ionicModal.fromTemplateUrl('templates/transactionComplete.html', {
     scope: $scope
