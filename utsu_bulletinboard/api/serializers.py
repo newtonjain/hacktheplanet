@@ -1,23 +1,22 @@
 from rest_framework import serializers
 
-from address.models import AddressField
+from address.models import Address
 from api.models import Trip, Route
 from users.models import User
 
-from api.utils import scenic_trip_builder
+from api.utils.utils import scenic_trip_builder
 
 
 class AddressSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = AddressField
+        model = Address
         fields = ['id', 'latitude', 'longitude']
 
 
 class RouteSerializer(serializers.ModelSerializer):
     start = AddressSerializer()
     end = AddressSerializer()
-    trip = TripSerializer(read_only=True)
 
     class Meta:
         model = Route
@@ -45,7 +44,7 @@ class TripSerializer(serializers.ModelSerializer):
             scenic_trip_builder(starting_point, ending_point)
         return Trip.objects.create(**validated_data)
 
-        
+
 class UserSerializer(serializers.ModelSerializer):
     trips = TripSerializer(many=True)
 

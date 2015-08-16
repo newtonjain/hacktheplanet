@@ -3,7 +3,7 @@ from rest_framework.generics import (ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      ListAPIView)
 
-from api.models import Trip, Location
+from api.models import Trip, Route
 from users.models import User
 from api.serializers import (
     UserSerializer,
