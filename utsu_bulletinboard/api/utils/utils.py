@@ -25,14 +25,14 @@ def scenic_trip_builder(self, point_a, point_b):
 	scenic_routes = []
 	# MATH ALERT
 
-	# convert to decimal for ya boy
+	# convert to decimal for ya boy #yaboybillnye
 	point_a[0] = Decimal(point_a[0])
 	point_a[1] = Decimal(point_a[1])
 	point_b[0] = Decimal(point_b[0])
 	point_b[1] = Decimal(point_b[1])
 
 	# distance formula
-	distance = math.hypot(point_b[1] - point_a[0]), (point_b[1] - point[0])) 
+	distance = math.hypot(point_b[1] - point_a[0]), (point_b[1] - point[0]))
 
 	y = 0
 	x = 0
@@ -61,13 +61,17 @@ def send_unconfirmed(self, trip):
 		trip_id=trip.id,
 		is_customer=False)
 	for rider in riders:
-		send_text(user=rider, status='unconfirmed')
+	    #person = SMS(rider.name)  NEED TO GET NAMES AND IMPORT sendsms.py
+	    #person("A trip has been requested")
+	    send_text(user=rider, status='unconfirmed')
 	return
-	
+
 def send_confirmed(self, user):
 	'''Send a sms to the customers phone number
 	when a trip is confirmed.
 	'''
+	#person = SMS(user.name)
+	#person("A trip has been confirmed")
 	send_text(user=user, status='confirmed')
 	return
 
@@ -75,5 +79,11 @@ def send_arrived(self, trip_id):
 	'''Send a sms to the customers phone number
 	when a rider has arrived at the pickup location.
 	'''
+	riders = User.objects.filter(
+		trip_id=trip.id,
+		is_customer=False)
+	for rider in riders:
+	    #person = SMS(rider.name)
+	    #person("Your rider has arrived")
 	send_text(user=user, status='arrived')
 	return

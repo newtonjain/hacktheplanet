@@ -30,4 +30,7 @@ class User(AbstractUser):
 
     def send_text(self, status):
         '''Send a text message to this users phone.'''
-        pass
+	#person = SMS(user.name)  I NEED USERNAME & to import the SMS class (sendsms.py)
+	#person(str(status))
+	#return
+	pass
