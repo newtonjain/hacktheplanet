@@ -4,7 +4,7 @@ from address.models import Address
 from api.models import Trip, Route
 from users.models import User
 
-from api.utils import scenic_trip_builder
+from api.utils.utils import scenic_trip_builder
 
 
 class AddressSerializer(serializers.ModelSerializer):
