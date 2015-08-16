@@ -18,7 +18,6 @@ urlpatterns = patterns(
         views.TripDetail.as_view(),
         name='trip_api'
         ),
-
     # users
     url(r'^user/?$',
         views.UserListView.as_view(),
