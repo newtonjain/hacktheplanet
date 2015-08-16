@@ -8,7 +8,8 @@ from .sendsms import SMS
 # from .models import Route, Trip
 # from users.model import User
 
-def scenic_trip_builder(self, point_a, point_b):
+
+def scenic_trip_builder(point_a, point_b):
     '''Builds a scenic route to point_b using Yelps api.
 
     Limit of 4 locations will be attached to a trip.
@@ -47,7 +48,8 @@ def scenic_trip_builder(self, point_a, point_b):
 
     return order_points(scenic_routes)
 
-def order_points(self, point_a, point_b, points):
+
+def order_points(point_a, point_b, points):
     '''Order the points from closest to farthest in between point_a
     point_b.
 
@@ -55,30 +57,33 @@ def order_points(self, point_a, point_b, points):
     '''
     pass
 
-def send_unconfirmed(self, trip_id):
+
+def send_unconfirmed(trip_id):
     '''Send a sms to the rider(s) phone number
     when a trip is created.
     '''
     riders = User.objects.filter(
         trip_id=trip_id,
         is_customer=False)
-    for rider in riders:
-        sms = SMS(rider.number)  
+    for rider in riders.all():
+        sms = SMS(rider.phone_number)
         status = sms.send("A customer is waiting for your reply, a trip has been requested.")
     return status
 
-def send_confirmed(self, user_number):
+
+def send_confirmed(user_number):
     '''Send a sms to the customers phone number
     when a trip is confirmed.
     '''
-    sms = SMS(user_number)  
+    sms = SMS(user_number)
     status = sms.send("A rider has confirmed your trip request.")
     return status
 
-def send_arrived(self, user_number):
+
+def send_arrived(user_number):
     '''Send a sms to the customers phone number
     when a rider has arrived at the pickup location.
     '''
-    sms = SMS(user_number)  
+    sms = SMS(user_number)
     status = sms.send("Your rider has arrived at your pick-up location.")
     return status
