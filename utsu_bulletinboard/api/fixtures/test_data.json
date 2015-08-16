@@ -9,19 +9,6 @@
     },
     {
     "model": "users.user",
-    "pk": 1,
-    "fields": {
-        "username": "kelly", 
-        "phone_number": 5266475, 
-        "first_name" :"kelly",
-        "interests": "cooking", 
-        "description": "a cool guy", 
-        "is_customer": true,
-        "trips": [1]
-        }
-    },
-    {
-    "model": "users.user",
     "pk": 2,
     "fields": {
         "username": "coolio", 
@@ -61,14 +48,15 @@
     },
     {
     "model": "users.user",
-    "pk": 4,
+    "pk": 5,
     "fields": {
-        "username": "paul", 
-        "phone_number": 5286475, 
-        "first_name" :"paul",
+        "username": "aleccool21", 
+        "phone_number": 4169928476, 
+        "first_name" :"Alec",
+        "last_name": "Brunelle",
         "interests": "driving", 
         "description": "a cool guy", 
-        "is_customer": false,
+        "is_customer": true,
         "trips": [1]
         }
     },

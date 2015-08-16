@@ -14,7 +14,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     photo = models.URLField(blank=True)
-    phone_number = models.IntegerField(blank=True, null=True)
+    phone_number = models.BigIntegerField(blank=True, null=True)
     is_customer = models.BooleanField(max_length=100, default=True)
     description = models.CharField(blank=True, max_length=200)
     interests = models.CharField(blank=True, max_length=300)
@@ -27,10 +27,4 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
-
-    def send_text(self, status):
-        '''Send a text message to this users phone.'''
-	#person = SMS(user.name)  I NEED USERNAME & to import the SMS class (sendsms.py)
-	#person(str(status))
-	#return
-	pass
+        
