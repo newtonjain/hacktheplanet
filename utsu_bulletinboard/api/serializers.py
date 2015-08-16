@@ -27,7 +27,8 @@ class TripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ['id', 'locations', 'scenic', 'start_ts', 'status']
+        fields = ['id', 'locations', 'scenic', 'start_ts', 'status',
+        'users']
 
     def update(self, instance, validated_data):
         riders = validated_data.get('riders')

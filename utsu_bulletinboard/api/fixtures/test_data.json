@@ -17,7 +17,7 @@
         "interests": "cooking", 
         "description": "a cool guy", 
         "is_customer": true,
-        "trips": 1
+        "trips": [1]
         }
     },
     {
@@ -30,7 +30,7 @@
         "interests": "driving", 
         "description": "a cool guy", 
         "is_customer": false,
-        "trips": 1
+        "trips": [1]
         }
     },
     {
@@ -43,7 +43,7 @@
         "interests": "driving", 
         "description": "a cool guy", 
         "is_customer": false,
-        "trips": 1
+        "trips": [1]
         }
     },
     {
@@ -56,7 +56,7 @@
         "interests": "driving", 
         "description": "a cool guy", 
         "is_customer": false,
-        "trips": 1
+        "trips": [1]
         }
     },
     {
