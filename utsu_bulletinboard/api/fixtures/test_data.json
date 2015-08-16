@@ -12,10 +12,10 @@
     "pk": 2,
     "fields": {
         "username": "coolio", 
-        "phone_number": 5266475, 
-        "first_name" :"coolio",
-        "interests": "driving", 
-        "description": "a cool guy", 
+        "phone_number": 2672318681, 
+        "first_name" :"Newton",
+        "interests": "Cooking, Gardening, Recycling", 
+        "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
         "is_customer": false,
         "trips": [1]
         }
@@ -26,9 +26,9 @@
     "fields": {
         "username": "jon", 
         "phone_number": 5276475, 
-        "first_name" :"jon",
-        "interests": "driving", 
-        "description": "a cool guy", 
+        "first_name" :"John",
+        "interests": "Bicycling, Gaming, Typing Fast", 
+        "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
         "is_customer": false,
         "trips": [1]
         }
@@ -39,9 +39,9 @@
     "fields": {
         "username": "paul", 
         "phone_number": 5286475, 
-        "first_name" :"paul",
-        "interests": "driving", 
-        "description": "a cool guy", 
+        "first_name" :"Karen",
+        "interests": "Smash Bros, Baseball, The Bachelor", 
+        "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
         "is_customer": false,
         "trips": [1]
         }
@@ -54,8 +54,8 @@
         "phone_number": 4169928476, 
         "first_name" :"Alec",
         "last_name": "Brunelle",
-        "interests": "driving", 
-        "description": "a cool guy", 
+        "interests": "Driving Fast, Not Driving Slow, Javascript", 
+        "description": "Bacon ipsum dolor amet ham tongue meatball short ribs jowl spare ribs strip steak bresaola leberkas hamburger flank turkey pork chop sausage. Hamburger flank beef fatback, swine tongue t-bone bresaola shankle chicken cupim tail jerky prosciutto landjaeger. Meatball picanha bacon doner meatloaf flank leberkas venison prosciutto ham. Pig strip steak prosciutto meatball cupim tri-tip sausage ham kielbasa porchetta frankfurter biltong. Cow turkey shankle, strip steak brisket drumstick short ribs biltong t-bone jowl frankfurter pastrami sirloin.", 
         "is_customer": true,
         "trips": [1]
         }
