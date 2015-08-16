@@ -74,12 +74,9 @@ angular.module('starter.controllers', [])
   }
     //document.addEventListener('deviceready', this.onDeviceReady, false);
   $scope.tapping = function(amount){
-    alert('amount'  + amount);
-
     $scope.amount = amount;
     nfc.addTagDiscoveredListener(triggerEvent,
       function () {
-        alert('I am here');
       $scope.hideSheet = $ionicActionSheet.show({
           buttons: [
        { text: '<center><b>You are going to pay $' + $scope.amount}
@@ -150,7 +147,7 @@ angular.module('starter.controllers', [])
 
 
 //////////////////////////
-  $scope.callRiders = function() {
+  $scope.useCurrentLocation = function() {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
   }
 
@@ -191,11 +188,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CustomerCtrl', function ($scope, $compile) {
-   $scope.positions = [{lat:37.7699298,lng:-122.4469157}];
+   $scope.positions = [];
+  
   $scope.addMarker = function(event) {
     console.log(event);
     var ll = event.latLng;
     $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
+    console.log($scope.positions);
   }
 
   $scope.cities = {
