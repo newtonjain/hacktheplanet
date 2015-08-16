@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
         "scenic": false,
-        "status": "unconfirmed"        }
+        "status": "unconfirmed"  
+        }
     },
     {
     "model": "users.user",
@@ -88,7 +89,7 @@
         }
     },
     {
-    "model": "api.location",
+    "model": "api.route",
     "pk": 1,
     "fields": {
         "name": "location 1",

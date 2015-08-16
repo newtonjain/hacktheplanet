@@ -18,4 +18,4 @@ class Route(models.Model):
 		null=True,
 		related_name='ending_addresses')
 	trip = models.ForeignKey(Trip, blank=True,
-		related_name='locations')
+		related_name='routes')

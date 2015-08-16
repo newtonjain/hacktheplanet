@@ -1,8 +1,9 @@
 import requests
 
+from math import sqrt
 
-from api.models import Location, Trip
-from users.model import User
+# from .models import Route, Trip
+# from users.model import User
 
 def scenic_trip_builder(self, point_a, point_b):
 	'''Builds a scenic route to point_b using Yelps api.
@@ -20,9 +21,38 @@ def scenic_trip_builder(self, point_a, point_b):
 
 	'''
 	print(trip)
-	# iterate 20% of the way (5 times for each trip)
+	# MATH ALERT
+	point_a[0] = Decimal(point_a[0])
+	point_a[1] = Decimal(point_a[1])
+	point_b[0] = Decimal(point_b[0])
+	point_b[1] = Decimal(point_b[1])
+	#find five points along the way from point a to point b
+	distance = sqrt(
+		(point_b[1] - point_a[0])**2 + (point_b[1] - point[0])**2
+	)
+
+	y = 0
+	x = 0
+	interval = distance / 5
+	for i in range(5):
+		y = (point_a[0] + point_a[1]) - x
+		sqrt(
+			(point_b[1] - y)**2 + (point_b[0] - x)**2
+		)
+		pass
+
+
+
+
 	pass
 
+# def 
+
+def order_points(self, point_a, point_b, points):
+	'''Order the points from closest to farthest in between point_a
+	point_b.
+	'''
+	pass
 
 def send_unconfirmed(self, trip):
 	'''Send a sms to the rider(s) phone number
