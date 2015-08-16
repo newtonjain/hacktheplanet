@@ -35,8 +35,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'photo', 'username',
-        'first_name', 'is_customer', 'phone_number',
-        'description', 'trips', 'interests']
+                  'first_name', 'is_customer', 'phone_number',
+                  'description', 'trips', 'interests']
 
 
 class TripSerializer(serializers.ModelSerializer):
@@ -44,13 +44,13 @@ class TripSerializer(serializers.ModelSerializer):
     status = serializers.CharField(required=False)
     start_ts = serializers.DateTimeField(required=False)
     users = serializers.PrimaryKeyRelatedField(
-        many=True, 
-        queryset=User.objects.all())
+        many=True,
+        read_only=True)
 
     class Meta:
         model = Trip
         fields = ['id', 'routes', 'scenic', 'start_ts', 'status',
-        'users']
+                  'users']
 
     def create(self, validated_data):
         # get scenic Routes on the way to point B,
@@ -59,9 +59,9 @@ class TripSerializer(serializers.ModelSerializer):
         if validated_data.get('scenic'):
             locations = validated_data['routes']
             starting_point = [locations['start']['latitude'],
-                locations['start']['latitude']]
+                              locations['start']['latitude']]
             ending_point = [locations['end']['latitude'],
-                locations['end']['latitude'] ]
+                            locations['end']['latitude']]
             scenic_trip_builder(starting_point, ending_point)
 
         routes_data = validated_data.pop('routes')
@@ -77,10 +77,10 @@ class TripSerializer(serializers.ModelSerializer):
             customer = instance.users.filter(is_customer=True).first()
             new_status = value
             if (instance.status == 'unconfirmed' and
-                new_status == 'confirmed'):
+                    new_status == 'confirmed'):
                 send_confirmed(user_number=customer.phone_number)
             if (instance.status == 'confirmed' and
-                new_status == 'arrived'):
+                    new_status == 'arrived'):
                 send_arrived(user_number=customer.phone_number)
         return value
 
@@ -97,5 +97,8 @@ class TripSerializer(serializers.ModelSerializer):
     #     user_ids = validated_data.get('users')
     #     print(user_ids)
     #     instance.users = User.objects.filter(id__in=user_ids)
+    #     instance.save()
+    #     return instance
+# user_ids)
     #     instance.save()
     #     return instance
