@@ -1,10 +1,37 @@
-<ion-view view-title="Customers">
+<ion-view view-title="Thrill Seaker">
   <ion-content>
-      <button ng-click="callRiders()" class="button button-balanced button-block" >call riders</button>
+      <button ng-click="callRiders()" class="button button-balanced button-block" >Use current location</button>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="37.41396, -122.07779" zoom="12" on-click="addMarker()">
     <marker ng-repeat="location in locations" position="{{location.latitude}}, {{location.longitude}}"></marker>
     <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="//developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+    <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
+    </shape>
   </map>
+  <div class="list">
+<div ng-repeat="ride in riders track by $index">
+  <div class="row card" >
+    <div class="col col-25">
+    <img src="img/Bike{{$index+1}}.png" style="width:100%">
+    </div>
+    <div class="col col-50">  
+    <h2>{{ride.name}}</h2>
+      <p>{{ride.phonenumber}}</p>
+      <p>{{ride.description}}</p>
+      <p>{{ride.interests}}</p>
+      </div>
+      <div class="col col-25"> 
+      Choose Rider: 
+      <label class="checkbox">
+       <input type="checkbox" ng-model="ride.checked" ng-checked="ride.checked">
+     </label>
+     </div>
+  </div>
+</div>
+<!--     <a class="item item-thumbnail-left"  href="#"> -->
+      
+    
+    </a>
+</div>
   </ion-content>
 </ion-view>
