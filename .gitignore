@@ -5,12 +5,13 @@ node_modules/
 platforms/
 plugins/
 
-# Visual Studio 
+# Visual Studio
 .vs/
 changeList.json
 *.user
 bin/
 
 # virtual envs
+/venv
 /htp
-*.pyc 
+*.pyc
