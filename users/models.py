@@ -9,10 +9,31 @@ from api.models import Trip
 # from django.utils.translation import ugettext_lazy as _
 
 
+class User(AbstractUser):
+
+    # First Name and Last Name do not cover name patterns
+    # around the globe.
+    photo = models.URLField(blank=True)
+    phone_number = models.BigIntegerField(blank=True, null=True)
+    is_customer = models.BooleanField(max_length=100, default=True)
+    description = models.CharField(blank=True, max_length=1000)
+    interests = models.CharField(blank=True, max_length=500)
+
+    # relationships
+    trips = models.ManyToManyField(Trip, blank=True, related_name='users')
+
+    def __init__(self):
+        """ Automatically defines user as driver or rider """
+        if is_customer:
+            return Rider(self)
+        else:
+            return Driver(self)
+
+
 class Driver(User):
 
     def __init__(self):
-    """ Initializes profile """
+        """ Initializes profile """
         photo = self.photo
     	phone_number = self.phone_number
     	description = self.description
@@ -28,7 +49,7 @@ class Driver(User):
 class Rider(User):
 
     def __init__(self):
-    """ Initializes profile """
+        """ Initializes profile """
         photo = self.photo
     	phone_number = self.phone_number
     	description = self.description
@@ -39,23 +60,3 @@ class Rider(User):
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
-
-
-class User(AbstractUser):
-
-    # First Name and Last Name do not cover name patterns
-    # around the globe.
-    photo = models.URLField(blank=True)
-    phone_number = models.BigIntegerField(blank=True, null=True)
-    is_customer = models.BooleanField(max_length=100, default=True)
-    description = models.CharField(blank=True, max_length=1000)
-    interests = models.CharField(blank=True, max_length=500)
-
-    # relationships
-    trips = models.ManyToManyField(Trip, blank=True, related_name='users')
-
-    def __init__(self):
-    	if is_customer:
-	    return Rider(self)
-	else:
-	    return Driver(self)
