@@ -13,35 +13,25 @@ from api.models import Trip
 
 
 class Trip(models.Model):
+    """ Trip model """
 
-    # real fields
 	scenic = models.BooleanField(blank=True, default=False)
 	start_ts = models.DateTimeField(blank=True, null=True, default=timezone.now)
-	status = models.CharField(
-		blank=True,
-		default='unconfirmed',
-		max_length=200)
+	status = models.CharField(blank=True, default='unconfirmed', max_length=200)
+
+    # Why isn't this a thing?
+    # def __unicode__(self):
+    #     pass some shit
 
 
-class User(AbstractUser):
+class User(models.Model):
+    """ User model """
 
-    def __init__(self, is_customer):
-        """ Automatically defines user as driver or rider """
-        if is_customer:
-            return Rider(self)
-        else:
-            return Driver(self)
-
-
-class Driver(User):
-
-    def __init__(self):
-        """ Initializes Driver Model """
-        self.photo = models.URLField(blank=True)
-        self.phone_number = models.BigIntegerField(blank=True, null=True)
-        self.description = models.CharField(blank=True, max_length=1000)
-        self.interests = models.CharField(blank=True, max_length=500)
-        self.trips = models.ForeignKey(Trip)
+    name = models.CharField(blank=True, max_length=100)
+    phone_number = models.BigIntegerField(blank=True, null=True)
+    photo = models.URLField(blank=True)
+    description = models.CharField(blank=True, max_length=1000)
+    interests = models.CharField(blank=True, max_length=500)
 
     def __unicode__(self):
         """ Retuns username (utf-8) """
@@ -51,19 +41,17 @@ class Driver(User):
         return reverse('users:detail', kwargs={'username': self.username})
 
 
-class Rider(User):
 
-    def __init__(self):
-        """ Initializes Rider Model """
-        self.photo = models.URLField(blank=True)
-        self.phone_number = models.BigIntegerField(blank=True, null=True)
-        self.description = models.CharField(blank=True, max_length=1000)
-        self.interests = models.CharField(blank=True, max_length=500)
-        self.trips = models.ForeignKey(Trip)
+class Driver(models.Model):
+    """ Driver model """
 
-    def __unicode__(self):
-        """ Retuns username (utf-8) """
-        return self.username
+    user = models.ForeignKey(User)
+    # Drivers definitely should have their own additional fields
 
-    def get_absolute_url(self):
-        return reverse('users:detail', kwargs={'username': self.username})
+
+class Rider(models.Model):
+    """ Rider model """
+
+    user = models.ForeignKey(User)
+    # Might be useless but I'll leave it here in case I think of
+    # something useful for it
