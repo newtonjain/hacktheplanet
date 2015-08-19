@@ -9,6 +9,38 @@ from api.models import Trip
 # from django.utils.translation import ugettext_lazy as _
 
 
+class Driver(User):
+
+    def __init__(self):
+    """ Initializes profile """
+        photo = self.photo
+    	phone_number = self.phone_number
+    	description = self.description
+    	interests = self.interests
+
+    def __unicode__(self):
+    	return self.username
+
+    def get_absolute_url(self):
+        return reverse('users:detail', kwargs={'username': self.username})
+
+
+class Rider(User):
+
+    def __init__(self):
+    """ Initializes profile """
+        photo = self.photo
+    	phone_number = self.phone_number
+    	description = self.description
+    	interests = self.interests
+
+    def __unicode__(self):
+    	return self.username
+
+    def get_absolute_url(self):
+        return reverse('users:detail', kwargs={'username': self.username})
+
+
 class User(AbstractUser):
 
     # First Name and Last Name do not cover name patterns
@@ -22,8 +54,8 @@ class User(AbstractUser):
     # relationships
     trips = models.ManyToManyField(Trip, blank=True, related_name='users')
 
-    def __unicode__(self):
-        return self.username
-
-    def get_absolute_url(self):
-        return reverse('users:detail', kwargs={'username': self.username})
+    def __init__(self):
+    	if is_customer:
+	    return Rider(self)
+	else:
+	    return Driver(self)
