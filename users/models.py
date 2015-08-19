@@ -35,11 +35,13 @@ class User(AbstractUser):
 
 class Driver(User):
 
-    photo = models.URLField(blank=True)
-    phone_number = models.BigIntegerField(blank=True, null=True)
-    description = models.CharField(blank=True, max_length=1000)
-    interests = models.CharField(blank=True, max_length=500)
-    trips = models.ForeignKey(Trips)
+    def __init__(self):
+        """ Initializes Driver Model """
+        self.photo = models.URLField(blank=True)
+        self.phone_number = models.BigIntegerField(blank=True, null=True)
+        self.description = models.CharField(blank=True, max_length=1000)
+        self.interests = models.CharField(blank=True, max_length=500)
+        self.trips = models.ForeignKey(Trip)
 
     def __unicode__(self):
         """ Retuns username (utf-8) """
@@ -51,11 +53,13 @@ class Driver(User):
 
 class Rider(User):
 
-    photo = models.URLField(blank=True)
-    phone_number = models.BigIntegerField(blank=True, null=True)
-    description = models.CharField(blank=True, max_length=1000)
-    interests = models.CharField(blank=True, max_length=500)
-    trips = models.ForeignKey(Trips)
+    def __init__(self):
+        """ Initializes Rider Model """
+        self.photo = models.URLField(blank=True)
+        self.phone_number = models.BigIntegerField(blank=True, null=True)
+        self.description = models.CharField(blank=True, max_length=1000)
+        self.interests = models.CharField(blank=True, max_length=500)
+        self.trips = models.ForeignKey(Trip)
 
     def __unicode__(self):
         """ Retuns username (utf-8) """
