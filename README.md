@@ -1,3 +1,9 @@
+# DJANGO/DJANGO REST + ANGULAR/CORDOVA + AWESOMENESS
+
+Preview:
+
+![lol](http://i.imgur.com/hnQklPw.png)
+
 # Getting Started
 ##### Modules
 - [FrontEnd](https://github.com/newtonjain/hacktheplanet/tree/master/FrontEnd): UX Design
