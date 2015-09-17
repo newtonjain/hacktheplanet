@@ -9,10 +9,6 @@ Production Configurations
 '''
 from __future__ import absolute_import, unicode_literals
 
-
-from boto.s3.connection import OrdinaryCallingFormat
-from django.utils import six
-
 from .common import *  # noqa
 
 # SECRET CONFIGURATION
@@ -23,16 +19,16 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # django-secure
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ("djangosecure", )
+# INSTALLED_APPS += ("djangosecure", )
 
-MIDDLEWARE_CLASSES = (
-    # Make sure djangosecure.middleware.SecurityMiddleware is listed first
-    'djangosecure.middleware.SecurityMiddleware',
-) + MIDDLEWARE_CLASSES
+# MIDDLEWARE_CLASSES = (
+#     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
+#     'djangosecure.middleware.SecurityMiddleware',
+# ) + MIDDLEWARE_CLASSES
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 # SECURE_HSTS_SECONDS = 60
@@ -58,10 +54,10 @@ INSTALLED_APPS += ("gunicorn", )
 # Uploaded Media Files
 # ------------------------
 # See: http://django-storages.readthedocs.org/en/latest/index.html
-INSTALLED_APPS += (
-    'storages',
-)
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# INSTALLED_APPS += (
+#     'storages',
+# )
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # AWS_ACCESS_KEY_ID = env('DJANGO_AWS_ACCESS_KEY_ID', None)
 # AWS_SECRET_ACCESS_KEY = env('DJANGO_AWS_SECRET_ACCESS_KEY', None)
@@ -86,7 +82,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # # Static Assests
 # # ------------------------
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # # EMAIL
@@ -110,16 +106,16 @@ DATABASES['default'] = env.db("DATABASE_URL")
 # CACHING
 # ------------------------------------------------------------------------------
 # Heroku URL does not pass the DB number, so we parse it in
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
-                                        # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-        }
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "{0}/{1}".format(env.cache_url('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#             "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
+#                                         # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
+#         }
+#     }
+# }
 
 # # Your production stuff: Below this line define 3rd party library settings
