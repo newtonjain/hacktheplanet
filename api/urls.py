@@ -4,7 +4,8 @@ from .views import (
     trip_views,
     user_views,
     driver_views,
-    customer_views
+    customer_views,
+    transaction_api
 )
 
 urlpatterns = patterns(
@@ -52,5 +53,11 @@ urlpatterns = patterns(
     url(r'^customer/(?P<customer_pk>\d+)/?$',
         customer_views.CustomerDetailView.as_view(),
         name='customer_api'
+        ),
+
+    # transactions
+    url(r'^transaction/?$',
+        transaction_views.TransactionListCreateView.as_view(),
+        name='transaction_api'
         ),
 )
