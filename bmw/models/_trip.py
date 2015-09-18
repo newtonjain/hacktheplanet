@@ -27,5 +27,9 @@ class Trip(ArchivableModel):
         related_name='ending_trips')
     status = models.ForeignKey(TripStatus)
 
-    class Meta:
-        db_name = 'trips'
+    @property
+    def price(self):
+        '''Returns the price of the trip based on the distance
+        of the trip.
+        '''
+        pass

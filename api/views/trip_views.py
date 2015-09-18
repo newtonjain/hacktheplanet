@@ -2,13 +2,11 @@ from rest_framework.generics import (RetrieveUpdateDestroyAPIView,
                                      ListCreateAPIView)
 
 from bmw.models import Trip, Driver, Customer
-from api.serializers import (
-    TripSerializer,
-)
+from api.serializers import trips
 
 
 class TripListCreateView(ListCreateAPIView):
-    serializer_class = TripSerializer
+    serializer_class = trips.TripSerializer
 
     def get_queryset(self):
         driver_pk = self.kwargs.get('driver_pk')
@@ -30,7 +28,7 @@ class TripListCreateView(ListCreateAPIView):
 
 class TripDetail(RetrieveUpdateDestroyAPIView):
     queryset = Trip.objects.all()
-    serializer_class = TripSerializer
+    serializer_class = trips.TripSerializer
 
     def partial_update(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.partial_update(

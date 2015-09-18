@@ -2,19 +2,19 @@ from rest_framework import serializers
 from address.models import Address
 
 from bmw.models import Trip
-from api.address_serializer import AddressSerializer
+from api.serializers import addresses
 
-from api.utils.utils import scenic_trip_builder
-from api.utils.utils import (
-    send_arrived,
-    send_confirmed
-)
+# from api.utils.utils import scenic_trip_builder
+# from api.utils.utils import (
+#    send_arrived,
+#    send_confirmed
+# )
 
 
 class TripSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField('trip_status')
-    start = AddressSerializer(source='start')
-    end = AddressSerializer(source='end')
+    start = addresses.AddressCreateDetailSerializer(source='start')
+    end = addresses.AddressCreateDetailSerializer(source='end')
 
     class Meta:
         model = Trip

@@ -35,7 +35,7 @@ DJANGO_APPS = (
     # Admin
     'django.contrib.admin',
     'rest_framework',
-    'address'
+    'address',
 )
 THIRD_PARTY_APPS = (
     'allauth',  # registration
@@ -47,7 +47,8 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'users',  # custom users app
     # Your stuff: custom apps go here
-    'api'
+    'api',
+    'bmw'
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -55,14 +56,15 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
+
 MIDDLEWARE_CLASSES = (
     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 # DEBUG
@@ -192,7 +194,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'django.contrib.auth.middleware.AuthenticationMiddleware'
 )
 
 # Some really nice defaults
@@ -247,7 +248,21 @@ LOGGING = {
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    #'DEFAULT_PERMISSION_CLASSES': [
-    #    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    #]
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
 }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("BMW_DB_NAME", default="bmw"),
+        'USER': env("BMW_DB_USER", default="alec"),
+        'PASSWORD': env("BMW_DB_PASSWORD", default=""),
+        'HOST': env("BMW_DB_HOST", default=""),
+        'PORT': env("BMW_DB_PORT", default=""),
+    }
+}
+DATABASES['default']['ATOMIC_REQUESTS'] = True
