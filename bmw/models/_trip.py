@@ -18,7 +18,7 @@ class Trip(ArchivableModel):
 
     # relationships
     driver = models.ForeignKey(Driver, related_name='driver_trips')
-    customer = models.ForeignKey(Customer, related_name='customer_trips', null=True)
+    customer = models.ForeignKey(Customer, related_name='customer_trips')
     start = AddressField(
         blank=True,
         null=True,
@@ -27,7 +27,7 @@ class Trip(ArchivableModel):
         blank=True,
         null=True,
         related_name='ending_trips')
-    status = models.ForeignKey(TripStatus)
+    trip_status = models.ForeignKey(TripStatus)
 
     @property
     def price(self):
@@ -37,7 +37,11 @@ class Trip(ArchivableModel):
         if self.start is None or self.end is None:
             return 0
         # convert decimal degrees to radians
-        lon1, lat1, lon2, lat2 = map(radians, [self.start.longitude, self.start.latitude, self.end.longitude, self.end.latitude])
+        lon1, lat1, lon2, lat2 = map(radians, [
+            self.start.longitude,
+            self.start.latitude,
+            self.end.longitude,
+            self.end.latitude])
         # haversine formula
         dlon = lon2 - lon1
         dlat = lat2 - lat1

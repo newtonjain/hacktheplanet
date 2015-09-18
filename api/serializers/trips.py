@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from address.models import Address
 
-from bmw.models import Trip
+from bmw.models import Trip, TripStatus
 from api.serializers import addresses
 
 # from api.utils.utils import scenic_trip_builder
@@ -12,19 +12,39 @@ from api.serializers import addresses
 
 
 class TripSerializer(serializers.ModelSerializer):
-    status = serializers.SerializerMethodField('trip_status')
+    status = serializers.CharField(source='trip_status.name')
     start = addresses.AddressCreateDetailSerializer(source='start')
     end = addresses.AddressCreateDetailSerializer(source='end')
     price = serializers.IntegerField()
 
     class Meta:
         model = Trip
-        fields = ['id', 'name', 'scenic', 'start_ts', 'status',
+        fields = ['id', 'name', 'scenic', 'start_ts', 'trip_status',
                   'driver_id', 'customer_id', 'start', 'end']
         read_only = ['status']
 
-    def trip_status(self, instance):
-        return instance.trip_status.name
+    def validate_status_name(self, value):
+        '''Change status based on input and the last known status of the trip.
+
+        None -> REQUESTED
+        REQUESTED -> PICKING UP
+        PICKING UP -> DRIVING
+        DRIVING -> FINISHED
+
+        '''
+        status_name = value
+        if status_name not in TripStatus.STATUSES:
+            raise serializers.ValidationError('Not a valid status name.')
+
+        if self.instance.trip_status.name is None:
+            self.instance.status = TripStatus.objects.get(name='REQUESTED')
+        if status_name is 'REQUESTED':
+            self.instance.status = TripStatus.objects.get(name='PICKING UP')
+        if status_name is 'PICKING UP':
+            self.instance.status = TripStatus.objects.get(name='DRIVING')
+        if status_name is 'DRIVING':
+            self.instance.status = TripStatus.objects.get(name='FINISIHED')
+        return value
 
     def create(self, validated_data):
         # get scenic Trips on the way to point B,
