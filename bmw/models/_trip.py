@@ -18,7 +18,7 @@ class Trip(ArchivableModel):
 
     # relationships
     driver = models.ForeignKey(Driver, related_name='driver_trips')
-    customer = models.ForeignKey(Customer, related_name='customer_trips')
+    customer = models.ForeignKey(Customer, related_name='customer_trips', null=True)
     start = AddressField(
         blank=True,
         null=True,
