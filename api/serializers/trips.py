@@ -15,6 +15,7 @@ class TripSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField('trip_status')
     start = addresses.AddressCreateDetailSerializer(source='start')
     end = addresses.AddressCreateDetailSerializer(source='end')
+    price = serializers.IntegerField()
 
     class Meta:
         model = Trip

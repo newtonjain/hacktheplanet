@@ -1,3 +1,5 @@
+from math import radians, cos, sin, asin, sqrt
+
 from django.db import models
 from django.utils import timezone
 
@@ -32,4 +34,14 @@ class Trip(ArchivableModel):
         '''Returns the price of the trip based on the distance
         of the trip.
         '''
-        pass
+        if self.start is None or self.end is None:
+            return 0
+        # convert decimal degrees to radians
+        lon1, lat1, lon2, lat2 = map(radians, [self.start.longitude, self.start.latitude, self.end.longitude, self.end.latitude])
+        # haversine formula
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+        c = 2 * asin(sqrt(a))
+        km = 6367 * c
+        return km
