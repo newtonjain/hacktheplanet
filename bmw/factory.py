@@ -18,7 +18,7 @@ class CustomerFactory(factory.Factory):
     class Meta:
         model = Customer
 
-    name = fake.first_name()
+    first_name = fake.first_name()
     username = factory.Sequence(lambda n: 'customer%s' % n)
     email = fake.email()
     is_active = True
@@ -30,7 +30,7 @@ class DriverFactory(factory.Factory):
     class Meta:
         model = Driver
 
-    name = fake.first_name()
+    first_name = fake.first_name()
     username = factory.Sequence(lambda n: 'driver%s' % n)
     email = fake.email()
     bike_model = 'BMW G 650 GS'
@@ -53,6 +53,22 @@ class TripFactory(factory.Factory):
 def make_objects():
     drivers = DriverFactory.build_batch(10)
     for driver in drivers:
+        radius = 100
+        radiusInDegrees = radius / 111300
+        r = radiusInDegrees
+        x0 = 37.788081
+        y0 = -122.34375
+        u = float(random.uniform(0.0, 1.0))
+        v = float(random.uniform(0.0, 1.0))
+        w = r * math.sqrt(u)
+        t = 2 * math.pi * v
+        x = w * math.cos(t)
+        y = w * math.sin(t)
+        xLat = x + x0
+        yLong = y + y0
+        driver.location = Address.objects.create(
+            latitude=xLat,
+            longitude=yLong)
         driver.save()
     customers = CustomerFactory.build_batch(10)
     for customer in customers:
