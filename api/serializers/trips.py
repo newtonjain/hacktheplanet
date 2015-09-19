@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from address.models import Address
 
-from bmw.models import Trip, TripStatus
+from bmw.models import Trip, TripStatus, Customer, Driver
 from api.serializers import addresses
 
 # from api.utils.utils import scenic_trip_builder
@@ -19,11 +19,15 @@ class TripSerializer(serializers.ModelSerializer):
     start = addresses.AddressCreateDetailSerializer()
     end = addresses.AddressCreateDetailSerializer()
     price = serializers.IntegerField(read_only=True)
+    driver_id = serializers.PrimaryKeyRelatedField(
+        queryset=Driver.objects.all())
+    customer_id = serializers.PrimaryKeyRelatedField(
+        queryset=Customer.objects.all())
 
     class Meta:
         model = Trip
         fields = ['id', 'name', 'scenic', 'trip_status',
-                  'driver', 'customer', 'start', 'end', 'price']
+                  'driver_id', 'customer_id', 'start', 'end', 'price']
 
     def validate_trip_status(self, value):
         '''Change status based on input and the last known status of the trip.
