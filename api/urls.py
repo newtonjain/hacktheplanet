@@ -2,7 +2,6 @@ from django.conf.urls import patterns, url
 
 from .views import (
     trip_views,
-    user_views,
     driver_views,
     customer_views,
     transaction_views
@@ -24,6 +23,7 @@ urlpatterns = patterns(
         trip_views.TripListCreateView.as_view(),
         name='trip_api'
         ),
+    # JUST CURRENTLY SUPPORTS PATCHING TRIP_STATUS
     url(r'^trip/(?P<pk>\d+)/?$',
         trip_views.TripDetail.as_view(),
         name='trip_api'

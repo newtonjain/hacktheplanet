@@ -29,7 +29,7 @@ class TripSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'scenic', 'trip_status',
                   'driver_id', 'customer_id', 'start', 'end', 'price']
 
-    def validate_trip_status(self, value):
+    def update(self, instance, validated_data):
         '''Change status based on input and the last known status of the trip.
 
         None -> REQUESTED
@@ -37,23 +37,18 @@ class TripSerializer(serializers.ModelSerializer):
         PICKING UP -> DRIVING
         DRIVING -> FINISHED
         '''
-        status_name = value
-        if status_name not in TripStatus.STATUSES:
+        status_name = validated_data.get('trip_status')
+        status_name = status_name.get('name')
+        if status_name not in TripStatus.objects.all().values_list('name', flat=True):
             raise serializers.ValidationError('Not a valid status name.')
-
-        if not self.instance:
-            return
-
-        if status_name is 'REQUESTED' and self.instance.trip_status.name is None:
-            self.instance.status = TripStatus.objects.get(name='REQUESTED')
-        if status_name is 'PICKING UP' and self.instance.status.name is 'REQUESTED':
-            self.instance.status = TripStatus.objects.get(name='PICKING UP')
-        if status_name is 'DRIVING' and self.instance.status.name is 'PICKING UP':
-            self.instance.status = TripStatus.objects.get(name='DRIVING')
-        if status_name is 'FINISHED' and self.instance.status.name is 'DRIVING':
-            self.instance.status = TripStatus.objects.get(name='FINISHED')
-        self.instance.save(fields=['status_id'])
-        return value
+        if status_name == 'PICKING UP' and instance.trip_status.name == 'REQUESTED':
+            instance.trip_status = TripStatus.objects.get(name='PICKING UP')
+        if status_name == 'DRIVING' and instance.trip_status.name == 'PICKING UP':
+            instance.trip_status = TripStatus.objects.get(name='DRIVING')
+        if status_name == 'FINISHED' and instance.trip_status.name == 'DRIVING':
+            instance.trip_status = TripStatus.objects.get(name='FINISHED')
+        instance.save()
+        return instance
 
     def create(self, validated_data):
         start_data = validated_data.pop('start')
