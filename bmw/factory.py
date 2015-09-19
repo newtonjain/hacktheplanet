@@ -22,6 +22,7 @@ class CustomerFactory(factory.Factory):
     username = factory.Sequence(lambda n: 'customer%s' % n)
     email = fake.email()
     is_active = True
+    description = fake.paragraphs(nb=2)
 
 
 class DriverFactory(factory.Factory):
@@ -34,6 +35,7 @@ class DriverFactory(factory.Factory):
     email = fake.email()
     bike_model = 'BMW G 650 GS'
     is_active = True
+    description = fake.paragraphs(nb=2)
 
 
 class TripFactory(factory.Factory):
