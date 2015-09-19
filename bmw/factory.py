@@ -18,7 +18,7 @@ class CustomerFactory(factory.Factory):
     class Meta:
         model = Customer
 
-    first_name = fake.first_name()
+    name = factory.Sequence(lambda n: 'customer_name%s' % n)
     username = factory.Sequence(lambda n: 'customer%s' % n)
     email = fake.email()
     is_active = True
@@ -30,7 +30,7 @@ class DriverFactory(factory.Factory):
     class Meta:
         model = Driver
 
-    first_name = fake.first_name()
+    name = factory.Sequence(lambda n: 'driver_name%s' % n)
     username = factory.Sequence(lambda n: 'driver%s' % n)
     email = fake.email()
     bike_model = 'BMW G 650 GS'
