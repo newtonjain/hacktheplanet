@@ -16,3 +16,5 @@ bin/
 /htp
 /.bmw
 *.pyc
+
+yelp_setup.sh
