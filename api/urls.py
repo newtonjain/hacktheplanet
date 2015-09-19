@@ -5,7 +5,7 @@ from .views import (
     user_views,
     driver_views,
     customer_views,
-    transaction_api
+    transaction_views
 )
 
 urlpatterns = patterns(
