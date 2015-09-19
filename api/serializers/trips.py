@@ -69,6 +69,10 @@ class TripSerializer(serializers.ModelSerializer):
         #     end_aadr = Address.objects.create(**route_data['end'])
         return trip
 
+    def validate_scenic(self, value):
+        '''If True, create a scenic journey, if not, do A to B.'''
+        pass
+
     # def validate_status(self, value):
     #     if self.instance:
     #         print(self.instance.users)
