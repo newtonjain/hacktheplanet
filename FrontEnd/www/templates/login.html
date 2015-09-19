@@ -8,6 +8,18 @@
   <center><img src="img/bmw.png" style="border:3px solid black; padding: 5px" ></center>
     <br>
   <br>
+  <div ng-hide="authData" class="card" ng-click="login()">
+  <button class="item">
+  Log In with Facebook
+  </button>
+</div>
+
+<div class="card" ng-show="authData">
+  <div class="item item-text-wrap">
+    Hello {{authData.facebook.displayName}}!
+  </div>
+</div>
+
     <form ng-submit="doLogin(username, password)">
       <div class="list">
         <label class="item item-input">

@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $http, $ionicActionSheet, $ionicModal) {
+.controller('AppCtrl', function($scope, $http, $ionicActionSheet, $ionicModal, $firebaseArray, Items, Auth) {
     $scope.creditCard = {};
     $scope.amount = null;
     $scope.txid = null;
@@ -43,11 +43,42 @@ angular.module('starter.controllers', [])
            console.log(data);
         })
         .error(function (data) {
-            alert("Error: " + data);
+            //alert("Error: " + data);
         });
   }
 
   _getRiders();
+
+  $scope.Items = Items;
+
+  // $scope.Items.child('baby').$add({
+  //   Power: 'Newton',
+  //   Content: 'Lets Do this'
+  // });
+
+//   var ref = new Firebase("https://bookmywride.firebaseio.com/");
+// ref.authWithOAuthPopup("facebook", function(error, authData) {
+//   if (error) {
+//     console.log("Login Failed!", error);
+//   } else {
+//     console.log("Authenticated successfully with payload:", authData);
+//   }
+// });
+
+$scope.login = function() {
+  Auth.$authWithOAuthPopup("facebook");
+};
+
+// $scope.login();
+
+Auth.$onAuth(function(authData) {
+  if (authData === null) {
+    console.log("Not logged in yet");
+  } else {
+    console.log("Logged in as", authData);
+  }
+  $scope.authData = authData; // This will display the user's name in our view
+});
 
   $scope.options = function (option) {
     $scope.option = option;
@@ -65,6 +96,7 @@ angular.module('starter.controllers', [])
       $scope.modallogin = modallogin;
       $scope.modallogin.show();
   });
+
 
    $ionicModal.fromTemplateUrl('templates/transactionDetails.html', { scope: $scope })
         .then(function (txDetails) {
