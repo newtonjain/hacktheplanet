@@ -8,5 +8,5 @@ from ._customer import Customer
 class Transaction(ArchivableModel):
     price = models.BigIntegerField()
     # relationships
-    driver = models.ForeignKey(Driver)
-    customer = models.ForeignKey(Customer)
+    driver = models.ForeignKey(Driver, null=True)
+    customer = models.ForeignKey(Customer, null=True)
