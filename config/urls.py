@@ -25,7 +25,7 @@ urlpatterns = [
         namespace='rest_framework')),
 
     # The rest of the URLs
-    url(r'^', include('api.urls', namespace="api")),
+    url(r'^api/', include('api.urls', namespace="api")),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
