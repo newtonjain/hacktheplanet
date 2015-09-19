@@ -12,15 +12,15 @@ from api.serializers import addresses
 
 
 class TripSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(source='trip_status.name', required=False)
-    start = addresses.AddressCreateDetailSerializer(source='start')
-    end = addresses.AddressCreateDetailSerializer(source='end')
+    trip_status = serializers.CharField(source='trip_status.name', required=False)
+    start = addresses.AddressCreateDetailSerializer()
+    end = addresses.AddressCreateDetailSerializer()
     price = serializers.IntegerField()
 
     class Meta:
         model = Trip
         fields = ['id', 'name', 'scenic', 'start_ts', 'trip_status',
-                  'driver_id', 'customer_id', 'start', 'end']
+                  'driver', 'customer', 'start', 'end', 'price']
         read_only = ['status']
 
     def validate_status_name(self, value):
