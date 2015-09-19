@@ -12,7 +12,7 @@ from api.serializers import addresses
 
 
 class TripSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(source='trip_status.name')
+    status = serializers.CharField(source='trip_status.name', required=False)
     start = addresses.AddressCreateDetailSerializer(source='start')
     end = addresses.AddressCreateDetailSerializer(source='end')
     price = serializers.IntegerField()
@@ -36,6 +36,9 @@ class TripSerializer(serializers.ModelSerializer):
         if status_name not in TripStatus.STATUSES:
             raise serializers.ValidationError('Not a valid status name.')
 
+        if not self.instance:
+            return
+
         if status_name is 'REQUESTED' and self.instance.trip_status.name is None:
             self.instance.status = TripStatus.objects.get(name='REQUESTED')
         if status_name is 'PICKING UP' and self.instance.status.name is 'REQUESTED':
@@ -56,6 +59,7 @@ class TripSerializer(serializers.ModelSerializer):
         #     ending_point = [locations['end']['latitude'],
         #                     locations['end']['latitude']]
         #     scenic_trip_builder(starting_point, ending_point)
+
         start_data = validated_data.pop('start')
         start_address = Address(**start_data)
         end_data = validated_data.pop('end')
@@ -63,6 +67,7 @@ class TripSerializer(serializers.ModelSerializer):
         trip = Trip.objects.create(**validated_data)
         trip.start = start_address
         trip.end = end_address
+        trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
         # for route_data in routes_data:
         #     start_aadr = Address.objects.create(**route_data['start'])
@@ -71,17 +76,7 @@ class TripSerializer(serializers.ModelSerializer):
 
     def validate_scenic(self, value):
         '''If True, create a scenic journey, if not, do A to B.'''
+        is_scenic = value
         pass
+        # if is_scenic:
 
-    # def validate_status(self, value):
-    #     if self.instance:
-    #         print(self.instance.users)
-    #         customer = self.instance.users.filter(is_customer=True).first()
-    #         new_status = value
-    #         if (self.instance.status == 'unconfirmed' and
-    #                 new_status == 'confirmed'):
-    #             send_confirmed(user_number=customer.phone_number)
-    #         if (self.instance.status == 'confirmed' and
-    #                 new_status == 'arrived'):
-    #             send_arrived(user_number=customer.phone_number)
-    #     return value
