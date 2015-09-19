@@ -46,7 +46,7 @@ class Trip(ArchivableModel):
         a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
         c = 2 * asin(sqrt(a))
         km = 6367 * c
-        return km
+        return km * 200
 
     def trip_builder(self):
         '''Builds a scenic trip based on the start and end points.'''
