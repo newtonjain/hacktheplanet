@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 
 from bmw.generics import ArchivableModel
-from address.models import AddressField
+from address.models import AddressField, Address
 from ._common import TripStatus
 from ._customer import Customer
 from ._driver import Driver
@@ -49,3 +49,7 @@ class Trip(ArchivableModel):
         c = 2 * asin(sqrt(a))
         km = 6367 * c
         return km
+
+    def trip_builder(self):
+        '''Builds a scenic trip based on the start and end points.'''
+        pass
