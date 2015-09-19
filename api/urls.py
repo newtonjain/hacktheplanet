@@ -29,12 +29,6 @@ urlpatterns = patterns(
         name='trip_api'
         ),
 
-    # users
-    url(r'^user/(?P<user_pk>\d+)/?$',
-        user_views.UserDetailView.as_view(),
-        name='user_api'
-        ),
-
     # driver
     url(r'^driver/?$',
         driver_views.DriverListCreateView.as_view(),
