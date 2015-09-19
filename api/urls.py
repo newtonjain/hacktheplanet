@@ -40,7 +40,7 @@ urlpatterns = patterns(
         driver_views.DriverListCreateView.as_view(),
         name='driver_api'
         ),
-    url(r'^driver/(?P<driver_pk>\d+)/?$',
+    url(r'^driver/(?P<pk>\d+)/?$',
         driver_views.DriverDetailView.as_view(),
         name='driver_api'
         ),
@@ -50,7 +50,7 @@ urlpatterns = patterns(
         customer_views.CustomerListCreateView.as_view(),
         name='customer_api'
         ),
-    url(r'^customer/(?P<customer_pk>\d+)/?$',
+    url(r'^customer/(?P<pk>\d+)/?$',
         customer_views.CustomerDetailView.as_view(),
         name='customer_api'
         ),

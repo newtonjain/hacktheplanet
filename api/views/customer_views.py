@@ -20,6 +20,7 @@ class CustomerListCreateView(ListCreateAPIView):
 
 class CustomerDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)

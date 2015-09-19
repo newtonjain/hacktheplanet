@@ -20,6 +20,7 @@ class DriverListCreateView(ListCreateAPIView):
 
 class DriverDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = drivers.DriverSerializer
+    queryset = Driver.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)

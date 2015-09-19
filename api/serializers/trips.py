@@ -12,25 +12,26 @@ from api.serializers import addresses
 
 
 class TripSerializer(serializers.ModelSerializer):
-    trip_status = serializers.CharField(source='trip_status.name', required=False)
+    trip_status = serializers.CharField(
+        source='trip_status.name',
+        required=False,
+        allow_null=True)
     start = addresses.AddressCreateDetailSerializer()
     end = addresses.AddressCreateDetailSerializer()
-    price = serializers.IntegerField()
+    price = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Trip
-        fields = ['id', 'name', 'scenic', 'start_ts', 'trip_status',
+        fields = ['id', 'name', 'scenic', 'trip_status',
                   'driver', 'customer', 'start', 'end', 'price']
-        read_only = ['status']
 
-    def validate_status_name(self, value):
+    def validate_trip_status(self, value):
         '''Change status based on input and the last known status of the trip.
 
         None -> REQUESTED
         REQUESTED -> PICKING UP
         PICKING UP -> DRIVING
         DRIVING -> FINISHED
-
         '''
         status_name = value
         if status_name not in TripStatus.STATUSES:
@@ -51,19 +52,10 @@ class TripSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        # get scenic Trips on the way to point B,
-        # if validated_data.get('scenic'):
-        #     locations = validated_data.get('routes')[0]
-        #     starting_point = [locations['start']['latitude'],
-        #                       locations['start']['latitude']]
-        #     ending_point = [locations['end']['latitude'],
-        #                     locations['end']['latitude']]
-        #     scenic_trip_builder(starting_point, ending_point)
-
         start_data = validated_data.pop('start')
-        start_address = Address(**start_data)
+        start_address = Address.objects.create(**start_data)
         end_data = validated_data.pop('end')
-        end_address = Address(**end_data)
+        end_address = Address.objects.create(**end_data)
         trip = Trip.objects.create(**validated_data)
         if trip.scenic:
             trip.trip_builder()
@@ -71,7 +63,4 @@ class TripSerializer(serializers.ModelSerializer):
         trip.end = end_address
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
-        # for route_data in routes_data:
-        #     start_aadr = Address.objects.create(**route_data['start'])
-        #     end_aadr = Address.objects.create(**route_data['end'])
         return trip
