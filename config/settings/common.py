@@ -30,7 +30,6 @@ DJANGO_APPS = (
 
     # Useful template tags:
     'django.contrib.humanize',
-    'crispy_forms',
 
     # Admin
     'django.contrib.admin',
@@ -41,6 +40,7 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'crispy_forms',
 )
 
 # Apps specific for this project go here.
