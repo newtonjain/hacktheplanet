@@ -36,14 +36,15 @@ class TripSerializer(serializers.ModelSerializer):
         if status_name not in TripStatus.STATUSES:
             raise serializers.ValidationError('Not a valid status name.')
 
-        if self.instance.trip_status.name is None:
+        if status_name is 'REQUESTED' and self.instance.trip_status.name is None:
             self.instance.status = TripStatus.objects.get(name='REQUESTED')
-        if status_name is 'REQUESTED':
+        if status_name is 'PICKING UP' and self.instance.status.name is 'REQUESTED':
             self.instance.status = TripStatus.objects.get(name='PICKING UP')
-        if status_name is 'PICKING UP':
+        if status_name is 'DRIVING' and self.instance.status.name is 'PICKING UP':
             self.instance.status = TripStatus.objects.get(name='DRIVING')
-        if status_name is 'DRIVING':
-            self.instance.status = TripStatus.objects.get(name='FINISIHED')
+        if status_name is 'FINISHED' and self.instance.status.name is 'DRIVING':
+            self.instance.status = TripStatus.objects.get(name='FINISHED')
+        self.instance.save(fields=['status_id'])
         return value
 
     def create(self, validated_data):
