@@ -6,6 +6,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-    name = models.CharField(blank=True, max_length=100, unique=True)
+    name = models.CharField(blank=True, max_length=100)
     description = models.TextField(blank=True, max_length=1000)
     facebook_id = models.BigIntegerField(null=True)
