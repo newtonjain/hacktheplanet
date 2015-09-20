@@ -4,8 +4,8 @@ from address.models import Address
 
 
 class AddressCreateDetailSerializer(serializers.ModelSerializer):
-    latitude = serializers.DecimalField(max_digits=10, decimal_places=5)
-    longitude = serializers.DecimalField(max_digits=10, decimal_places=5)
+    latitude = serializers.FloatField()
+    longitude = serializers.FloatField()
 
     class Meta:
         model = Address
