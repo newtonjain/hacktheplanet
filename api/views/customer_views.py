@@ -2,6 +2,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     ListCreateAPIView
 )
+from django.http import Http404
 
 from bmw.models import Customer
 from api.serializers.customers import (CustomerSerializer)
@@ -24,7 +25,9 @@ class CustomerDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         facebook_id = int(self.kwargs.get('pk'))
-        obj = Customer.objects.get(facebook_id=facebook_id)
+        obj = Customer.objects.filter(facebook_id=facebook_id).first()
+        if not obj:
+            raise Http404
         return obj
 
     def retrieve(self, request, *args, **kwargs):
