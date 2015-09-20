@@ -7,4 +7,4 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['id', 'name', 'email', 'description']
+        fields = ['id', 'name', 'email', 'description', 'facebook_id']
