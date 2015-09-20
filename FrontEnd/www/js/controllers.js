@@ -9,13 +9,14 @@ angular.module('starter.controllers', [])
     $scope.locations.latitude = 0;
     $scope.locations.longitude = 0;
     $scope.positions = [];
-    $scope.locations2;
-    $scope.positions2;
-    $scope.userType = {}
+    $scope.userType = {};
     $scope.userType.passanger = false;
     $scope.userType.rider = false;
     $scope.clicked = false;
     $scope.authData;
+    $scope.positions2={};
+    $scope.positions2.latitude = 0;
+    $scope.positions2.longitude = 0;
 
   var vcard  = {
     firstName: 'Shiva',
@@ -44,6 +45,8 @@ angular.module('starter.controllers', [])
   var itemsRef = new Firebase("https://bookmywride.firebaseio.com/");
   var passanger = new Firebase("https://bookmywride.firebaseio.com/passanger");
   var rider= new Firebase("https://bookmywride.firebaseio.com/rider");
+
+
 
     var itemsObj = $firebaseObject(itemsRef);
 
@@ -374,6 +377,8 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
     }
   };
 
+   passanger.child('endLocations').set(toSend.end);
+
   console.log('here is to send for patching trip', toSend);
   $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip', toSend)
     .success(function (data, status, headers, config) {
@@ -384,26 +389,36 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   };
 
 
-})
 
-.controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {
+
 $scope.driverObject;
-$scope.locations2={};
-$scope.positions2={};
+ 
 
   function _pickups() {
     $http.get('https://cryptic-oasis-6309.herokuapp.com/api/trip/driver/' + $scope.authData.id)
        .success(function (data) {
         $scope.driverObject = data;
-        console.log('nnnnnnnnnn', $scope.driverObject[0].start);
-        $scope.locations2= data[0].start;
-        $scope.positions2= data[0].end;
-        console.log(data, $scope.positions2);
+        console.log('nnnnnnnnnn', data[0].start, data[0].end );
+        // $scope.locations2 = data[0].start;
+        $scope.positions2= $scope.passanger.endLocations;
+        //$scope.positions2.longitude = data[0].end.longitude;
+        console.log('can we ever meet again',data[0], $scope.positions2);
+
+          $scope.passanger.forEach(function(item) {
+            console.log('logginf', item, $scope.driverObject[0].customer_facebook_id);
+        if(item.id && item.id == ($scope.driverObject[0].customer_facebook_id).toString()) {
+          console.log('found', item.userData);
+          $scope.xyz = item.userData;
+         // alert(JSON.stringify($scope.xyz));
+        }
+      })
           
        })
        .error(function (data) {
            // alert("Error: " + data);
        });
+
+
  }
  $scope.$watch('authData.id', function(id) {
   if(id) {
@@ -412,6 +427,11 @@ $scope.positions2={};
   }
  })
   
+
+
+})
+
+.controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {
 
   $scope.rideComplete = function() {
     $ionicActionSheet.show({

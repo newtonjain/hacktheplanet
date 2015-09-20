@@ -15,15 +15,20 @@
   <label class="item item-radio">
     <input  name="group" type="checkbox" ng-model="userType.passanger" ng-checked="userType.passanger.checked">
     <div class="item-content">
-      Passsanger
+      <h2><b>Passsenger</b></h2>
     </div>
     <i class="radio-icon ion-checkmark"></i>
   </label>
 
-    <label class="item item-radio">
+    <label class="item item-radio item-select">
     <input name="group" type="checkbox" ng-model="userType.rider" ng-checked="userType.rider.checked">
     <div class="item-content">
-     Rider
+      <h2><b>Rider</b></h2>
+      <select>
+      <option selected>Motorbike</option>
+      <option >Boat</option>
+      <option>Air-plane</option>
+    </select>
     </div>
     <i class="radio-icon ion-checkmark"></i>
   </label>
@@ -35,12 +40,16 @@
   <center><img src="img/fb.png" style="width:50%"></img></center>
 </div>
 
-<div class="card" ng-show="authData">
+<div class="card" ng-show="authData && (userType.passanger || userType.rider)">
   <div class="item item-text-wrap item-icon-right item-avatar">
   <img ng-src="{{authData.profileImageURL}}">
     Hello {{authData.displayName}}!
     <i class="icon ion-chevron-right icon-accessory" ng-click="savefbinfo(userType)"></i>
   </div>
+</div>
+
+<div ng-show="!(userType.passanger || userType.rider) && authData">
+  <center><p style="color:red">Please select a option from Passenger or Rider</p></center>
 </div>
 
   </ion-content>
