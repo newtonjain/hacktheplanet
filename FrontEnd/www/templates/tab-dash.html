@@ -1,21 +1,21 @@
 <ion-view view-title="Rider">
   <ion-content>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="37.41396, -122.07779" zoom="12" id="map" data-tap-disabled="true">
-    <marker  position="{{location2.latitude}}, {{location2.longitude}}"></marker>
-    <marker  position="{{position2.latitude}}, {{position2.latitude}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+<map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
+    <marker  position="({{locations.latitude}}, {{locations.longitude}})"></marker>
+  
   </map>
 
   <div class="row card">
     <div class="col col-30 col-center">
-        <img src="img/Erlich.png" style="width:75%">
+        <img src="{{xyz.cover}}" style="width:75%">
     </div>
     
     <div class="col col-40 col-center">
-        <h2>Erlich Bachman</h2>
+        <h2>{{xyz.displayName}}</h2>
         <p>415 - 739 - 3425</p>
-        <p>erlich.bachman@piedpiper.com</p>
-        <p><strong>Interests: </strong>startups, marijuana, technology, fine dining, bars, nightclubs, strip clubs</p>
+        <p>{{xyz.email}}</p>
+        <p><strong>Interests: </strong></p>
     </div>
     <div class="col col-30 col-center"> 
         <div class="row-center">
