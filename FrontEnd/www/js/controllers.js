@@ -1,15 +1,20 @@
 angular.module('starter.controllers', [])
 
 
-.controller('AppCtrl', function($scope, $http, $ionicActionSheet, $ionicModal, $firebaseArray, Items, Auth) {
+.controller('AppCtrl', function($scope, $http, $firebaseObject, $firebaseArray, $ionicActionSheet, $ionicModal, Items, Auth) {
     $scope.creditCard = {};
     $scope.amount = null;
     $scope.txid = null;
-    $scope.locations=[];
+    $scope.locations={};
+    $scope.locations.latitude = 0;
+    $scope.locations.longitude = 0;
     $scope.positions = [];
     $scope.locations2;
     $scope.positions2;
-    //$scope.clicked = false;
+    $scope.userType = {}
+    $scope.userType.passanger = false;
+    $scope.userType.rider = false;
+    $scope.clicked = false;
 
   var vcard  = {
     firstName: 'Shiva',
@@ -35,9 +40,30 @@ angular.module('starter.controllers', [])
 
   $scope.riders = [];
 
+  var itemsRef = new Firebase("https://bookmywride.firebaseio.com/");
+  var passanger = new Firebase("https://bookmywride.firebaseio.com/passanger");
+  var rider= new Firebase("https://bookmywride.firebaseio.com/rider");
+
+    var itemsObj = $firebaseObject(itemsRef);
+
+    $scope.passanger = $firebaseArray(passanger);
+    $scope.rider = $firebaseArray(rider);
+
+$scope.passanger.$watch(function(event) {
+  console.log('I am being triggered', event);
+  $scope.passanger = $firebaseArray(passanger);
+  console.log('passangr', $scope.passanger);
+});
+
+$scope.rider.$watch(function(event) {
+  console.log('I am being triggered', event);
+  $scope.rider = $firebaseArray(rider);
+  console.log('rider', $scope.rider);
+});
+
   function _getRiders () {
 
-     $http.get('https://cryptic-oasis-6309.herokuapp.com/user')
+     $http.get('https://cryptic-oasis-6309.herokuapp.com/api/driver')
         .success(function (data) {
            $scope.riders = data;
            console.log(data);
@@ -46,39 +72,108 @@ angular.module('starter.controllers', [])
             //alert("Error: " + data);
         });
   }
-
   _getRiders();
 
-  $scope.Items = Items;
+$scope.savefbinfo  = function() {
+      navigator.geolocation.getCurrentPosition(function(position){
+      console.log('here are the position', position);
+  $scope.locations.latitude = position.coords.latitude;
+   $scope.locations.longitude = position.coords.longitude;
+}, onError);
 
-  // $scope.Items.child('baby').$add({
-  //   Power: 'Newton',
-  //   Content: 'Lets Do this'
-  // });
+    $scope.authData.startingPosition = $scope.locations;
 
-//   var ref = new Firebase("https://bookmywride.firebaseio.com/");
-// ref.authWithOAuthPopup("facebook", function(error, authData) {
-//   if (error) {
-//     console.log("Login Failed!", error);
-//   } else {
-//     console.log("Authenticated successfully with payload:", authData);
-//   }
-// });
+   $scope.modallogin.hide();
+    console.log($scope.userType);
+    if($scope.userType.passanger == true) {
+      $scope.passanger.$add({
+        id: $scope.authData.id,
+        userData: $scope.authData
+      })
+
+  $http.get('https://cryptic-oasis-6309.herokuapp.com/api/customer' + $scope.authData.id)
+   .success(function (data) {
+         console.log('User exists');
+        })
+        .error(function (data) {
+
+          var toSend_Customer= {
+            "facebook_id": parseInt($scope.authData.id),
+            "name": $scope.authData.displayName,
+            "email": $scope.authData.email,
+            "description": $scope.authData.description
+          };
+
+    $http.post('https://cryptic-oasis-6309.herokuapp.com/api/customer', toSend_Customer)
+    .success(function (data, status, headers, config) {
+      console.log('saving data', JSON.stringify(data), JSON.stringify(status));
+    }).error(function (data, status, headers, config) {
+        console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+    });
+        });
+
+    }
+
+    if($scope.userType.rider== true) {
+      $scope.rider.$add({
+        id: $scope.authData.id,
+        userData: $scope.authData
+      })
+
+    var toSend_Driver= {
+    "facebook_id": parseInt($scope.authData.id),
+    "name": $scope.authData.displayName,
+    "email": $scope.authData.email,
+    "description": $scope.authData.description
+}
+
+ $http.post('https://cryptic-oasis-6309.herokuapp.com/api/driver', toSend_Driver)
+    .success(function (data, status, headers, config) {
+      console.log('saving data', data);
+    }).error(function (data, status, headers, config) {
+        console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+    });
+
+    }
+   
+  }
 
 $scope.login = function() {
-  Auth.$authWithOAuthPopup("facebook");
+  var ref = new Firebase("https://bookmywride.firebaseio.com/");
+ref.authWithOAuthPopup("facebook", function(error, authData) {
+  if (error) {
+    console.log("Login Failed!", error);
+  } else {
+    // the access token will allow us to make Open Graph API calls
+    console.log(authData.facebook.accessToken);
+    console.log("Logged in as", authData);
+
+    $scope.authData = authData.facebook; // This will display the user's name in our view
+  $http.get('https://graph.facebook.com/me?fields=cover,gender,age_range,birthday&access_token=' + authData.facebook.accessToken)
+        .success(function (data) {
+         console.log("got it" + JSON.stringify(data));
+        $scope.authData.cover = data.cover.source;
+        $scope.authData.gender = data.gender;
+        $scope.authData.age = data.age_range;
+        $scope.authData.id = data.id;
+        $scope.authData.birthday = data.birthday;
+        $scope.authData.description = "Erlich Bachman is a a supremely confident and arrogant entrepreneur who founded an innovation incubator in his home after the purchase of his airfare collator Aviato.";
+
+         console.log('kshdkjhdkjhsakjd', $scope.authData);
+        })
+        .error(function (data) {
+            console.log("Error: " + JSON.stringify(data));
+        });
+
+  }
+}, {
+  scope: "email,user_birthday" // the permissions requested
+});
 };
 
-// $scope.login();
 
-Auth.$onAuth(function(authData) {
-  if (authData === null) {
-    console.log("Not logged in yet");
-  } else {
-    console.log("Logged in as", authData);
-  }
-  $scope.authData = authData; // This will display the user's name in our view
-});
+
+
 
   $scope.options = function (option) {
     $scope.option = option;
@@ -184,6 +279,7 @@ Auth.$onAuth(function(authData) {
     }
 
 
+
 //////////////////////////
   $scope.useCurrentLocation = function() {
     navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
@@ -195,7 +291,10 @@ Auth.$onAuth(function(authData) {
   //
   var onSuccess = function(position) {
     var url = "insert url";
-      $scope.locations.push(position.coords);
+      $scope.locations.latitude = position.coords.latitude;
+   $scope.locations.longitude = position.coords.longitude;
+      console.log('bla', $scope.locations.latitude);
+      $scope.authData.startingPosition = $scope.locations;
       //$scope.location.lon = position.coords.longitude;
       $http({method: 'GET', url: url,
               params: {
@@ -234,43 +333,27 @@ Auth.$onAuth(function(authData) {
     };
 
 
-    var toSend= [
-    {
-        "id": 1,
-        "routes": [
-            {
-                "id": 1,
-                "name": "location 1",
-                "start": {
-                    "id": 1,
-                    "latitude": $scope.locations[0].latitude,
-                    "longitude": $scope.locations[0].longitude
-                },
-                "end": {
-                    "id": 2,
-                    "latitude": $scope.positions[0].lat,
-                    "longitude": $scope.positions[0].lng
-                }
-            }
-        ],
-        "scenic": scenic,
-        "start_ts": "2015-08-16T13:21:20.382226Z",
-        "status": "unconfirmed",
-        "users": [
-            selectedRiders[0].id,
-            selectedRiders[1].id,
-            selectedRiders[2].id,
-            5
-        ]
+    var toSend= {
+    "name": $scope.authData.displayName,
+    "scenic": scenic,
+    "driver_facebook_id": selectedRiders[0].facebook_id,
+    "customer_facebook_id": parseInt($scope.authData.id),
+    "start": {
+        "latitude": $scope.locations.latitude,
+        "longitude": $scope.locations.longitude
+    },
+    "end": {
+        "latitude": $scope.positions[0].lat,
+        "longitude": $scope.positions[0].lng
     }
-];
+  };
 
-console.log('here is to send', toSend);
-  $http.post('https://cryptic-oasis-6309.herokuapp.com/trip', toSend)
+  console.log('here is to send for patching trip', toSend);
+  $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip', toSend)
     .success(function (data, status, headers, config) {
-      $scope.modal.show();
+      console.log('here is response', JSON.stringify(data), JSON.stringify(status));
     }).error(function (data, status, headers, config) {
-        alert('There was a problem retrieving your information' + data + status);
+        console.log('There was a problem retrieving your information', JSON.stringify(data), JSON.stringify(status));
     });
   };
 
@@ -291,7 +374,7 @@ $scope.passanger;
           
        })
        .error(function (data) {
-           alert("Error: " + data);
+           // alert("Error: " + data);
        });
   }
   _pickups();

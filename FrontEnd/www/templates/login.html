@@ -5,35 +5,42 @@
   <ion-content>
   <br>
   <br>
-  <center><img src="img/bmw.png" style="border:3px solid black; padding: 5px" ></center>
+  <center><img src="img/bmw2.png" style="border:3px solid black; padding: 5px; width:50%" ></center>
+  <center><h1>3 Comma Rydes</h1></center>
     <br>
   <br>
+
+  <div class="list">
+
+  <label class="item item-radio">
+    <input  name="group" type="checkbox" ng-model="userType.passanger" ng-checked="userType.passanger.checked">
+    <div class="item-content">
+      Passsanger
+    </div>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+
+    <label class="item item-radio">
+    <input name="group" type="checkbox" ng-model="userType.rider" ng-checked="userType.rider.checked">
+    <div class="item-content">
+     Rider
+    </div>
+    <i class="radio-icon ion-checkmark"></i>
+  </label>
+
+
+</div>
+
   <div ng-hide="authData" class="card" ng-click="login()">
-  <button class="item">
-  Log In with Facebook
-  </button>
+  <center><img src="img/fb.png"></img></center>
 </div>
 
 <div class="card" ng-show="authData">
-  <div class="item item-text-wrap">
-    Hello {{authData.facebook.displayName}}!
+  <div class="item item-text-wrap item-icon-right item-avatar">
+    Hello {{authData.displayName}}!
+    <i class="icon ion-chevron-right icon-accessory" ng-click="savefbinfo(userType)"></i>
   </div>
 </div>
 
-    <form ng-submit="doLogin(username, password)">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
   </ion-content>
 </ion-modal-view>
