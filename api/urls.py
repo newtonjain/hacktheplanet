@@ -15,11 +15,11 @@ urlpatterns = patterns(
         trip_views.TripListCreateView.as_view(),
         name='trip_api'
         ),
-    url(r'^trip/driver/(?P<driver_pk>\d+)/?$',
+    url(r'^trip/driver/(?P<pk>\d+)/?$',
         trip_views.TripListCreateView.as_view(),
         name='trip_api'
         ),
-    url(r'^trip/customer/(?P<customer_pk>\d+)/?$',
+    url(r'^trip/customer/(?P<pk>\d+)/?$',
         trip_views.TripListCreateView.as_view(),
         name='trip_api'
         ),

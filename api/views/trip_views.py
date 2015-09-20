@@ -9,13 +9,13 @@ class TripListCreateView(ListCreateAPIView):
     serializer_class = trips.TripSerializer
 
     def get_queryset(self):
-        driver_pk = self.kwargs.get('driver_pk')
+        driver_pk = self.kwargs.get('pk')
         if driver_pk:
-            driver = Driver.objects.get(id=driver_pk)
+            driver = Driver.objects.get(facebook_id=driver_pk)
             return Trip.objects.filter(driver=driver)
-        customer_pk = self.kwargs.get('customer_pk')
+        customer_pk = self.kwargs.get('pk')
         if customer_pk:
-            customer = Customer.objects.get(id=customer_pk)
+            customer = Customer.objects.get(facebook_id=customer_pk)
             return Trip.objects.filter(customer=customer)
         return Trip.objects.all()
 
