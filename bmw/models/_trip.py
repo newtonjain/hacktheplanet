@@ -7,6 +7,7 @@ from address.models import AddressField, Address
 from ._common import TripStatus
 from ._customer import Customer
 from ._driver import Driver
+from bmw.yelp import Yelp
 
 
 class Trip(ArchivableModel):
@@ -26,6 +27,7 @@ class Trip(ArchivableModel):
         null=True,
         related_name='ending_trips')
     trip_status = models.ForeignKey(TripStatus, blank=True, null=True)
+    scenic_locations = models.ManyToManyField(Address, null=True)
 
     @property
     def price(self):
@@ -50,4 +52,12 @@ class Trip(ArchivableModel):
 
     def trip_builder(self):
         '''Builds a scenic trip based on the start and end points.'''
-        pass
+        yelp = Yelp()
+        # get locations based on single destination
+        locations = get_locations(
+            self.end.longitude,
+            self.end.latitude)
+
+
+
+
