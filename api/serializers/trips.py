@@ -56,7 +56,6 @@ class TripSerializer(serializers.ModelSerializer):
         return instance
 
     def create(self, validated_data):
-        print(validated_data)
         start_data = validated_data.pop('start')
         start_address = Address.objects.create(**start_data)
         end_data = validated_data.pop('end')
