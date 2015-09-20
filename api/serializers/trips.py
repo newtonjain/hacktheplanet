@@ -27,7 +27,8 @@ class TripSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trip
         fields = ['id', 'name', 'scenic', 'trip_status',
-                  'driver_facebook_id', 'customer_facebook_id', 'start', 'end', 'price']
+                  'driver_facebook_id', 'customer_facebook_id',
+                  'start', 'end', 'price']
 
     def update(self, instance, validated_data):
         '''Change status based on input and the last known status of the trip.
