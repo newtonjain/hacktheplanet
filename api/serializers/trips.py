@@ -24,11 +24,15 @@ class TripSerializer(serializers.ModelSerializer):
     customer_facebook_id = serializers.IntegerField(
         source='customer.facebook_id')
 
+    scenic_locations = addresses.AddressCreateDetailSerializer(
+        many=True,
+        required=False)
+
     class Meta:
         model = Trip
         fields = ['id', 'name', 'scenic', 'trip_status',
                   'driver_facebook_id', 'customer_facebook_id',
-                  'start', 'end', 'price']
+                  'start', 'end', 'price', 'scenic_locations']
 
     def update(self, instance, validated_data):
         '''Change status based on input and the last known status of the trip.
@@ -57,17 +61,19 @@ class TripSerializer(serializers.ModelSerializer):
         start_address = Address.objects.create(**start_data)
         end_data = validated_data.pop('end')
         end_address = Address.objects.create(**end_data)
-        driver_facebook_id = validated_data.pop('driver_facebook_id')
-        customer_facebook_id = validated_data.pop('customer_facebook_id')
-        driver = Driver.objects.get(facebook_id=driver_facebook_id)
-        customer = Customer.objects.get(facebook_id=customer_facebook_id)
+        driver_data = validated_data.pop('driver')
+        driver_facebook_id = driver_data.get('facebook_id')
+        customer_data = validated_data.pop('customer')
+        customer_facebook_id = customer_data.get('facebook_id')
+        driver = Driver.objects.filter(facebook_id=driver_facebook_id).first()
+        customer = Customer.objects.filter(facebook_id=customer_facebook_id).first()
         trip = Trip.objects.create(**validated_data)
         trip.driver = driver
         trip.customer = customer
-        # if trip.scenic:
-        #     trip.trip_builder()
         trip.start = start_address
         trip.end = end_address
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
+        if trip.scenic:
+            trip.trip_builder()
         return trip

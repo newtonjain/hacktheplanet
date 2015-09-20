@@ -16,11 +16,14 @@ TOKEN_SECRET = env("TOKEN_SECRET", default="")
 
 class Yelp(object):
 
-    def __init__(self):
+    def __init__(self, longitude, latitude):
         self.client = YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
+        self.longitude = str(longitude)
+        self.latitude = str(latitude)
 
     def get_locations(self):
         return self.client.search_query(
-            location=DEFAULT_LOCATION,
+            ll=self.latitude + ',' + self.longitude,
             limit=5,
-            category_filter=DEFAULT_TERMS)
+            category_filter=DEFAULT_TERMS,
+            radius_filter=5)

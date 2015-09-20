@@ -17,7 +17,7 @@ class Trip(ArchivableModel):
 
     # relationships
     driver = models.ForeignKey(Driver, related_name='driver_trips', null=True)
-    customer = models.ForeignKey(Customer, related_name='customer_trips')
+    customer = models.ForeignKey(Customer, related_name='customer_trips', null=True)
     start = AddressField(
         blank=True,
         null=True,
@@ -52,15 +52,16 @@ class Trip(ArchivableModel):
 
     def trip_builder(self):
         '''Builds a scenic trip based on the start and end points.'''
-        yelp = Yelp()
+        yelp = Yelp(
+            longitude=self.end.longitude,
+            latitude=self.end.latitude)
         # get locations based on single destination
-        yelp_location_data = yelp.get_locations(
-            self.end.longitude,
-            self.end.latitude)
+        yelp_location_data = yelp.get_locations()
         for location in yelp_location_data['businesses']:
-            coordinate = location['coordinate']
-            address = Address.objects.create(
-                latitude=coordinate.get('latitude'),
-                longitude=coordinate.get('longitude'))
-            self.scenic_locations.add(address)
+            coordinate = location['location'].get('coordinate')
+            if coordinate:
+                address = Address.objects.create(
+                    latitude=coordinate.get('latitude'),
+                    longitude=coordinate.get('longitude'))
+                self.scenic_locations.add(address)
         return
