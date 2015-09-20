@@ -5,8 +5,8 @@
   <ion-content>
   <br>
   <br>
-  <center><img src="img/bmw2.png" style="border:3px solid black; padding: 5px; width:50%" ></center>
-  <center><h1>3 Comma Rydes</h1></center>
+  <center><img src="img/bmw2.png" style="border:3px solid black; padding: 5px; width:20%; height:20%" ></center>
+  <center><h2>3 Comma Rydes</h2></center>
     <br>
   <br>
 
@@ -31,12 +31,13 @@
 
 </div>
 
-  <div ng-hide="authData" class="card" ng-click="login()">
-  <center><img src="img/fb.png"></img></center>
+  <div ng-hide="authData" ng-click="login()">
+  <center><img src="img/fb.png" style="width:50%"></img></center>
 </div>
 
 <div class="card" ng-show="authData">
   <div class="item item-text-wrap item-icon-right item-avatar">
+  <img ng-src="{{authData.profileImageURL}}">
     Hello {{authData.displayName}}!
     <i class="icon ion-chevron-right icon-accessory" ng-click="savefbinfo(userType)"></i>
   </div>

@@ -3,7 +3,7 @@
 
       <button ng-click="useCurrentLocation()" class="button button-balanced button-block" >Use current location</button>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="{{locations.latitude}}, {{locations.longitude}}" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
+<map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
     <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
     <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
     <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
@@ -26,7 +26,7 @@
     <img src="img/Bike{{$index+1}}.png" style="width:100%">
     </div>
     <div class="col col-50">  
-    <h3>{{ride.first_name}}</h3>
+    <h3>{{ride.name}}</h3>
       <p>Ph: {{ride.phone_number}}</p>
       <p>Description: {{ride.description}}</p>
       <p>Interests: {{ride.interests}}</p>
