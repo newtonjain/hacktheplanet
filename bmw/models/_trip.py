@@ -27,7 +27,7 @@ class Trip(ArchivableModel):
         null=True,
         related_name='ending_trips')
     trip_status = models.ForeignKey(TripStatus, blank=True, null=True)
-    scenic_locations = models.ManyToManyField(Address, null=True)
+    scenic_locations = models.ManyToManyField(Address)
 
     @property
     def price(self):
@@ -54,10 +54,13 @@ class Trip(ArchivableModel):
         '''Builds a scenic trip based on the start and end points.'''
         yelp = Yelp()
         # get locations based on single destination
-        locations = get_locations(
+        yelp_location_data = yelp.get_locations(
             self.end.longitude,
             self.end.latitude)
-
-
-
-
+        for location in yelp_location_data['businesses']:
+            coordinate = location['coordinate']
+            address = Address.objects.create(
+                latitude=coordinate.get('latitude'),
+                longitude=coordinate.get('longitude'))
+            self.scenic_locations.add(address)
+        return
