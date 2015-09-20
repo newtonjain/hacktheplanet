@@ -20,4 +20,14 @@ angular.module('starter.services', [])
             return null;
         }
     };
-});
+})
+
+.factory("Items", function($firebaseArray) {
+  var itemsRef = new Firebase("https://bookmywride.firebaseio.com/");
+  return $firebaseArray(itemsRef);
+})
+
+.factory("Auth", function($firebaseAuth) {
+  var usersRef = new Firebase("https://bookmywride.firebaseio.com/users");
+  return $firebaseAuth(usersRef);
+})

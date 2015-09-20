@@ -24,7 +24,7 @@ class DriverDetailView(RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         facebook_id = int(self.kwargs.get('pk'))
-        obj = Driver.objects.filter(facebook_id=facebook_id)
+        obj = Driver.objects.filter(facebook_id=facebook_id).first()
         return obj
 
     def retrieve(self, request, *args, **kwargs):

@@ -1,14 +1,27 @@
 from rest_framework import serializers
 from api.serializers import addresses
+import random
 
+from address.models import Address
 from bmw.models import Driver
 
 
 class DriverSerializer(serializers.ModelSerializer):
-    location = addresses.AddressCreateDetailSerializer()
+    location = addresses.AddressCreateDetailSerializer(required=False)
+    bike_model = serializers.CharField(required=False)
 
     class Meta:
         model = Driver
-        fields = ['id', 'username', 'name', 'email', 'description',
+        fields = ['id', 'name', 'email', 'description',
                   'bike_model', 'location', 'facebook_id']
-        read_only = ['location', 'bike_model']
+
+    def create(self, validated_data):
+        location_data = validated_data.pop('location')
+        location = Address.objects.create(**location_data)
+        driver = Driver.objects.create(
+            username=str(random.uniform(0.0, 1.0)),
+            **validated_data
+        )
+        driver.location = location
+        driver.save()
+        return driver
