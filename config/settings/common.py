@@ -30,7 +30,6 @@ DJANGO_APPS = (
 
     # Useful template tags:
     'django.contrib.humanize',
-    'crispy_forms',
 
     # Admin
     'django.contrib.admin',
@@ -41,6 +40,7 @@ THIRD_PARTY_APPS = (
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
+    'crispy_forms',
 )
 
 # Apps specific for this project go here.
@@ -248,11 +248,9 @@ LOGGING = {
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    ]
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    )
 }
 
 DATABASES = {

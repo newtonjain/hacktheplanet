@@ -20,6 +20,12 @@ class CustomerListCreateView(ListCreateAPIView):
 
 class CustomerDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
+
+    def get_object(self):
+        facebook_id = int(self.kwargs.get('pk'))
+        obj = Customer.objects.filter(facebook_id=facebook_id)
+        return obj
 
     def retrieve(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)

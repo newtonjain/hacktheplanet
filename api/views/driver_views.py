@@ -20,6 +20,12 @@ class DriverListCreateView(ListCreateAPIView):
 
 class DriverDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = drivers.DriverSerializer
+    queryset = Driver.objects.all()
+
+    def get_object(self):
+        facebook_id = int(self.kwargs.get('pk'))
+        obj = Driver.objects.filter(facebook_id=facebook_id).first()
+        return obj
 
     def retrieve(self, request, *args, **kwargs):
         return RetrieveUpdateDestroyAPIView.retrieve(self, request, *args, **kwargs)
