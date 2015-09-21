@@ -62,9 +62,20 @@ def order_points(points):
     Returns the same format in the optimum route
 
     [FOR TESTING]:
-    PAIR1 = [[3, 3], [1, 2], [0, 0], [2, -1], [3, 4], [5, 5]]
-    PAIR2 = [[1, 1], [5, 3], [8, 2], [6, 7], [2, 5], [-5, -7], [4, 4], [3, 2]]
-    PAIR3 = [[0, 0], [9, 1], [5, 5], [3, 1], [4, 2], [0, 13], [8, 5], [2, 10]]
+    ''' generates random lat-long pairs to the 7th decimal'''
+    import random
+
+    PAIR4 = []
+    for i in range(5):
+    temp = []
+    for j in range(2):
+    temp.append(round(random.random()*random.randrange(-1,2,2), 7))
+
+    PAIR4.append(temp)
+
+
+    print(PAIR4)
+    order_points(PAIR4)
     """
     print("\n<PAIR value='" + str(points) + "'>")
     points = points[::-1]
