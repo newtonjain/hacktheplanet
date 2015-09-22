@@ -35,25 +35,20 @@ class TripSerializer(serializers.ModelSerializer):
                   'start', 'end', 'price', 'scenic_locations']
 
     def update(self, instance, validated_data):
-        '''Change status based on input and the last known status of the trip.
-
-        None -> REQUESTED
-        REQUESTED -> PICKING UP
-        PICKING UP -> DRIVING
-        DRIVING -> FINISHED
+        '''Support writable nested fields.
+        Supported:
         '''
-        status_name = validated_data.get('trip_status')
-        status_name = status_name.get('name')
-        if status_name not in TripStatus.objects.all().values_list('name', flat=True):
-            raise serializers.ValidationError('Not a valid status name.')
-        if status_name == 'PICKING UP' and instance.trip_status.name == 'REQUESTED':
-            instance.trip_status = TripStatus.objects.get(name='PICKING UP')
-        if status_name == 'DRIVING' and instance.trip_status.name == 'PICKING UP':
-            instance.trip_status = TripStatus.objects.get(name='DRIVING')
-        if status_name == 'FINISHED' and instance.trip_status.name == 'DRIVING':
-            instance.trip_status = TripStatus.objects.get(name='FINISHED')
-        instance.save()
         return instance
+
+    def validate_trip_status(self, value):
+        '''If trip status comes in, call change_status.'''
+        trip_status = value
+        if not self.instance:
+            return value
+        if trip_status not in TripStatus.objects.all().values_list('name', flat=True):
+            raise serializers.ValidationError('Not a valid status name.')
+        self.instance.change_status(new_status=trip_status)
+        return trip_status
 
     def create(self, validated_data):
         start_data = validated_data.pop('start')
@@ -66,6 +61,8 @@ class TripSerializer(serializers.ModelSerializer):
         customer_facebook_id = customer_data.get('facebook_id')
         driver = Driver.objects.filter(facebook_id=driver_facebook_id).first()
         customer = Customer.objects.filter(facebook_id=customer_facebook_id).first()
+        if not (driver and customer):
+            raise serializers.ValidationError('not valid fb ids')
         trip = Trip.objects.create(**validated_data)
         trip.driver = driver
         trip.customer = customer

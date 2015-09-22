@@ -3,7 +3,7 @@ env = environ.Env()
 from yelpapi import YelpAPI
 
 API_HOST = 'api.yelp.com'
-DEFAULT_TERMS = 'landmarks,parks,hiking,lakes'
+DEFAULT_TERMS = 'landmarks,parks,hiking,lakes,golf,boating'
 DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 5
 SEARCH_PATH = '/v2/search/'

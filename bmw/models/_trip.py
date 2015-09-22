@@ -67,3 +67,15 @@ class Trip(ArchivableModel):
                     longitude=coordinate.get('longitude'))
                 self.scenic_locations.add(address)
         return
+
+    def change_status(self, new_status):
+        '''Change the status based on the status coming in and
+        the previous status.
+        '''
+        if new_status == 'PICKING UP' and self.trip_status.name == 'REQUESTED':
+            self.trip_status = TripStatus.objects.get(name='PICKING UP')
+        if new_status == 'DRIVING' and self.trip_status.name == 'PICKING UP':
+            self.trip_status = TripStatus.objects.get(name='DRIVING')
+        if new_status == 'FINISHED' and self.trip_status.name == 'DRIVING':
+            self.trip_status = TripStatus.objects.get(name='FINISHED')
+        self.save()
