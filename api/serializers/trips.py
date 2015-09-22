@@ -74,5 +74,6 @@ class TripSerializer(serializers.ModelSerializer):
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
         if trip.scenic:
+            print('creating yelp spots')
             trip.trip_builder()
         return trip
