@@ -4,12 +4,6 @@ Preview:
 
 ![lol](http://i.imgur.com/hnQklPw.png)
 
-# Getting Started
-##### Modules
-- [FrontEnd](https://github.com/newtonjain/hacktheplanet/tree/master/FrontEnd): UX Design
-- [docs](https://github.com/newtonjain/hacktheplanet/tree/master/docs): *you're reading them*
-- [requirements](https://github.com/newtonjain/hacktheplanet/tree/master/requirements): *lolwut?*
-- [utsu-bulletinboard](https://github.com/newtonjain/hacktheplanet/tree/master/utsu-bulletinboard): Django Infrastructure
 
 ## Setup
 
@@ -17,3 +11,11 @@ Preview:
 * set up ur db from the settings in common.py
 * `django migrate`
 * `django runserver`
+
+## Creating test data
+
+* make sure you have run `pip3 install -r requirements/local.txt`
+* `python3 manage.py shell`
+* `from bmw.factory import make_objects()`
+* `make_objects()`
+
