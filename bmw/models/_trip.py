@@ -58,7 +58,7 @@ class Trip(ArchivableModel):
         print('yelp client intiated')
         # get locations based on single destination
         yelp_location_data = yelp.get_locations()
-        print('yelp_location_data')
+        print(yelp_location_data)
         for location in yelp_location_data['businesses']:
             coordinate = location['location'].get('coordinate')
             if coordinate:
