@@ -62,13 +62,13 @@ class TripSerializer(serializers.ModelSerializer):
         if not (driver and customer):
             raise serializers.ValidationError('not valid fb ids')
         trip = Trip.objects.create(**validated_data)
-        send_unconfirmed(4169928476)
         trip.driver = driver
         trip.customer = customer
         trip.start = start_address
         trip.end = end_address
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
+        send_unconfirmed(trip.customer.phone_number)
         if trip.scenic:
             print('creating yelp spots')
             trip.trip_builder()
