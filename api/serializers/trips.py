@@ -50,7 +50,8 @@ class TripSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         scenic = validated_data.get('scenic')
-        if scenic and not validated_data.get('scenic_locations'):
+        scenic_locations = validated_data.get('scenic_locations')
+        if scenic and not scenic_locations:
             raise serializers.ValidationError(
                 'If scenic is true, you need scenic_locations!')
 
@@ -81,6 +82,12 @@ class TripSerializer(serializers.ModelSerializer):
 
         # default the status to REQUESTED
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
+
+        # create scenic locations
+        for location_data in scenic_locations:
+            location = Address.objects.create(**location_data)
+            trip.scenic_locations.add(location)
+
         trip.save()
         send_unconfirmed(trip.customer.phone_number)
         return trip
