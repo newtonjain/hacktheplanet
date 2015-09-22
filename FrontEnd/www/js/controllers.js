@@ -85,9 +85,6 @@ $scope.rider.$watch(function(event) {
      }, onError);
 
 $scope.savefbinfo  = function() {
- 
-
-
    $scope.modallogin.hide();
     console.log($scope.userType);
 
@@ -185,7 +182,6 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
         $scope.authData.gender = data.gender;
         $scope.authData.age = data.age_range;
         $scope.authData.id = data.id;
-        $scope.authData.birthday = data.birthday;
         $scope.authData.description = "Erlich Bachman is a a supremely confident and arrogant entrepreneur who founded an innovation incubator in his home after the purchase of his airfare collator Aviato.";
 
          console.log('kshdkjhdkjhsakjd', $scope.authData);
@@ -199,10 +195,6 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   scope: "email,user_birthday" // the permissions requested
 });
 };
-
-
-
-
 
   $scope.options = function (option) {
     $scope.option = option;
@@ -344,6 +336,14 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   $scope.$watch('locations', function (location) {
     console.log('here we go again', location);
   })
+
+//////////////////////////////////////////
+$scope.yelping = function() {
+
+
+}
+
+///////////////////////////////////////
 
   $scope.callRiders = function(riders) {
     var selectedRiders = [];
