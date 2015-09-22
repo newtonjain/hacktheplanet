@@ -9,6 +9,12 @@ from ._customer import Customer
 from ._driver import Driver
 from bmw.yelp import Yelp
 
+from api.utils.utils import (
+    send_unconfirmed,
+    send_confirmed,
+    send_arrived
+)
+
 
 class Trip(ArchivableModel):
     name = models.CharField(blank=True, null=True,
@@ -73,9 +79,12 @@ class Trip(ArchivableModel):
         the previous status.
         '''
         if new_status == 'PICKING UP' and self.trip_status.name == 'REQUESTED':
+            send_unconfirmed(4169928476)
             self.trip_status = TripStatus.objects.get(name='PICKING UP')
         if new_status == 'DRIVING' and self.trip_status.name == 'PICKING UP':
+            send_confirmed(4169928476)
             self.trip_status = TripStatus.objects.get(name='DRIVING')
         if new_status == 'FINISHED' and self.trip_status.name == 'DRIVING':
+            send_arrived(4169928476)
             self.trip_status = TripStatus.objects.get(name='FINISHED')
         self.save()

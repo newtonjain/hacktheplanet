@@ -1,9 +1,9 @@
 from twilio.rest import TwilioRestClient
+import environ
+env = environ.Env()
 
-from users.models import User
-
-account_sid = "AC7f33789db90afa45749656926700a7f1"
-auth_token = "63a1850c200e719d08c0d0c343d47e54"
+account_sid = env("ACCOUNT_SID", default="")
+auth_token = env("AUTH_TOKEN", default="")
 client = TwilioRestClient(account_sid, auth_token)
 
 
