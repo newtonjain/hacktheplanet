@@ -16,11 +16,11 @@ urlpatterns = patterns(
         name='trip_api'
         ),
     url(r'^trip/driver/(?P<pk>\d+)/?$',
-        trip_views.TripListCreateView.as_view(),
+        trip_views.DriverTripListCreateView.as_view(),
         name='trip_api'
         ),
     url(r'^trip/customer/(?P<pk>\d+)/?$',
-        trip_views.TripListCreateView.as_view(),
+        trip_views.CustomerTripListCreateView.as_view(),
         name='trip_api'
         ),
     # JUST CURRENTLY SUPPORTS PATCHING TRIP_STATUS
