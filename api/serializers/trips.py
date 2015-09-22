@@ -73,3 +73,10 @@ class TripSerializer(serializers.ModelSerializer):
             print('creating yelp spots')
             trip.trip_builder()
         return trip
+
+
+class ScenicRouteSerializer(serializers.BaseSerializer):
+    end = addresses.AddressCreateDetailSerializer()
+    scenic_locations = addresses.AddressCreateDetailSerializer(
+        many=True,
+        required=False)
