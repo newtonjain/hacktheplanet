@@ -4,11 +4,9 @@ from address.models import Address
 from bmw.models import Trip, TripStatus, Customer, Driver
 from api.serializers import addresses
 
-# from api.utils.utils import scenic_trip_builder
-# from api.utils.utils import (
-#    send_arrived,
-#    send_confirmed
-# )
+from api.utils.utils import (
+    send_unconfirmed
+)
 
 
 class TripSerializer(serializers.ModelSerializer):
@@ -64,6 +62,7 @@ class TripSerializer(serializers.ModelSerializer):
         if not (driver and customer):
             raise serializers.ValidationError('not valid fb ids')
         trip = Trip.objects.create(**validated_data)
+        send_unconfirmed(4169928476)
         trip.driver = driver
         trip.customer = customer
         trip.start = start_address
