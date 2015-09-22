@@ -13,7 +13,7 @@ class DriverSerializer(serializers.ModelSerializer):
         model = Driver
         fields = ['id', 'name', 'email', 'description',
                   'bike_model', 'location', 'facebook_id',
-                  'phone_number']
+                  'phone_number', 'profile_picture_url']
         read_only = ['bike_model']
 
     def create(self, validated_data):
