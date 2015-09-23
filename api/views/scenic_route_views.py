@@ -5,7 +5,7 @@ from rest_framework import status
 from bmw.yelp import Yelp
 
 
-class ScneicRouteCreateView(APIView):
+class ScenicRouteCreateView(APIView):
 
     def get(self, request, *args, **kwargs):
         print(request.data.__dict__)
