@@ -8,7 +8,8 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['id', 'name', 'email', 'description', 'facebook_id']
+        fields = ['id', 'name', 'email', 'description', 'facebook_id',
+                  'phone_number']
 
     def create(self, validated_data):
         customer = Customer.objects.create(

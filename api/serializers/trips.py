@@ -4,11 +4,9 @@ from address.models import Address
 from bmw.models import Trip, TripStatus, Customer, Driver
 from api.serializers import addresses
 
-# from api.utils.utils import scenic_trip_builder
-# from api.utils.utils import (
-#    send_arrived,
-#    send_confirmed
-# )
+from api.utils.utils import (
+    send_unconfirmed
+)
 
 
 class TripSerializer(serializers.ModelSerializer):
@@ -70,6 +68,7 @@ class TripSerializer(serializers.ModelSerializer):
         trip.end = end_address
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
         trip.save()
+        send_unconfirmed(trip.customer.phone_number)
         if trip.scenic:
             print('creating yelp spots')
             trip.trip_builder()
