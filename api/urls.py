@@ -4,7 +4,8 @@ from .views import (
     trip_views,
     driver_views,
     customer_views,
-    transaction_views
+    transaction_views,
+    scenic_route_views
 )
 
 urlpatterns = patterns(
@@ -53,5 +54,11 @@ urlpatterns = patterns(
     url(r'^transaction/?$',
         transaction_views.TransactionListCreateView.as_view(),
         name='transaction_api'
+        ),
+
+    # scenic route api
+    url(r'^scenic-route/?$',
+        scenic_route_views.ScenicRouteCreateView.as_view(),
+        name='scenic_route_api'
         ),
 )

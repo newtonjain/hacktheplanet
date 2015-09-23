@@ -49,10 +49,19 @@ class TripSerializer(serializers.ModelSerializer):
         return trip_status
 
     def create(self, validated_data):
+        scenic = validated_data.get('scenic')
+        scenic_locations = validated_data.pop('scenic_locations')
+        if scenic and not scenic_locations:
+            raise serializers.ValidationError(
+                'If scenic is true, you need scenic_locations!')
+
+        # create start and end dates
         start_data = validated_data.pop('start')
         start_address = Address.objects.create(**start_data)
         end_data = validated_data.pop('end')
         end_address = Address.objects.create(**end_data)
+
+        # attach drivers and customers based on fb ids
         driver_data = validated_data.pop('driver')
         driver_facebook_id = driver_data.get('facebook_id')
         customer_data = validated_data.pop('customer')
@@ -61,15 +70,32 @@ class TripSerializer(serializers.ModelSerializer):
         customer = Customer.objects.filter(facebook_id=customer_facebook_id).first()
         if not (driver and customer):
             raise serializers.ValidationError('not valid fb ids')
+
+        # create the trip
         trip = Trip.objects.create(**validated_data)
+
+        # attach the driver and customer
         trip.driver = driver
         trip.customer = customer
         trip.start = start_address
         trip.end = end_address
+
+        # default the status to REQUESTED
         trip.trip_status = TripStatus.objects.get(name='REQUESTED')
+
+        # create scenic locations
+        for location_data in scenic_locations:
+            location = Address.objects.create(**location_data)
+            trip.scenic_locations.add(location)
+
         trip.save()
+        print('sending unconfirmed')
         send_unconfirmed(trip.customer.phone_number)
-        if trip.scenic:
-            print('creating yelp spots')
-            trip.trip_builder()
         return trip
+
+
+class ScenicRouteSerializer(serializers.BaseSerializer):
+    end = addresses.AddressCreateDetailSerializer()
+    scenic_locations = addresses.AddressCreateDetailSerializer(
+        many=True,
+        required=False)

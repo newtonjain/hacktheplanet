@@ -18,8 +18,8 @@ class Yelp(object):
 
     def __init__(self, longitude, latitude):
         self.client = YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
-        self.longitude = str(-122.343574628432)
-        self.latitude = str(37.7881330131943)
+        self.longitude = str(longitude)
+        self.latitude = str(latitude)
 
     def get_locations(self):
         return self.client.search_query(

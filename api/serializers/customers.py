@@ -9,7 +9,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
         fields = ['id', 'name', 'email', 'description', 'facebook_id',
-                  'phone_number']
+                  'phone_number', 'profile_picture_url']
 
     def create(self, validated_data):
         customer = Customer.objects.create(
