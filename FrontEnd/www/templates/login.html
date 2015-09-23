@@ -4,16 +4,13 @@
   </ion-header-bar>
   <ion-content>
   <br>
-  <br>
-  <center><img src="img/bmw.png" style="border:3px solid black" ></center>
-
+  <center><img src="img/bmwLogo.png" style="border:3px solid black; width:325px " ></center>
     <br>
-  <br>
 
   <div class="list">
 
   <label class="item item-radio">
-    <input  name="group" type="checkbox" ng-model="userType.passanger" ng-checked="userType.passanger.checked">
+    <input name="group" type="checkbox" ng-model="userType.passanger" ng-checked="userType.passanger.checked" ng-click="checkPassanger()">
     <div class="item-content">
       <h2><b>Passsenger</b></h2>
     </div>
@@ -21,18 +18,12 @@
   </label>
 
     <label class="item item-radio item-select">
-    <input name="group" type="checkbox" ng-model="userType.rider" ng-checked="userType.rider.checked">
+    <input name="group" type="checkbox" ng-model="userType.rider" ng-checked="userType.rider.checked" ng-click="checkRider()">
     <div class="item-content">
       <h2><b>Rider</b></h2>
-      <select>
-      <option selected>Motorbike</option>
-      <option >Boat</option>
-      <option>Air-plane</option>
-    </select>
     </div>
     <i class="radio-icon ion-checkmark"></i>
   </label>
-
 
 </div>
 
