@@ -7,7 +7,7 @@ from bmw.yelp import Yelp
 
 class ScenicRouteCreateView(APIView):
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         print(request.data.__dict__)
         yelp_client = Yelp(
             longitude=0,

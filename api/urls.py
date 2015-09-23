@@ -57,7 +57,7 @@ urlpatterns = patterns(
         ),
 
     # scenic route api
-    url(r'^scenic-route/(?P<pk>\d+)/?$',
+    url(r'^scenic-route/?$',
         scenic_route_views.ScenicRouteCreateView.as_view(),
         name='scenic_route_api'
         ),
