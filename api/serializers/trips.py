@@ -50,10 +50,12 @@ class TripSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         scenic = validated_data.get('scenic')
-        scenic_locations = validated_data.pop('scenic_locations')
-        if scenic and not scenic_locations:
+        is_scenic_locations = validated_data.get('scenic_locations')
+        if scenic and not is_scenic_locations:
             raise serializers.ValidationError(
                 'If scenic is true, you need scenic_locations!')
+        elif scenic:
+            scenic_locations = validated_data.pop('scenic_locations')
 
         # create start and end dates
         start_data = validated_data.pop('start')
