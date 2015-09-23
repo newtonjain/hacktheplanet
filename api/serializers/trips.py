@@ -50,7 +50,7 @@ class TripSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         scenic = validated_data.get('scenic')
-        scenic_locations = validated_data.get('scenic_locations')
+        scenic_locations = validated_data.pop('scenic_locations')
         if scenic and not scenic_locations:
             raise serializers.ValidationError(
                 'If scenic is true, you need scenic_locations!')

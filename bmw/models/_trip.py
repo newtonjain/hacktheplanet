@@ -78,12 +78,14 @@ class Trip(ArchivableModel):
         the previous status.
         '''
         if new_status == 'PICKING UP' and self.trip_status.name == 'REQUESTED':
+            print('sending confirmed text')
             send_confirmed(self.customer.phone_number)
             self.trip_status = TripStatus.objects.get(name='PICKING UP')
         if new_status == 'DRIVING' and self.trip_status.name == 'PICKING UP':
             self.trip_status = TripStatus.objects.get(name='DRIVING')
         if new_status == 'ARRIVED' and self.trip_status.name == 'DRIVING':
             self.trip_status = TripStatus.objects.get(name='ARRIVED')
+            print('send arrived text')
             send_arrived(self.customer.phone_number)
         if new_status == 'FINISHED' and self.trip_status.name == 'ARRIVED':
             self.trip_status = TripStatus.objects.get(name='FINISHED')
