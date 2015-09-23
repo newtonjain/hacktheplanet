@@ -9,9 +9,12 @@ class ScenicRouteCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         print(request.data.__dict__)
+        end_data = request.data.get('end')
+        longitude = end_data.get('longitude')
+        latitude = end_data.get('latitude')
         yelp_client = Yelp(
-            longitude=0,
-            latitude=0)
+            longitude=longitude,
+            latitude=latitude)
         yelp_location_data = yelp_client.get_locations()
         print(yelp_location_data)
         result = []
