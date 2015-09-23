@@ -8,7 +8,6 @@ from bmw.yelp import Yelp
 class ScenicRouteCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
-        print(request.data.__dict__)
         end_data = request.data.get('end')
         longitude = end_data.get('longitude')
         latitude = end_data.get('latitude')
