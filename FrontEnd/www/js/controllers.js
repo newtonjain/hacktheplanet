@@ -175,7 +175,7 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   $http.get('https://graph.facebook.com/me?fields=cover,gender,age_range,birthday,picture.width(800).height(800)&access_token=' + authData.facebook.accessToken)
         .success(function (data) {
          console.log("got it" + JSON.stringify(data));
-        $scope.authData.cover = data.cover.source;
+        $scope.authData.cover = data.picture.data.url;
         $scope.authData.gender = data.gender;
         $scope.authData.age = data.age_range;
         $scope.authData.id = data.id;
@@ -389,8 +389,6 @@ $scope.checkPassanger = function() {
         console.log('There was a problem retrieving your information', JSON.stringify(data), JSON.stringify(status));
     });
   };
-
-
 
 
 $scope.driverObject;
