@@ -397,11 +397,9 @@ $scope.driverObject;
   function _pickups() {
     $http.get('https://cryptic-oasis-6309.herokuapp.com/api/trip/driver/' + $scope.authData.id)
        .success(function (data) {
-        console.log('the pickup data is as follow', data.length);
+        console.log('the pickup data is as follow', data);
         if(data.length){
         $scope.driverObject = data;
-        console.log('nnnnnnnnnn', data[0].start, data[0].end);
-        // $scope.locations2 = data[0].start;
         $scope.positions2= $scope.passanger.endLocations;
         //$scope.positions2.longitude = data[0].end.longitude;
         console.log('can we ever meet again',data[0], $scope.positions2);
@@ -419,8 +417,6 @@ $scope.driverObject;
        .error(function (data) {
            // alert("Error: " + data);
        });
-
-
  }
  $scope.$watch('authData.id', function(id) {
   if(id) {
@@ -429,8 +425,6 @@ $scope.driverObject;
   }
  })
   
-
-
 })
 
 .controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {

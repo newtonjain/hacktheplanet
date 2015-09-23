@@ -2,8 +2,8 @@
   <ion-content>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
-    <marker  position="({{locations.latitude}}, {{locations.longitude}})"></marker>
-  
+       <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
+    <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
   </map>
 
   <div class="row card" ng-show="xyz">
