@@ -89,6 +89,7 @@ class TripSerializer(serializers.ModelSerializer):
             trip.scenic_locations.add(location)
 
         trip.save()
+        print('sending unconfirmed')
         send_unconfirmed(trip.customer.phone_number)
         return trip
 

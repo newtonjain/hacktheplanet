@@ -7,7 +7,6 @@ from address.models import AddressField, Address
 from ._common import TripStatus
 from ._customer import Customer
 from ._driver import Driver
-from bmw.yelp import Yelp
 
 from api.utils.utils import (
     send_confirmed,
@@ -54,24 +53,6 @@ class Trip(ArchivableModel):
         c = 2 * asin(sqrt(a))
         km = 6367 * c
         return km * 200
-
-    # def trip_builder(self):
-    #     '''Builds a scenic trip based on the start and end points.'''
-    #     yelp = Yelp(
-    #         longitude=self.end.longitude,
-    #         latitude=self.end.latitude)
-    #     print('yelp client intiated')
-    #     # get locations based on single destination
-    #     yelp_location_data = yelp.get_locations()
-    #     print(yelp_location_data)
-    #     for location in yelp_location_data['businesses']:
-    #         coordinate = location['location'].get('coordinate')
-    #         if coordinate:
-    #             address = Address.objects.create(
-    #                 latitude=coordinate.get('latitude'),
-    #                 longitude=coordinate.get('longitude'))
-    #             self.scenic_locations.add(address)
-    #     return
 
     def change_status(self, new_status):
         '''Change the status based on the status coming in and
