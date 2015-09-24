@@ -5,7 +5,7 @@
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
     <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
-    <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+    <marker position="{{positions.latitude}}, {{positions.longitude}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
     <marker ng-repeat="points in attractions" position="{{points.latitude}}, {{points.longitude}}" icon="https://maps.google.com/mapfiles/kml/shapes/schools_maps.png"></marker>
     <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
     </shape>
@@ -13,10 +13,10 @@
       
       <div class="row">
         <div class="col col-50">
-            <button class="button button-block" ng-class="{'button-balanced' : clicked}" ng-click="options('Economical'); clicked = !clicked">Economical</button>
+            <button class="button button-block" ng-class="{'button-balanced' : clicked && !adventurous}" ng-click="options('Economical'); clicked = !clicked">Economical</button>
         </div>
         <div class="col col-50">
-            <button class="button button-block" ng-class="{'button-assertive' : clicked2}" ng-click="options('Adventurous'); clicked2 = !clicked2">Adventurous</button>
+            <button class="button button-block" ng-class="{'button-assertive' : adventurous}" ng-click="options('Adventurous'); clicked2 = !clicked2">Adventurous</button>
         </div>
       </div>
 

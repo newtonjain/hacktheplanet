@@ -8,7 +8,7 @@
     <br>
 
   <div class="list">
-
+<p><center>Please make a selection</center></p>
   <label class="item item-radio">
     <input name="group" type="checkbox" ng-model="userType.passanger" ng-checked="userType.passanger.checked" ng-click="checkPassanger()">
     <div class="item-content">
@@ -25,6 +25,12 @@
     <i class="radio-icon ion-checkmark"></i>
   </label>
 
+</div>
+
+<div class="list list-inset">
+  <label class="item item-input">
+    <input type="number" placeholder="Enter your phone number" ng-model="userType.phoneNumber">
+  </label>
 </div>
 
   <div ng-hide="authData" ng-click="login()">

@@ -104,7 +104,8 @@ $scope.savefbinfo  = function() {
                     "name": $scope.authData.displayName,
                     "email": $scope.authData.email,
                     "description": $scope.authData.description,
-                    "profile_picture_url": $scope.authData.profileImageURL
+                    "profile_picture_url": $scope.authData.profileImageURL,
+                    "phone_number": $scope.userType.phoneNumber
                   };
 
             $http.post('https://cryptic-oasis-6309.herokuapp.com/api/customer', toSend_Customer)
@@ -143,7 +144,8 @@ $scope.savefbinfo  = function() {
             "latitude": $scope.locations.latitude,
             "longitude": $scope.locations.longitude
         },
-        "profile_picture_url": $scope.authData.profileImageURL
+        "profile_picture_url": $scope.authData.profileImageURL,
+        "phone_number": $scope.userType.phoneNumber
         }
         $http.post('https://cryptic-oasis-6309.herokuapp.com/api/driver', toSend_Driver)
         .success(function (data, status, headers, config) {
@@ -195,6 +197,13 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
 
   $scope.options = function (option) {
     $scope.option = option;
+    if(option === 'Economical'){
+         $scope.adventurous = false;    
+    } else {
+        $scope.adventurous = true;    
+    }
+    console.log('the selection had been made', $scope.adventurous);
+
   }
 
    $ionicModal.fromTemplateUrl('templates/transactionComplete.html', {
@@ -418,13 +427,13 @@ $scope.driverObject;
            // alert("Error: " + data);
        });
  }
+
  $scope.$watch('authData.id', function(id) {
   if(id) {
   _pickups();
     
   }
  })
-  
 })
 
 .controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {
@@ -449,8 +458,10 @@ $scope.driverObject;
   
   $scope.addMarker = function(event) {
     var ll = event.latLng;
-    $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
-    console.log($scope.positions);
+    $scope.positions.latitude = ll.lat();
+    $scope.positions.longitude = ll.lng();
+  
+    console.log('Final destination has been set', $scope.positions);
   }
 
   $scope.cities = {
