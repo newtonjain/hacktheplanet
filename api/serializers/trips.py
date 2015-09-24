@@ -92,7 +92,7 @@ class TripSerializer(serializers.ModelSerializer):
 
         trip.save()
         print('sending unconfirmed')
-        send_unconfirmed(trip.customer.phone_number)
+        send_unconfirmed(trip.driver.phone_number)
         return trip
 
 
