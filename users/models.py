@@ -10,4 +10,4 @@ class User(AbstractUser):
     description = models.TextField(blank=True, max_length=1000)
     facebook_id = models.BigIntegerField(null=True)
     phone_number = models.BigIntegerField(null=True)
-    profile_picture_url = models.URLField(max_length=200, null=True)
+    profile_picture_url = models.URLField(max_length=1000, null=True)
