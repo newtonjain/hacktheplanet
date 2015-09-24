@@ -62,9 +62,7 @@ class Trip(ArchivableModel):
             print('sending confirmed text')
             send_confirmed(self.customer.phone_number)
             self.trip_status = TripStatus.objects.get(name='PICKING UP')
-        if new_status == 'DRIVING' and self.trip_status.name == 'PICKING UP':
-            self.trip_status = TripStatus.objects.get(name='DRIVING')
-        if new_status == 'ARRIVED' and self.trip_status.name == 'DRIVING':
+        if new_status == 'ARRIVED' and self.trip_status.name == 'PICKING UP':
             self.trip_status = TripStatus.objects.get(name='ARRIVED')
             print('send arrived text')
             send_arrived(self.customer.phone_number)

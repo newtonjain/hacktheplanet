@@ -16,6 +16,11 @@ class DriverSerializer(serializers.ModelSerializer):
                   'phone_number', 'profile_picture_url']
         read_only = ['bike_model']
 
+    def validate_phone_number(self, value):
+        phone_number = value
+        if len(phone_number) >= 12:
+            raise serializers.ValidationError('Phone number is too long!')
+
     def create(self, validated_data):
         location_data = validated_data.pop('location')
         location = Address.objects.create(**location_data)
