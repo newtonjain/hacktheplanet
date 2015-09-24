@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 from __future__ import absolute_import, unicode_literals
 
 import environ
+from django import http
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('')
@@ -267,3 +268,33 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 XS_SHARING_ALLOWED_ORIGINS = '*'
+XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
+
+
+class XsSharing(object):
+    """
+        This middleware allows cross-domain XHR using the html5 postMessage API.
+
+        Access-Control-Allow-Origin: http://foo.example
+        Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE
+    """
+    def process_request(self, request):
+
+        if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
+            response = http.HttpResponse()
+            response['Access-Control-Allow-Origin'] = XS_SHARING_ALLOWED_ORIGINS
+            response['Access-Control-Allow-Methods'] = ",".join(XS_SHARING_ALLOWED_METHODS)
+
+            return response
+
+        return None
+
+    def process_response(self, request, response):
+        # Avoid unnecessary work
+        if response.has_header('Access-Control-Allow-Origin'):
+            return response
+
+        response['Access-Control-Allow-Origin'] = XS_SHARING_ALLOWED_ORIGINS
+        response['Access-Control-Allow-Methods'] = ",".join(XS_SHARING_ALLOWED_METHODS)
+
+        return response
