@@ -17,6 +17,8 @@ angular.module('starter.controllers', [])
     $scope.positions2={};
     $scope.positions2.latitude = 0;
     $scope.positions2.longitude = 0;
+    $scope.requestedRides = [];
+
 
   var vcard  = {
     firstName: 'Shiva',
@@ -104,7 +106,8 @@ $scope.savefbinfo  = function() {
                     "name": $scope.authData.displayName,
                     "email": $scope.authData.email,
                     "description": $scope.authData.description,
-                    "profile_picture_url": $scope.authData.profileImageURL
+                    "profile_picture_url": $scope.authData.profileImageURL,
+                    "phone_number": $scope.userType.phoneNumber
                   };
 
             $http.post('https://cryptic-oasis-6309.herokuapp.com/api/customer', toSend_Customer)
@@ -143,7 +146,8 @@ $scope.savefbinfo  = function() {
             "latitude": $scope.locations.latitude,
             "longitude": $scope.locations.longitude
         },
-        "profile_picture_url": $scope.authData.profileImageURL
+        "profile_picture_url": $scope.authData.profileImageURL,
+        "phone_number": $scope.userType.phoneNumber
         }
         $http.post('https://cryptic-oasis-6309.herokuapp.com/api/driver', toSend_Driver)
         .success(function (data, status, headers, config) {
@@ -195,6 +199,13 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
 
   $scope.options = function (option) {
     $scope.option = option;
+    if(option === 'Economical'){
+         $scope.adventurous = false;    
+    } else {
+        $scope.adventurous = true;    
+    }
+    console.log('the selection had been made', $scope.adventurous);
+
   }
 
    $ionicModal.fromTemplateUrl('templates/transactionComplete.html', {
@@ -397,40 +408,42 @@ $scope.driverObject;
   function _pickups() {
     $http.get('https://cryptic-oasis-6309.herokuapp.com/api/trip/driver/' + $scope.authData.id)
        .success(function (data) {
-        console.log('the pickup data is as follow', data.length);
+        console.log('the pickup data is as follow', data);
         if(data.length){
         $scope.driverObject = data;
-        console.log('nnnnnnnnnn', data[0].start, data[0].end);
-        // $scope.locations2 = data[0].start;
         $scope.positions2= $scope.passanger.endLocations;
         //$scope.positions2.longitude = data[0].end.longitude;
         console.log('can we ever meet again',data[0], $scope.positions2);
+        data.forEach(function(item){
+            console.log('this is the for each item', item);
+             $http.get('https://cryptic-oasis-6309.herokuapp.com/api/customer/' + item.customer_facebook_id)
+        .success(function (data) {
 
-          $scope.passanger.forEach(function(item) {
-            console.log('logginf', item, $scope.driverObject[0].customer_facebook_id);
-        if(item.id && item.id == ($scope.driverObject[0].customer_facebook_id).toString()) {
-          console.log('found', item.userData);
-          $scope.xyz = item.userData;
-         // alert(JSON.stringify($scope.xyz));
-        }
-      })
+            $scope.requestedRides.push(data);
+
+            console.log('this is the returned data ', data, $scope.requestedRides );
+        }).error(function(data){
+            console.log('cant find a specific customer who requested a ride');
+        })
+    });
           }
        })
        .error(function (data) {
            // alert("Error: " + data);
        });
-
-
  }
+
+ $scope.onfirmedRide = function(ride) {
+    $scope.rideConformed = ride.checked;
+    console.log('/////////////////', $scope.rideConformed, ride.checked);
+ }
+
  $scope.$watch('authData.id', function(id) {
-  if(id) {
+  if(id && $scope.userType.rider) {
   _pickups();
     
   }
  })
-  
-
-
 })
 
 .controller('DashCtrl', function ($scope, $http, $ionicActionSheet, $ionicModal) {
@@ -455,8 +468,10 @@ $scope.driverObject;
   
   $scope.addMarker = function(event) {
     var ll = event.latLng;
-    $scope.positions.push({lat:ll.lat(), lng: ll.lng()});
-    console.log($scope.positions);
+    $scope.positions.latitude = ll.lat();
+    $scope.positions.longitude = ll.lng();
+  
+    console.log('Final destination has been set', $scope.positions);
   }
 
   $scope.cities = {
