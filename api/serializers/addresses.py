@@ -9,4 +9,4 @@ class AddressCreateDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Address
-        fields = ['id', 'latitude', 'longitude']
+        fields = ['latitude', 'longitude']
