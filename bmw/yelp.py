@@ -3,8 +3,8 @@ env = environ.Env()
 from yelpapi import YelpAPI
 
 API_HOST = 'api.yelp.com'
-DEFAULT_TERMS = 'landmarks,parks,hiking,lakes,golf,boating'
-DEFAULT_LOCATION = 'San Francisco, CA'
+# DEFAULT_TERMS = 'landmarks,parks,hiking,lakes,golf,boating'
+# DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 5
 SEARCH_PATH = '/v2/search/'
 
@@ -20,10 +20,9 @@ class Yelp(object):
         self.client = YelpAPI(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET)
         self.longitude = str(longitude)
         self.latitude = str(latitude)
+        print(self.latitude, self.longitude)
 
     def get_locations(self):
         return self.client.search_query(
             ll=self.latitude + ',' + self.longitude,
-            limit=5,
-            category_filter=DEFAULT_TERMS,
-            radius_filter=100)
+            limit=5)
