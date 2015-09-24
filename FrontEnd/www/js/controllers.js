@@ -17,6 +17,8 @@ angular.module('starter.controllers', [])
     $scope.positions2={};
     $scope.positions2.latitude = 0;
     $scope.positions2.longitude = 0;
+    $scope.requestedRides = [];
+
 
   var vcard  = {
     firstName: 'Shiva',
@@ -412,15 +414,18 @@ $scope.driverObject;
         $scope.positions2= $scope.passanger.endLocations;
         //$scope.positions2.longitude = data[0].end.longitude;
         console.log('can we ever meet again',data[0], $scope.positions2);
+        data.forEach(function(item){
+            console.log('this is the for each item', item);
+             $http.get('https://cryptic-oasis-6309.herokuapp.com/api/customer/' + item.customer_facebook_id)
+        .success(function (data) {
 
-          $scope.passanger.forEach(function(item) {
-            console.log('logginf', item, $scope.driverObject[0].customer_facebook_id);
-        if(item.id && item.id == ($scope.driverObject[0].customer_facebook_id).toString()) {
-          console.log('found', item.userData);
-          $scope.xyz = item.userData;
-         // alert(JSON.stringify($scope.xyz));
-        }
-      })
+            $scope.requestedRides.push(data);
+
+            console.log('this is the returned data ', data, $scope.requestedRides );
+        }).error(function(data){
+            console.log('cant find a specific customer who requested a ride');
+        })
+    });
           }
        })
        .error(function (data) {
@@ -428,8 +433,13 @@ $scope.driverObject;
        });
  }
 
+ $scope.onfirmedRide = function(ride) {
+    $scope.rideConformed = ride.checked;
+    console.log('/////////////////', $scope.rideConformed, ride.checked);
+ }
+
  $scope.$watch('authData.id', function(id) {
-  if(id) {
+  if(id && $scope.userType.rider) {
   _pickups();
     
   }

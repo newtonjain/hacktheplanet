@@ -2,19 +2,21 @@
   <ion-content>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
-       <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
-    <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
+       <marker ng-repeat="location in driverObject" position="{{location.start.latitude}}, {{location.start.longitude}}"></marker>
+    <marker ng-repeat="position in driverObject" position="{{position.end.latitude}}, {{position.end.longitude}}"icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
   </map>
 
-  <div class="row card" ng-show="xyz">
+
+
+  <div ng-show="requestedRides.length" class="row card" data-ng-repeat="myrides in requestedRides">
     <div class="col col-30 col-center">
-        <img src="{{xyz.cover}}" style="width:75%" class="headshot menu-item">
+        <img src="{{myrides.profile_picture_url}}" style="width:75%" class="headshot menu-item">
     </div>
     
     <div class="col col-40 col-center">
-        <h2>{{xyz.displayName}}</h2>
-        <p>415 - 739 - 3425</p>
-        <p>{{xyz.email}}</p>
+        <h2>{{myrides.name}}</h2>
+        <p>{{myrides.phone_number}}</p>
+        <p>{{myrides.email}}</p>
         <p><strong>Interests: </strong></p>
     </div>
     <div class="col col-30 col-center"> 
@@ -23,12 +25,13 @@
         </div>
         <div class="row-center">
             <label class="checkbox">
-                <input type="checkbox" ng-model="passanger.ride.checked" ng-checked="passanger.ride.checked">
+                <input type="checkbox" ng-model="myrides.checked" ng-checked="myrides.checked" >
             </label>
         </div>
     </div>
 </div>
-<div ng-show="!xyz">
+
+<div ng-show="!requestedRides.length">
 <br>
 <br>
 <p><center><h3>No trips have been requested yet.</h3></center></p>
@@ -36,7 +39,7 @@
 </div>
 
   <div class="list">
-  <div ng-if="passanger.ride.checked && !passanger.arrived">
+  <div ng-if="!passanger.arrived">
     <button ng-click="passanger.arrived = true" class="button button-balanced button-block" >Arrived</button>
   </div>
     <div ng-if="passanger.arrived">
