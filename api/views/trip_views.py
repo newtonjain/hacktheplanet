@@ -26,7 +26,9 @@ class DriverTripListCreateView(ListCreateAPIView):
             driver = Driver.objects.filter(facebook_id=driver_facebook_id).first()
         if not driver:
             raise Http404
-        return Trip.objects.filter(driver=driver)
+        return Trip.objects.filter(
+            driver=driver).exclude(
+            trip_status__name='FINISHED')
 
     def list(self, request, *args, **kwargs):
         return ListCreateAPIView.list(self, request, *args, **kwargs)
