@@ -2,8 +2,8 @@
   <ion-content>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
 <map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
-       <marker ng-repeat="location in driverObject" position="{{location.start.latitude}}, {{location.start.longitude}}"></marker>
-    <marker ng-repeat="position in driverObject" position="{{position.end.latitude}}, {{position.end.longitude}}"icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
+       <marker position="{{driverObject.start.latitude}}, {{driverObject.start.longitude}}"></marker>
+    <marker position="{{driverObject.end.latitude}}, {{driverObject.end.longitude}}"icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
   </map>
 
 
@@ -25,7 +25,7 @@
         </div>
         <div class="row-center">
             <label class="checkbox">
-                <input type="checkbox" ng-model="myrides.checked" ng-checked="myrides.checked" >
+                <input type="checkbox" ng-model="myrides.checked" ng-checked="myrides.checked" ng-click="justcheck(myrides)">
             </label>
         </div>
     </div>
@@ -39,8 +39,8 @@
 </div>
 
   <div class="list">
-  <div ng-if="!passanger.arrived">
-    <button ng-click="passanger.arrived = true" class="button button-balanced button-block" >Arrived</button>
+  <div ng-if="!passanger.arrived && driverObject.status=='PICKING UP' ">
+    <button ng-click="passanger.arrived = true" class="button button-balanced button-block">Arrived</button>
   </div>
     <div ng-if="passanger.arrived">
     <button ng-click="rideComplete(); passanger.delivered = true" class="button button-balanced button-block">Ride Complete</button>

@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
     $scope.locations={};
     $scope.locations.latitude = 0;
     $scope.locations.longitude = 0;
-    $scope.positions = [];
+    $scope.positions = {};
     $scope.userType = {};
     $scope.userType.passanger = false;
     $scope.userType.rider = false;
@@ -18,7 +18,9 @@ angular.module('starter.controllers', [])
     $scope.positions2.latitude = 0;
     $scope.positions2.longitude = 0;
     $scope.requestedRides = [];
-
+    $scope.attractions = {};
+    $scope.driverObject={};
+    $scope.requrl;
 
   var vcard  = {
     firstName: 'Shiva',
@@ -301,10 +303,52 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
       $scope.txDetails.hide();
   };
 
-  $scope.justcheck = function(){    
+  $scope.justcheck = function(input){  
+    $scope.driverObject.start = input.start;
+    $scope.driverObject.end = input.end;
+    $scope.driverObject.status = "PICKING UP";
+    var objToSend = {
+        'trip_status': $scope.driverObject.status
     }
 
+    console.log('objtosend', objToSend);
+   // $http({ method: 'PATCH', url: 'https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid, data: angular.toJson(objToSend)});
 
+    $http({
+  url: 'https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid,
+  method: 'PATCH',
+  data: {
+      'trip_status': $scope.driverObject.status
+  }
+}).success(function(response) {
+      console.log(response);
+  }).
+  error(function(response) {
+  console.log(response);
+  return false;
+});
+
+    // $http.post('https://cryptic-oasis-6309.herokuapp.com/api/driver', toSend_Driver)
+    //     .success(function (data, status, headers, config) {
+    //       console.log('saving data', data);
+    //     }).error(function (data, status, headers, config) {
+    //         console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+    //     });
+
+    
+
+    // patch('https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid, objToSend)
+    //         .success(function (data, status, headers, config) {
+    //           console.log('picking up', JSON.stringify(data), JSON.stringify(status));
+    //         }).error(function (data, status, headers, config) {
+    //             console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+    //         });
+
+    }
+
+    $scope.$watch('requestedRides', function(data){
+        console.log('you are selecting something', data);
+    })
 
 //////////////////////////
   $scope.useCurrentLocation = function() {
@@ -344,7 +388,22 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
 
 //////////////////////////////////////////
 $scope.yelping = function() {
+            var yelppoints = {
+                'end': {
+                    'latitude': $scope.positions.latitude,
+                    'longitude': $scope.positions.longitude
+                    }
+            }
+            $scope.yelpLocations=[];
 
+            $http.post('https://cryptic-oasis-6309.herokuapp.com/api/scenic-route', yelppoints)
+            .success(function (data, status, headers, config) {
+              console.log('getting points by yelp', JSON.stringify(data), JSON.stringify(status));
+              $scope.attractions = data;
+              
+            }).error(function (data, status, headers, config) {
+                console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+            });
 
 }
 
@@ -384,9 +443,10 @@ $scope.checkPassanger = function() {
         "longitude": $scope.locations.longitude
     },
     "end": {
-        "latitude": $scope.positions[0].lat,
-        "longitude": $scope.positions[0].lng
-    }
+        "latitude": $scope.positions.latitude,
+        "longitude": $scope.positions.longitude
+    },
+    'scenic_locations': $scope.attractions
   };
 
    passanger.child('endLocations').set(toSend.end);
@@ -394,23 +454,19 @@ $scope.checkPassanger = function() {
   console.log('here is to send for patching trip', toSend);
   $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip', toSend)
     .success(function (data, status, headers, config) {
-      $scope.attractions = data.scenic_locations;
+      // $scope.attractions = data.scenic_locations;
       console.log('here is scenic routes', $scope.attractions);
     }).error(function (data, status, headers, config) {
         console.log('There was a problem retrieving your information', JSON.stringify(data), JSON.stringify(status));
     });
   };
 
-
-$scope.driverObject;
- 
-
   function _pickups() {
     $http.get('https://cryptic-oasis-6309.herokuapp.com/api/trip/driver/' + $scope.authData.id)
        .success(function (data) {
         console.log('the pickup data is as follow', data);
         if(data.length){
-        $scope.driverObject = data;
+        // $scope.driverObject = data;
         $scope.positions2= $scope.passanger.endLocations;
         //$scope.positions2.longitude = data[0].end.longitude;
         console.log('can we ever meet again',data[0], $scope.positions2);
@@ -418,10 +474,14 @@ $scope.driverObject;
             console.log('this is the for each item', item);
              $http.get('https://cryptic-oasis-6309.herokuapp.com/api/customer/' + item.customer_facebook_id)
         .success(function (data) {
-
+            data.start = item.start;
+            data.end = item.end;
+            data.tripid = item.id;
+            data.trip_status = item.trip_status;
+            data.patch = item;
             $scope.requestedRides.push(data);
 
-            console.log('this is the returned data ', data, $scope.requestedRides );
+            console.log('this is the returned data ', $scope.requestedRides );
         }).error(function(data){
             console.log('cant find a specific customer who requested a ride');
         })
@@ -455,7 +515,6 @@ $scope.driverObject;
      ],
            titleText: '<center>You are going to pay $50</center>'
         });
-
   }
 
 })
@@ -470,8 +529,13 @@ $scope.driverObject;
     var ll = event.latLng;
     $scope.positions.latitude = ll.lat();
     $scope.positions.longitude = ll.lng();
+
+    $scope.requrl= "https://www.google.com/maps/embed/v1/directions"
+            + "?key=AIzaSyCBYtphSiDRCkgJdo9y3IomkqL2ZjEi1Oc"
+            + "&origin=" + $scope.locations.latitude + "," + $scope.locations.longitude
+            + "&destination=" + $scope.positions.latitude + "," + $scope.positions.longitude;
   
-    console.log('Final destination has been set', $scope.positions);
+    console.log('Final destination has been set', $scope.positions,  $scope.requrl);
   }
 
   $scope.cities = {
