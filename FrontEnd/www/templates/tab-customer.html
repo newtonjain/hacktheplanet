@@ -3,25 +3,24 @@
 
       <button ng-click="useCurrentLocation()" class="button button-balanced button-block" >Use current location</button>
       <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
-    <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
-   
-
-    <marker position="{{positions.latitude}}, {{positions.longitude}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
-    <marker ng-repeat="points in attractions" position="{{points.latitude}}, {{points.longitude}}" icon="https://maps.google.com/mapfiles/kml/shapes/schools_maps.png"></marker>
-    <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
-    </shape>
-  </map>
-
-<!--     <iframe width="100%" height="450" frameborder="0" style="border:0;" ng-src="{{requrl}}" allowfullscreen>
-    </iframe> -->
 
       <div class="row">
         <div class="col col-50">
-            <button class="button button-block" ng-class="{'button-balanced' : clicked && !adventurous}" ng-click="options('Economical'); clicked = !clicked">Economical</button>
+	  <map style="width: 100%" center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" on-click="addMarker()" id="map" data-tap-disabled="true">
+	    <marker position="{{locations.latitude}}, {{locations.longitude}}"></marker>
+
+
+	    <marker position="{{positions.latitude}}, {{positions.longitude}}" icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+	    <marker ng-repeat="points in attractions" position="{{points.latitude}}, {{points.longitude}}" icon="https://maps.google.com/mapfiles/kml/shapes/schools_maps.png"></marker>
+	    <shape name="circle" ng-repeat="city in cities" stroke-color="#FF0000" stroke-opacity="0.8" stroke-weight="2" fill-color="#FF0000" fill-opacity="0.35" center="{{city.position}}" radius="50">
+	    </shape>
+	  </map>
+          <button class="button button-block" ng-class="{'button-balanced' : clicked && !adventurous}" ng-click="options('Economical'); clicked = !clicked">Economical</button>
         </div>
         <div class="col col-50">
-            <button class="button button-block" ng-class="{'button-assertive' : adventurous}" ng-click="options('Adventurous'); yelping(); clicked2 = !clicked2">Adventurous</button>
+	  <iframe style="border: 0; width: 100%; height: 300px;" frameborder="0" ng-src="{{requrl}}" allowfullscreen>
+	  </iframe>
+            <button style="margin-top: 5px;" class="button button-block" ng-class="{'button-assertive' : adventurous}" ng-click="options('Adventurous'); yelping(); clicked2 = !clicked2">Adventurous</button>
         </div>
       </div>
 
@@ -31,14 +30,14 @@
     <div class="col col-25">
     <img src="{{ride.profile_picture_url}}" style="width:90%" class="headshot menu-item">
     </div>
-    <div class="col col-50">  
+    <div class="col col-50">
     <h3>{{ride.name}}</h3>
       <p>Email: {{ride.email}}</p>
       <p>Description: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
       <p>Model: {{ride.bike_model}}</p>
       </div>
-      <div class="col col-25"> 
-      Choose Rider: 
+      <div class="col col-25">
+      Choose Rider:
       <label class="checkbox">
        <input type="checkbox" ng-model="ride.checked" ng-checked="ride.checked">
      </label>
@@ -48,8 +47,8 @@
 <button ng-click="callRiders(riders)" class="button button-assertive button-block" >Call Rider!</button>
 
 <!--     <a class="item item-thumbnail-left"  href="#"> -->
-      
-    
+
+
     </a>
 </div>
   </ion-content>
