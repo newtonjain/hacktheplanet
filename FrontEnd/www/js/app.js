@@ -102,8 +102,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/account');
 
-  $httpProvider.defaults.headers.patch = {
-    'Content-Type': 'application/json;charset=utf-8'
-}
+$httpProvider.defaults.headers.patch = {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+    
 
 });

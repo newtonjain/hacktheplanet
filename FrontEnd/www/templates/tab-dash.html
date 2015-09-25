@@ -40,10 +40,10 @@
 
   <div class="list">
   <div ng-if="!passanger.arrived && driverObject.status=='PICKING UP' ">
-    <button ng-click="passanger.arrived = true" class="button button-balanced button-block">Arrived</button>
+    <button ng-click="passanger.arrived = true; justArrived()" class="button button-balanced button-block">Arrived</button>
   </div>
     <div ng-if="passanger.arrived">
-    <button ng-click="rideComplete(); passanger.delivered = true" class="button button-balanced button-block">Ride Complete</button>
+    <button ng-click="rideComplete(); passanger.delivered = true; justCompleted()" class="button button-balanced button-block">Ride Complete</button>
   </div>
 
 

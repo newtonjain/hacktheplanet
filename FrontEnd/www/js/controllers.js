@@ -307,48 +307,53 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
     $scope.driverObject.start = input.start;
     $scope.driverObject.end = input.end;
     $scope.driverObject.status = "PICKING UP";
+    $scope.driverObject.tripid = input.tripid;
     var objToSend = {
+        'id': input.tripid,
+        'trip_status': $scope.driverObject.status
+    };
+
+    console.log('objtosend', objToSend);
+    $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip/trip-status', objToSend)
+            .success(function (data, status, headers, config) {
+              console.log('picking up', JSON.stringify(data), JSON.stringify(status));
+            }).error(function (data, status, headers, config) {
+                console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+            });
+    };
+
+      $scope.justArrived = function(){  
+    $scope.driverObject.status = "ARRIVED";
+    var objToSend = {
+        'id': $scope.driverObject.tripid,
         'trip_status': $scope.driverObject.status
     }
 
     console.log('objtosend', objToSend);
-   // $http({ method: 'PATCH', url: 'https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid, data: angular.toJson(objToSend)});
-
-    $http({
-  url: 'https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid,
-  method: 'PATCH',
-  data: {
-      'trip_status': $scope.driverObject.status
-  }
-}).success(function(response) {
-      console.log(response);
-  }).
-  error(function(response) {
-  console.log(response);
-  return false;
-});
-
-    // $http.post('https://cryptic-oasis-6309.herokuapp.com/api/driver', toSend_Driver)
-    //     .success(function (data, status, headers, config) {
-    //       console.log('saving data', data);
-    //     }).error(function (data, status, headers, config) {
-    //         console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
-    //     });
-
-    
-
-    // patch('https://cryptic-oasis-6309.herokuapp.com/api/trip/' + input.tripid, objToSend)
-    //         .success(function (data, status, headers, config) {
-    //           console.log('picking up', JSON.stringify(data), JSON.stringify(status));
-    //         }).error(function (data, status, headers, config) {
-    //             console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
-    //         });
-
+    $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip/trip-status', objToSend)
+            .success(function (data, status, headers, config) {
+              console.log('arrived', JSON.stringify(data), JSON.stringify(status));
+            }).error(function (data, status, headers, config) {
+                console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+            });
     }
 
-    $scope.$watch('requestedRides', function(data){
-        console.log('you are selecting something', data);
-    })
+    $scope.justCompleted = function() {
+            $scope.driverObject.status = "FINISHED";
+    var objToSend = {
+        'id': $scope.driverObject.tripid,
+        'trip_status': $scope.driverObject.status
+    }
+
+    console.log('objtosend', objToSend);
+    $http.post('https://cryptic-oasis-6309.herokuapp.com/api/trip/trip-status', objToSend)
+            .success(function (data, status, headers, config) {
+              console.log('finished', JSON.stringify(data), JSON.stringify(status));
+            }).error(function (data, status, headers, config) {
+                console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
+            });
+
+    }
 
 //////////////////////////
   $scope.useCurrentLocation = function() {
