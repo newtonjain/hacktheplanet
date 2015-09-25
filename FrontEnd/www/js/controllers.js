@@ -49,7 +49,7 @@ angular.module('starter.controllers', [])
   var itemsRef = new Firebase("https://bookmywride.firebaseio.com/");
   var passanger = new Firebase("https://bookmywride.firebaseio.com/passanger");
   var rider= new Firebase("https://bookmywride.firebaseio.com/rider");
-    
+
     var itemsObj = $firebaseObject(itemsRef);
 
     $scope.passanger = $firebaseArray(passanger);
@@ -91,7 +91,7 @@ $scope.savefbinfo  = function() {
     console.log($scope.userType);
 
     if($scope.userType.passanger == true) {
-      
+
   $http.get('https://cryptic-oasis-6309.herokuapp.com/api/customer/' + $scope.authData.id)
    .success(function (data) {
          console.log('User exists');
@@ -133,7 +133,7 @@ $scope.savefbinfo  = function() {
         id: $scope.authData.id,
         userData: $scope.authData
       })
-   
+
      navigator.geolocation.getCurrentPosition(function(position){
         console.log('here are the position', position);
       $scope.locations.latitude = position.coords.latitude;
@@ -163,8 +163,8 @@ $scope.savefbinfo  = function() {
 
     })
 
-  }    
-   
+  }
+
   }
 
 $scope.login = function() {
@@ -202,9 +202,9 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   $scope.options = function (option) {
     $scope.option = option;
     if(option === 'Economical'){
-         $scope.adventurous = false;    
+         $scope.adventurous = false;
     } else {
-        $scope.adventurous = true;    
+        $scope.adventurous = true;
     }
     console.log('the selection had been made', $scope.adventurous);
 
@@ -303,7 +303,7 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
       $scope.txDetails.hide();
   };
 
-  $scope.justcheck = function(input){  
+  $scope.justcheck = function(input){
     $scope.driverObject.start = input.start;
     $scope.driverObject.end = input.end;
     $scope.driverObject.status = "PICKING UP";
@@ -322,7 +322,7 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
             });
     };
 
-      $scope.justArrived = function(){  
+      $scope.justArrived = function(){
     $scope.driverObject.status = "ARRIVED";
     var objToSend = {
         'id': $scope.driverObject.tripid,
@@ -405,7 +405,7 @@ $scope.yelping = function() {
             .success(function (data, status, headers, config) {
               console.log('getting points by yelp', JSON.stringify(data), JSON.stringify(status));
               $scope.attractions = data;
-              
+
             }).error(function (data, status, headers, config) {
                 console.log('There was a problem posting your information' + JSON.stringify(data) + JSON.stringify(status));
             });
@@ -506,7 +506,7 @@ $scope.checkPassanger = function() {
  $scope.$watch('authData.id', function(id) {
   if(id && $scope.userType.rider) {
   _pickups();
-    
+
   }
  })
 })
@@ -525,22 +525,31 @@ $scope.checkPassanger = function() {
 })
 
 .controller('CustomerCtrl', function ($scope, $compile) {
- 
+
  // $("map").on("tap",function(){
  //   $scope.addMarker();
- //  });  
-  
-  $scope.addMarker = function(event) {
-    var ll = event.latLng;
-    $scope.positions.latitude = ll.lat();
-    $scope.positions.longitude = ll.lng();
+ //  });
 
-    $scope.requrl= "https://www.google.com/maps/embed/v1/directions"
-            + "?key=AIzaSyCBYtphSiDRCkgJdo9y3IomkqL2ZjEi1Oc"
-            + "&origin=" + $scope.locations.latitude + "," + $scope.locations.longitude
-            + "&destination=" + $scope.positions.latitude + "," + $scope.positions.longitude;
-  
-    console.log('Final destination has been set', $scope.positions,  $scope.requrl);
+  $scope.addMarker = function(event) {
+      var ll = event.latLng;
+      $scope.positions.latitude = ll.lat();
+      $scope.positions.longitude = ll.lng();
+      console.log("$scope.attractions: ", $scope.attractions);
+
+      $scope.requrl= "https://www.google.com/maps/embed/v1/directions"
+          + "?key=AIzaSyCBYtphSiDRCkgJdo9y3IomkqL2ZjEi1Oc"
+          + "&origin=" + $scope.locations.latitude + "," + $scope.locations.longitude
+	  //+ "&waypoints=";
+
+      // Set map midpoints
+      /*
+      $scope.attractions.forEach(function(place) {
+	  requrl += place.latitude + "," + place.longitude + "|"
+      });
+      */
+
+      $scope.requrl += "&destination=" + $scope.positions.latitude + "," + $scope.positions.longitude;
+      //console.log('Final destination has been set', $scope.positions,  $scope.requrl);
   }
 
   $scope.cities = {
