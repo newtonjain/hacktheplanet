@@ -104,7 +104,7 @@ $scope.savefbinfo  = function() {
                })
 
                   var toSend_Customer= {
-                    "facebook_id": parseInt($scope.authData.id),
+                    "facebook_id": $scope.authData.id,
                     "name": $scope.authData.displayName,
                     "email": $scope.authData.email,
                     "description": $scope.authData.description,
@@ -123,7 +123,7 @@ $scope.savefbinfo  = function() {
     }
 
     if($scope.userType.rider== true) {
-      console.log('lllllll',$scope.authData.id);
+      console.log('lllllll', $scope.authData.id);
        $http.get('https://cryptic-oasis-6309.herokuapp.com/api/driver/' + $scope.authData.id)
    .success(function (data) {
          console.log('User exists', JSON.stringify(data));
@@ -140,7 +140,7 @@ $scope.savefbinfo  = function() {
        $scope.locations.longitude = position.coords.longitude;
        if($scope.userType.rider== true) {
         var toSend_Driver= {
-        "facebook_id": parseInt($scope.authData.id),
+        "facebook_id": $scope.authData.id,
         "name": $scope.authData.displayName,
         "email": $scope.authData.email,
         "description": $scope.authData.description,
@@ -184,7 +184,7 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
         $scope.authData.cover = data.picture.data.url;
         $scope.authData.gender = data.gender;
         $scope.authData.age = data.age_range;
-        $scope.authData.id = data.id;
+        $scope.authData.id = parseInt(data.id);
         $scope.authData.profileImageURL = data.picture.data.url;
         $scope.authData.description = "Erlich Bachman is a a supremely confident and arrogant entrepreneur who founded an innovation incubator in his home after the purchase of his airfare collator Aviato.";
 
@@ -442,7 +442,7 @@ $scope.checkPassanger = function() {
     "name": $scope.authData.displayName,
     "scenic": scenic,
     "driver_facebook_id": selectedRiders[0].facebook_id,
-    "customer_facebook_id": parseInt($scope.authData.id),
+    "customer_facebook_id": $scope.authData.id,
     "start": {
         "latitude": $scope.locations.latitude,
         "longitude": $scope.locations.longitude
