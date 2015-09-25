@@ -21,6 +21,8 @@ angular.module('starter.controllers', [])
     $scope.attractions = {};
     $scope.driverObject={};
     $scope.requrl;
+    $scope.showMap = false;
+    $scope.showIt = false;
 
   var vcard  = {
     firstName: 'Shiva',
@@ -288,7 +290,9 @@ ref.authWithOAuthPopup("facebook", function(error, authData) {
   };
 
   $scope.closeLogin = function() {
-    $scope.modal.hide();
+      $scope.modal.hide();
+      // Because nobody likes rendering maps
+      $scope.showMap = true;
   };
 
   $scope.doLogin = function (username, password) {

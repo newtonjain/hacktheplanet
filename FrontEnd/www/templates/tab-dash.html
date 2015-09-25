@@ -1,63 +1,63 @@
 <ion-view view-title="Rider">
-  <ion-content>
-      <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
-<map center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
-       <marker position="{{driverObject.start.latitude}}, {{driverObject.start.longitude}}"></marker>
-    <marker position="{{driverObject.end.latitude}}, {{driverObject.end.longitude}}"icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker> 
-  </map>
+  <ion-content ng-click="showIt = true;">
+    <!-- <map center="-34.397, 150.644" zoom="8"></map> -->
+    <map ng-if="showIt" center="({{locations.latitude}}, {{locations.longitude}})" zoom="12" id="map" data-tap-disabled="true">
+      <marker position="{{driverObject.start.latitude}}, {{driverObject.start.longitude}}"></marker>
+      <marker position="{{driverObject.end.latitude}}, {{driverObject.end.longitude}}"icon="http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"></marker>
+    </map>
 
 
 
-  <div ng-show="requestedRides.length" class="row card" data-ng-repeat="myrides in requestedRides">
-    <div class="col col-30 col-center">
+    <div ng-show="requestedRides.length" class="row card" data-ng-repeat="myrides in requestedRides">
+      <div class="col col-30 col-center">
         <img src="{{myrides.profile_picture_url}}" style="width:75%" class="headshot menu-item">
-    </div>
-    
-    <div class="col col-40 col-center">
+      </div>
+
+      <div class="col col-40 col-center">
         <h2>{{myrides.name}}</h2>
         <p>{{myrides.phone_number}}</p>
         <p>{{myrides.email}}</p>
         <p><strong>Interests: </strong></p>
-    </div>
-    <div class="col col-30 col-center"> 
+      </div>
+      <div class="col col-30 col-center">
         <div class="row-center">
-            <h3>Confirm Ride:</h3>
+          <h3>Confirm Ride:</h3>
         </div>
         <div class="row-center">
-            <label class="checkbox">
-                <input type="checkbox" ng-model="myrides.checked" ng-checked="myrides.checked" ng-click="justcheck(myrides)">
-            </label>
+          <label class="checkbox">
+            <input type="checkbox" ng-model="myrides.checked" ng-checked="myrides.checked" ng-click="justcheck(myrides)">
+          </label>
         </div>
+      </div>
     </div>
-</div>
 
-<div ng-show="!requestedRides.length">
-<br>
-<br>
-<p><center><h3>No trips have been requested yet.</h3></center></p>
-  
-</div>
+    <div ng-show="!requestedRides.length">
+      <br>
+      <br>
+      <p><center><h3>No trips have been requested yet.</h3></center></p>
 
-  <div class="list">
-  <div ng-if="!passanger.arrived && driverObject.status=='PICKING UP' ">
-    <button ng-click="passanger.arrived = true; justArrived()" class="button button-balanced button-block">Arrived</button>
-  </div>
-    <div ng-if="passanger.arrived">
-    <button ng-click="rideComplete(); passanger.delivered = true; justCompleted()" class="button button-balanced button-block">Ride Complete</button>
-  </div>
+    </div>
+
+    <div class="list">
+      <div ng-if="!passanger.arrived && driverObject.status=='PICKING UP' ">
+	<button ng-click="passanger.arrived = true; justArrived()" class="button button-balanced button-block">Arrived</button>
+      </div>
+      <div ng-if="passanger.arrived">
+	<button ng-click="rideComplete(); passanger.delivered = true; justCompleted()" class="button button-balanced button-block">Ride Complete</button>
+      </div>
 
 
       <div class="list card" ng-if="passanger.delivered">
-      <div class="item item-divider">Enter Amount</div>
-      <div class="item item-body">
-        <div class="item item-input-inset">
+	<div class="item item-divider">Enter Amount</div>
+	<div class="item item-body">
+          <div class="item item-input-inset">
             $&nbsp <input style="width: 100%" class="input-group input" type="number" name="amount" placeholder="Enter Transaction amount" ng-model="amount" required>
-        </div>
-        <br>
-        <div><button class="button button-balanced button-block"  ng-disabled="amount <= 0" ng-click="tapping(amount)"> Tap </button></div>
+          </div>
+          <br>
+          <div><button class="button button-balanced button-block"  ng-disabled="amount <= 0" ng-click="tapping(amount)"> Tap </button></div>
+	</div>
       </div>
+
     </div>
-      
-</div>
   </ion-content>
 </ion-view>
