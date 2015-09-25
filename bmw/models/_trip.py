@@ -68,4 +68,5 @@ class Trip(ArchivableModel):
             send_arrived(self.customer.phone_number)
         if new_status == 'FINISHED' and self.trip_status.name == 'ARRIVED':
             self.trip_status = TripStatus.objects.get(name='FINISHED')
+
         self.save()
