@@ -61,4 +61,10 @@ urlpatterns = patterns(
         scenic_route_views.ScenicRouteCreateView.as_view(),
         name='scenic_route_api'
         ),
+
+    url(r'^trip/trip-status?$',
+        trip_views.TripStatusDetailView.as_view(),
+        name='trip_api'
+        ),
+
 )
