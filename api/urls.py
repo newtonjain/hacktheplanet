@@ -62,7 +62,7 @@ urlpatterns = patterns(
         name='scenic_route_api'
         ),
 
-    url(r'^trip/trip-status?$',
+    url(r'^trip/trip-status/?$',
         trip_views.TripStatusDetailView.as_view(),
         name='trip_api'
         ),
